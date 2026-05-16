@@ -1,0 +1,3 @@
+questionary>=2.0.1
+markdown>=3.4
+pygments>=2.15

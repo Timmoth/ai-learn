@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ai-learn</title>
+  <meta name="description" content="AI-generated learning material with written lessons and accompanying audio narration.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/">
+  <link rel="author" href="https://timmoth.com">
+  <meta property="og:title" content="ai-learn">
+  <meta property="og:description" content="AI-generated learning material with written lessons and accompanying audio narration.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ai-learn">
+  <meta name="twitter:description" content="AI-generated learning material with written lessons and accompanying audio narration.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ai-learn","url":"https://ai-learn.timmoth.com","description":"AI-generated learning material with written lessons and accompanying audio narration.","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <h1 class="text-base font-medium tracking-tight">ai-learn</h1>
+      <div class="w-9"></div>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <p class="text-gray-600 dark:text-gray-400 mb-10">AI-generated learning material with written lessons and accompanying audio narration.</p>
+    <div class="space-y-3">
+      <a href="lessons/cloud-init-beginners-guide/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Cloud-init beginners guide</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">cloud</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">automation</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
+      </a>
+      <a href="lessons/introduction-to-ansible/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Introduction to Ansible</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">ansible</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
+      </a>
+      <a href="lessons/introduction-to-opentofu-fundamentals/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Introduction to OpenTofu fundamentals</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">opentofu</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">overview</span></div>
+      </a>
+    </div>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a> — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud-init beginners guide — ai-learn</title>
+  <meta name="description" content="An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/">
+  <link rel="author" href="https://timmoth.com">
+  <meta property="og:title" content="Cloud-init beginners guide">
+  <meta property="og:description" content="An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cloud-init beginners guide">
+  <meta name="twitter:description" content="An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Cloud-init beginners guide","headline":"Cloud-init beginners guide","description":"An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.","url":"https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/","inLanguage":"en","keywords":"cloud, devops, linux, automation, beginner","datePublished":"2026-05-16","dateModified":"2026-05-16","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com"},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/audio.mp3","encodingFormat":"audio/mpeg"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    audio::-webkit-media-controls-panel { background-color: transparent; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <div class="w-9"></div>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">Cloud-init beginners guide</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.</p>
+      <div class="flex flex-wrap gap-1.5">
+        <span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">cloud</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">automation</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>Cloud-init beginners guide</h1>
+<p>When you launch a virtual machine on AWS, Azure, GCP, DigitalOcean, OpenStack, or any modern cloud, <em>something</em> turns that generic base image into your specific instance — sets the hostname, installs your SSH key, creates your user, applies your packages, and runs your first-boot scripts. On almost every Linux cloud image, that something is <strong>cloud-init</strong>.</p>
+<p>This lesson walks you through what cloud-init is, the boot stages it runs through, the datasources it reads, the cloud-config YAML you write, and how to test it on your own laptop before you ever pay for a cloud instance.</p>
+<h2>What cloud-init is</h2>
+<p>Cloud-init is an open source program that initializes a cloud instance on first boot. The idea is simple: cloud providers want to ship one generic image (one "golden" Ubuntu, one "golden" RHEL, one "golden" Amazon Linux) and have every customer's instance customize itself the first time it powers on. Cloud-init is the standard mechanism for doing that customization in a way that works across providers.</p>
+<p>It is pre-installed on the official cloud images for Ubuntu, Debian, Fedora, RHEL, CentOS Stream, Rocky, AlmaLinux, openSUSE, FreeBSD, and others. It supports more than thirty datasources, including Amazon EC2, Microsoft Azure, Google Compute Engine, Oracle Cloud, OpenStack, DigitalOcean, VMware, LXD, and the local "NoCloud" datasource you will see later. It works equally well on cloud VMs, on-premises hypervisors, and bare metal.</p>
+<p>The problem it solves is mundane but ubiquitous: configuring a fresh instance is a complex, error-prone task, and doing it the same way across many clouds, distros, and instance counts is much worse. Cloud-init turns that task into a single YAML file.</p>
+<h2>How cloud-init works at a glance</h2>
+<p>Cloud-init runs early in the boot process and is driven by three inputs:</p>
+<ul>
+<li><strong>Meta-data</strong> — facts about the instance, provided by the cloud platform: instance ID, hostname, region, availability zone, network configuration. You do not write this; the platform does.</li>
+<li><strong>User-data</strong> — what <em>you</em> hand the cloud at launch time, telling cloud-init what to do. Most often this is a <code>#cloud-config</code> YAML document.</li>
+<li><strong>Vendor-data</strong> — optional extra configuration the cloud provider injects for you (for example, installing the provider's CLI tool).</li>
+</ul>
+<p>Cloud-init pulls all three from a <strong>datasource</strong>, merges them into a plan, and executes that plan in a series of stages.</p>
+<h2>Boot stages and execution flow</h2>
+<p>Cloud-init runs in <strong>five sequential stages</strong>, each implemented by a systemd unit. Understanding the order matters when you are debugging or trying to figure out <em>why</em> a particular module did not run when you expected.</p>
+<ol>
+<li>
+<p><strong>Detect (<code>ds-identify</code>).</strong> Before cloud-init really starts, a small shell tool called <code>ds-identify</code> inspects the running system — DMI strings, kernel command line, available block devices — to figure out which cloud the instance is on. The result decides whether cloud-init runs at all and which datasource it should use.</p>
+</li>
+<li>
+<p><strong>Local stage (<code>cloud-init-local.service</code>).</strong> Runs as soon as the root filesystem is mounted read-write, <em>before</em> networking comes up. Its job is to find a <em>local</em> datasource (a config drive, a NoCloud seed disk, kernel command-line arguments) and apply network configuration. This stage blocks network bring-up so that the network is configured correctly the first time.</p>
+</li>
+<li>
+<p><strong>Network stage (<code>cloud-init-network.service</code>).</strong> Runs once networking is online. This is the heavy stage: cloud-init reaches out to any remote metadata service, fetches user-data, decompresses or decodes it, processes <code>#include</code> directives and MIME parts, then runs the early modules — disk setup, filesystem creation, mount configuration, <code>bootcmd</code>. SSH and console login are blocked until this stage finishes.</p>
+</li>
+<li>
+<p><strong>Config stage (<code>cloud-config.service</code>).</strong> Runs the bulk of non-critical configuration modules — things like setting the timezone, installing CA certificates, configuring apt sources. This stage does not block the rest of boot.</p>
+</li>
+<li>
+<p><strong>Final stage (<code>cloud-final.service</code>).</strong> The "rc.local" of cloud-init. Installs packages, runs <code>runcmd</code>, applies any configuration-management hand-off (Chef, Puppet, Ansible-pull), and emits a final status. Other scripts that need to wait for cloud-init to finish can do so with <code>cloud-init status --wait</code>.</p>
+</li>
+</ol>
+<p>The key intuition: networking-sensitive work goes early (local + network), most YAML directives run in <em>config</em> or <em>final</em>, and your custom shell commands almost always run at the very end.</p>
+<h2>Datasources and environment detection</h2>
+<p>A <strong>datasource</strong> is cloud-init's name for "the way this particular cloud hands me my data." Each supported cloud has its own datasource module that knows the right URL to hit, the right disk to look at, or the right kernel argument to read. Examples:</p>
+<ul>
+<li><strong>EC2</strong> — fetches data from the link-local HTTP endpoint at <code>http://169.254.169.254/</code>.</li>
+<li><strong>Azure</strong> — combines a small ovf-env.xml file on an attached CD-ROM with the Instance Metadata Service.</li>
+<li><strong>GCE</strong> — reads metadata from <code>metadata.google.internal</code>.</li>
+<li><strong>ConfigDrive</strong> — reads from a small attached ISO formatted by the OpenStack provider.</li>
+<li><strong>NoCloud</strong> — reads user-data and meta-data from a local filesystem labeled <code>cidata</code>, with no network involved at all. This is the datasource you will use for local testing.</li>
+</ul>
+<p>Detection is almost always automatic — <code>ds-identify</code> figures it out. You only need to intervene if you are running cloud-init somewhere unusual; in that case you can pin the datasource list with <code>/etc/cloud/cloud.cfg.d/99-datasource.cfg</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">datasource_list</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">NoCloud</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">None</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</code></pre></div>
+
+<h2>Writing cloud-config user-data</h2>
+<p>User-data can take several formats. The most common, and the one you will spend almost all of your time on, is <strong>cloud-config</strong>: a YAML document whose very first line is the literal comment <code>#cloud-config</code>. That magic header is how cloud-init recognizes the format — without it, your YAML is silently ignored.</p>
+<p>Other supported formats include shell scripts (anything starting with <code>#!</code>), <code>#include</code> files, gzip-compressed payloads, MIME multipart archives, and Jinja-templated documents.</p>
+<p>Here is a small but realistic cloud-config that touches the most common modules:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#cloud-config</span>
+
+<span class="c1"># Set identity</span>
+<span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web-01</span>
+<span class="nt">fqdn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">web-01.example.com</span>
+<span class="nt">timezone</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Europe/London</span>
+
+<span class="c1"># Create a user with an SSH key and sudo access</span>
+<span class="nt">users</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<span class="w">    </span><span class="nt">gecos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deployment user</span>
+<span class="w">    </span><span class="nt">groups</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">sudo</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">shell</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/bin/bash</span>
+<span class="w">    </span><span class="nt">sudo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ALL=(ALL)</span><span class="nv"> </span><span class="s">NOPASSWD:ALL&quot;</span>
+<span class="w">    </span><span class="nt">lock_passwd</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">ssh_authorized_keys</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA... you@laptop</span>
+
+<span class="c1"># Refresh apt and install packages on first boot</span>
+<span class="nt">package_update</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">package_upgrade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="nt">packages</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nginx</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curl</span>
+
+<span class="c1"># Drop a config file in place with explicit ownership and mode</span>
+<span class="nt">write_files</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/nginx/sites-available/hello.conf</span>
+<span class="w">    </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">root:root</span>
+<span class="w">    </span><span class="nt">permissions</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0644&quot;</span>
+<span class="w">    </span><span class="nt">content</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">server {</span>
+<span class="w">        </span><span class="no">listen 80 default_server;</span>
+<span class="w">        </span><span class="no">root /var/www/html;</span>
+<span class="w">        </span><span class="no">index index.html;</span>
+<span class="w">      </span><span class="no">}</span>
+
+<span class="c1"># Run shell commands at the very end of boot</span>
+<span class="nt">runcmd</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">ln</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-sf</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">/etc/nginx/sites-available/hello.conf</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">/etc/nginx/sites-enabled/default</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">systemctl</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">restart</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">nginx</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="nv">sh</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-c</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;echo</span><span class="nv"> </span><span class="s">&#39;hello</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">cloud-init&#39;</span><span class="nv"> </span><span class="s">&gt;</span><span class="nv"> </span><span class="s">/var/www/html/index.html&quot;</span><span class="w"> </span><span class="p p-Indicator">]</span>
+</code></pre></div>
+
+<p>A few details that catch beginners out:</p>
+<ul>
+<li>The <code>#cloud-config</code> line is <strong>not</strong> optional and <strong>not</strong> a comment in the YAML sense — cloud-init parses it as a format marker. Forget it and the rest of the file does nothing.</li>
+<li><code>runcmd</code> runs in the <em>final</em> stage. If you need something earlier, use <code>bootcmd</code>, which runs on <em>every</em> boot in the network stage.</li>
+<li><code>users:</code> replaces the default user list. If you want to keep the cloud image's default user (e.g. <code>ubuntu</code>) and <em>add</em> one, include <code>- default</code> as the first entry.</li>
+<li>Cloud-config is processed once per <strong>instance ID</strong>, not once per boot. Re-running it requires either a new instance ID or a <code>cloud-init clean</code> followed by a reboot.</li>
+</ul>
+<h2>Other useful modules</h2>
+<p>The cloud-config schema covers a lot more ground than this lesson can. A non-exhaustive tour of what is commonly used:</p>
+<ul>
+<li><code>apt:</code> and <code>yum_repos:</code> — configure package repositories and pinning.</li>
+<li><code>ssh_authorized_keys:</code> and <code>ssh_keys:</code> — manage SSH keys and host keys.</li>
+<li><code>disk_setup:</code> and <code>fs_setup:</code> and <code>mounts:</code> — partition disks, create filesystems, write <code>/etc/fstab</code> entries.</li>
+<li><code>ca_certs:</code> — install trusted CA certificates.</li>
+<li><code>power_state:</code> — reboot or power off when cloud-init finishes.</li>
+<li><code>chef:</code>, <code>puppet:</code>, <code>ansible:</code> — hand off to a real configuration-management system once the box is reachable.</li>
+</ul>
+<p>Every module has a JSON schema, and <code>cloud-init schema --system</code> will validate your real user-data against it.</p>
+<h2>Testing and debugging cloud-init locally</h2>
+<p>You do not need a cloud account to learn cloud-init. The <strong>NoCloud</strong> datasource exists precisely so you can hand cloud-init a <code>user-data</code> and a <code>meta-data</code> file from a local disk image and watch it run inside a VM.</p>
+<p>The fastest path on a laptop is the <code>cloud-localds</code> helper (Debian/Ubuntu) or the <code>cloud-init</code> snap, together with <code>qemu</code>. The recipe is:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Write a minimal meta-data file. The instance-id determines &quot;first boot&quot;.</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>meta-data<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">instance-id: iid-local01</span>
+<span class="s">local-hostname: cloudinit-demo</span>
+<span class="s">EOF</span>
+
+<span class="c1"># 2. Write the cloud-config user-data.</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>user-data<span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="s">#cloud-config</span>
+<span class="s">hostname: cloudinit-demo</span>
+<span class="s">users:</span>
+<span class="s">  - default</span>
+<span class="s">  - name: tester</span>
+<span class="s">    sudo: &quot;ALL=(ALL) NOPASSWD:ALL&quot;</span>
+<span class="s">    lock_passwd: true</span>
+<span class="s">    ssh_authorized_keys:</span>
+<span class="s">      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA... you@laptop</span>
+<span class="s">runcmd:</span>
+<span class="s">  - [ sh, -c, &quot;echo it works &gt; /tmp/hello&quot; ]</span>
+<span class="s">EOF</span>
+
+<span class="c1"># 3. Bake them into a seed ISO labelled &quot;cidata&quot;.</span>
+cloud-localds<span class="w"> </span>seed.iso<span class="w"> </span>user-data<span class="w"> </span>meta-data
+
+<span class="c1"># 4. Boot an Ubuntu cloud image with the seed ISO attached.</span>
+qemu-system-x86_64<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-enable-kvm<span class="w"> </span>-m<span class="w"> </span><span class="m">2048</span><span class="w"> </span>-nographic<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-drive<span class="w"> </span><span class="nv">file</span><span class="o">=</span>ubuntu-cloudimg.qcow2,if<span class="o">=</span>virtio<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-drive<span class="w"> </span><span class="nv">file</span><span class="o">=</span>seed.iso,if<span class="o">=</span>virtio,format<span class="o">=</span>raw<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-netdev<span class="w"> </span>user,id<span class="o">=</span>n0,hostfwd<span class="o">=</span>tcp::2222-:22<span class="w"> </span>-device<span class="w"> </span>virtio-net,netdev<span class="o">=</span>n0
+</code></pre></div>
+
+<p>On the booted VM, four commands cover almost all debugging:</p>
+<ul>
+<li><code>cloud-init status --long</code> — has cloud-init finished, and which datasource did it pick?</li>
+<li><code>cloud-init schema --system --annotate</code> — validates the user-data you actually received, with inline error annotations.</li>
+<li><code>cloud-init query userdata</code> — prints the user-data cloud-init saw, after any decoding.</li>
+<li><code>cloud-init clean --logs</code> — wipes all cloud-init state so the next boot behaves like first boot. Essential when iterating.</li>
+</ul>
+<p>Two log files are worth bookmarking:</p>
+<ul>
+<li><code>/var/log/cloud-init.log</code> — cloud-init's own structured log of everything it did, by stage and module. Most "why didn't my module run?" answers live here.</li>
+<li><code>/var/log/cloud-init-output.log</code> — the captured stdout and stderr from <code>runcmd</code>, <code>bootcmd</code>, and package installs. When your shell snippet misbehaves, this is where you find the error.</li>
+</ul>
+<p>For an even faster loop, modern Linux distributions support <code>multipass launch --cloud-init user-data.yaml</code> (Ubuntu) and <code>lxc launch --config=user.user-data=...</code> (LXD), which spin up a container or lightweight VM with your cloud-config in under ten seconds.</p>
+<h2>Putting it together</h2>
+<p>The full mental model fits in one paragraph. A cloud-init-enabled image boots, <code>ds-identify</code> decides which <strong>datasource</strong> to use, cloud-init runs through the <strong>local</strong>, <strong>network</strong>, <strong>config</strong>, and <strong>final</strong> stages, pulling <strong>meta-data</strong>, <strong>user-data</strong>, and <strong>vendor-data</strong> from that datasource. Your contribution is a <code>#cloud-config</code> YAML document — users, packages, files, commands — that cloud-init's modules apply at the right stage. Locally you can reproduce the whole thing with a <code>seed.iso</code> and a cloud image, and you debug it with <code>cloud-init status</code>, <code>cloud-init schema</code>, and the two log files under <code>/var/log/</code>.</p>
+<p>From here, the natural next step is to write a one-page cloud-config that creates your user, installs your favourite packages, and prints a banner — and to launch it twice: once locally with NoCloud, and once on whatever cloud you actually use. Once the same YAML works in both places, you have learned cloud-init.</p>
+    </article>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a> — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "slug": "introduction-to-ansible",
+  "revision": 2,
+  "generated_at": "2026-05-16T13:51:04Z",
+  "sources": [
+    {
+      "url": "https://docs.ansible.com/ansible/latest/getting_started/basic_concepts.html",
+      "title": "Ansible concepts — Ansible Community Documentation",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    },
+    {
+      "url": "https://docs.ansible.com/projects/ansible/latest/playbook_guide/playbooks_intro.html",
+      "title": "Ansible playbooks — Ansible Community Documentation",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    },
+    {
+      "url": "https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html",
+      "title": "How to build your inventory — Ansible Community Documentation",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    },
+    {
+      "url": "https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html",
+      "title": "Roles — Ansible Community Documentation",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    },
+    {
+      "url": "https://docs.ansible.com/ansible/latest/reference_appendices/config.html",
+      "title": "Ansible Configuration Settings — Ansible Community Documentation",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    },
+    {
+      "url": "https://www.redhat.com/en/ansible-collaborative/how-ansible-works",
+      "title": "How Ansible Works — Red Hat Ansible Collaborative",
+      "accessed_at": "2026-05-16T13:12:52Z"
+    }
+  ],
+  "summary": "A beginner-friendly introduction to Ansible that builds the mental model needed before writing a first playbook. The lesson explains infrastructure as code, then walks through Ansible's agentless, push-based architecture (control node and managed nodes over SSH or WinRM), inventory files and host groups in INI and YAML, the structure of playbooks, plays, and tasks, the role of modules and idempotency, the standard layout of roles and collections distributed via Ansible Galaxy, and the conventional project layout including ansible.cfg lookup order, group_vars, host_vars, and Ansible Vault for secrets."
+}

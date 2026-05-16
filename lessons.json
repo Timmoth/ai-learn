@@ -1,0 +1,90 @@
+{
+  "lessons": [
+    {
+      "slug": "introduction-to-ansible",
+      "title": "Introduction to Ansible",
+      "description": "A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.",
+      "topics": [
+        "Infrastructure as Code fundamentals",
+        "Ansible architecture and control/managed node model",
+        "Inventory files and host groups",
+        "Playbooks, plays, and tasks",
+        "Modules and roles",
+        "Project structure and where configuration lives"
+      ],
+      "tags": [
+        "ansible",
+        "devops",
+        "infrastructure-as-code",
+        "beginner"
+      ],
+      "created_at": "2026-05-16T13:09:45+00:00",
+      "updated_at": "2026-05-16T13:51:51+00:00"
+    },
+    {
+      "slug": "introduction-to-opentofu-fundamentals",
+      "title": "Introduction to OpenTofu fundamentals",
+      "description": "A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.",
+      "topics": [
+        "What OpenTofu is and its relationship to Terraform",
+        "Infrastructure as code core concepts",
+        "Providers, resources, and data sources",
+        "Essential project files (main.tf, variables.tf, outputs.tf)",
+        "State files and the .terraform directory",
+        "The init, plan, apply, destroy workflow"
+      ],
+      "tags": [
+        "infrastructure-as-code",
+        "opentofu",
+        "devops",
+        "beginner",
+        "overview"
+      ],
+      "created_at": "2026-05-16T13:17:35+00:00",
+      "updated_at": "2026-05-16T13:53:10+00:00"
+    },
+    {
+      "slug": "secrets-management-sops-age",
+      "title": "Secrets management with SOPS and age",
+      "description": "A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.",
+      "topics": [
+        "why secrets management matters",
+        "how SOPS works",
+        "age encryption fundamentals",
+        "SOPS and age architecture",
+        "getting started workflow",
+        "common use cases and patterns"
+      ],
+      "tags": [
+        "security",
+        "devops",
+        "beginner",
+        "tooling"
+      ],
+      "created_at": "2026-05-16T13:37:51+00:00",
+      "updated_at": "2026-05-16T13:37:51+00:00"
+    },
+    {
+      "slug": "cloud-init-beginners-guide",
+      "title": "Cloud-init beginners guide",
+      "description": "An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.",
+      "topics": [
+        "what cloud-init is and why it exists",
+        "cloud-init boot stages and execution flow",
+        "datasources and how cloud-init detects its environment",
+        "writing cloud-config YAML user-data",
+        "common use cases like users, packages, and scripts",
+        "testing and debugging cloud-init locally"
+      ],
+      "tags": [
+        "cloud",
+        "devops",
+        "linux",
+        "automation",
+        "beginner"
+      ],
+      "created_at": "2026-05-16T13:38:34+00:00",
+      "updated_at": "2026-05-16T13:50:42+00:00"
+    }
+  ]
+}

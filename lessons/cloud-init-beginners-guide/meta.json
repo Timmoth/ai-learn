@@ -1,0 +1,48 @@
+{
+  "slug": "cloud-init-beginners-guide",
+  "revision": 2,
+  "generated_at": "2026-05-16T13:50:35Z",
+  "sources": [
+    {
+      "url": "https://docs.cloud-init.io/en/latest/explanation/introduction.html",
+      "title": "Introduction to cloud-init — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/explanation/boot.html",
+      "title": "Boot stages — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/explanation/format.html",
+      "title": "User data formats — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/reference/datasources.html",
+      "title": "Datasources — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/reference/datasources/nocloud.html",
+      "title": "NoCloud datasource — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/reference/examples.html",
+      "title": "All cloud config examples — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.cloud-init.io/en/latest/howto/debug_user_data.html",
+      "title": "Debugging cloud-init user-data — cloud-init documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    },
+    {
+      "url": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/configuring_and_managing_cloud-init_for_rhel/introduction-to-cloud-init",
+      "title": "Introduction to cloud-init — Red Hat Enterprise Linux 10 Documentation",
+      "accessed_at": "2026-05-16T13:42:27Z"
+    }
+  ],
+  "summary": "A beginner-friendly introduction to cloud-init, the open source program that initializes cloud instances on first boot across providers such as Amazon EC2, Azure, Google Compute Engine, OpenStack, DigitalOcean, and bare metal. The lesson explains what cloud-init is and the problem it solves, walks through the five sequential boot stages (detect via ds-identify, local, network, config, and final) and the systemd units that implement them, distinguishes meta-data, user-data, and vendor-data, describes how datasources like EC2, Azure, ConfigDrive, and NoCloud are detected automatically, then shows how to write practical #cloud-config YAML covering users with SSH keys, package management, write_files, and runcmd. It closes with a hands-on local testing recipe using NoCloud seed ISOs with cloud-localds and QEMU, and the core debugging toolkit of cloud-init status, schema, query, and clean, plus the cloud-init.log and cloud-init-output.log files."
+}

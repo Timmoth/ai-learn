@@ -1,0 +1,73 @@
+{
+  "slug": "introduction-to-opentofu-fundamentals",
+  "revision": 2,
+  "generated_at": "2026-05-16T13:53:03Z",
+  "sources": [
+    {
+      "url": "https://opentofu.org/docs/intro/",
+      "title": "Introduction to OpenTofu — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/intro/core-workflow/",
+      "title": "OpenTofu Core Workflow — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/providers/",
+      "title": "Providers — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/resources/",
+      "title": "Resources — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/data-sources/",
+      "title": "Data Sources — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/files/",
+      "title": "Files and Directories — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/values/variables/",
+      "title": "Input Variables — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/values/outputs/",
+      "title": "Output Values — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/state/",
+      "title": "State — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/cli/init/",
+      "title": "Command: init — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/cli/run/",
+      "title": "Provisioning Infrastructure with OpenTofu — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://opentofu.org/docs/language/files/dependency-lock/",
+      "title": "Dependency Lock File — OpenTofu Documentation",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/OpenTofu",
+      "title": "OpenTofu — Wikipedia",
+      "accessed_at": "2026-05-16T13:31:26Z"
+    }
+  ],
+  "summary": "A beginner-friendly introduction to OpenTofu, the Linux Foundation-governed open source fork of Terraform. The lesson covers OpenTofu's origin (the August 2023 HashiCorp license change and the community fork), the core ideas of infrastructure as code (declarative configuration and idempotency), and the three building blocks of every configuration: providers (plugins that talk to APIs), resources (objects OpenTofu manages), and data sources (read-only lookups). It then walks through the conventional project files — main.tf, variables.tf, and outputs.tf — explains the role of the terraform.tfstate state file, the .terraform directory of cached providers, and the .terraform.lock.hcl dependency lock file, and closes with the four commands that drive everything: tofu init, plan, apply, and destroy."
+}

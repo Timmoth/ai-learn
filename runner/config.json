@@ -1,0 +1,37 @@
+{
+  "active_backend": "claude-code",
+  "backends": {
+    "claude-code": {
+      "command": "claude",
+      "args": [
+        "-p", "{prompt}",
+        "--permission-mode", "acceptEdits",
+        "--allowedTools", "WebSearch,WebFetch,Read,Write,Edit,Bash"
+      ],
+      "verbose_args": ["--verbose"],
+      "prompt_via": "arg"
+    },
+    "opencode": {
+      "command": "opencode",
+      "args": ["run", "{prompt}"],
+      "verbose_args": [],
+      "prompt_via": "arg"
+    }
+  },
+  "tts": {
+    "enabled": true,
+    "url": "http://10.0.50.4:8880/v1",
+    "voice": "am_eric",
+    "model": "kokoro",
+    "speed": 1.0,
+    "timeout_seconds": 600
+  },
+  "site": {
+    "title": "ai-learn",
+    "description": "AI-generated learning material with written lessons and accompanying audio narration.",
+    "url": "https://ai-learn.timmoth.com",
+    "author": "Tim Jones",
+    "author_url": "https://timmoth.com",
+    "github_url": "https://github.com/Timmoth/ai-learn"
+  }
+}
