@@ -72,10 +72,15 @@ def synthesize(
     voice = os.environ.get("TTS_VOICE") or tts.get("voice", "am_eric")
     model = tts.get("model", "kokoro")
     speed = tts.get("speed", 1.0)
+    response_format = tts.get("response_format", "flac").lower()
+    normalization_options = tts.get("normalization_options")
     timeout = tts.get("timeout_seconds", 600)
 
-    if shutil.which("ffmpeg") is None:
-        raise RuntimeError("ffmpeg not found on PATH; required for MP3 transcode.")
+    needs_transcode = response_format != "mp3"
+    if needs_transcode and shutil.which("ffmpeg") is None:
+        raise RuntimeError(
+            f"ffmpeg not found on PATH; required to transcode {response_format} → MP3."
+        )
 
     text = _strip_markdown(script_path.read_text(encoding="utf-8"))
     if not text:
@@ -87,50 +92,58 @@ def synthesize(
             text = apply_dictionary(text, dictionary)
             print(f"  applied TTS dictionary ({len(dictionary)} entries)")
 
-    print(f"  TTS  {url}  voice={voice}  ({len(text)} chars)")
+    print(
+        f"  TTS  {url}  voice={voice}  format={response_format}  "
+        f"speed={speed}  ({len(text)} chars)"
+    )
 
     payload = {
         "model": model,
         "voice": voice,
         "input": text,
-        "response_format": "flac",
+        "response_format": response_format,
         "speed": speed,
         "stream": False,
     }
+    if normalization_options is not None:
+        payload["normalization_options"] = normalization_options
 
     try:
-        flac_bytes = _http_post_bytes(f"{url}/audio/speech", payload, timeout)
+        audio_bytes = _http_post_bytes(f"{url}/audio/speech", payload, timeout)
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", "replace")[:300]
         raise RuntimeError(f"TTS HTTP {e.code}: {body}") from e
     except urllib.error.URLError as e:
         raise RuntimeError(f"TTS request failed: {e.reason}") from e
 
-    if not flac_bytes:
+    if not audio_bytes:
         raise RuntimeError("TTS server returned an empty response.")
 
     audio_path.parent.mkdir(parents=True, exist_ok=True)
-    flac_path = audio_path.with_suffix(".flac")
-    flac_path.write_bytes(flac_bytes)
 
-    try:
-        result = subprocess.run(
-            [
-                "ffmpeg", "-y", "-loglevel", "error",
-                "-i", str(flac_path),
-                "-c:a", "libmp3lame", "-q:a", "0",
-                str(audio_path),
-            ],
-            capture_output=True,
-            text=True,
-        )
-        if result.returncode != 0:
-            raise RuntimeError(f"ffmpeg failed: {result.stderr.strip()}")
-    finally:
+    if not needs_transcode:
+        audio_path.write_bytes(audio_bytes)
+    else:
+        intermediate = audio_path.with_suffix(f".{response_format}")
+        intermediate.write_bytes(audio_bytes)
         try:
-            flac_path.unlink()
-        except FileNotFoundError:
-            pass
+            result = subprocess.run(
+                [
+                    "ffmpeg", "-y", "-loglevel", "error",
+                    "-i", str(intermediate),
+                    "-c:a", "libmp3lame", "-q:a", "0",
+                    str(audio_path),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode != 0:
+                raise RuntimeError(f"ffmpeg failed: {result.stderr.strip()}")
+        finally:
+            try:
+                intermediate.unlink()
+            except FileNotFoundError:
+                pass
 
     size_mb = audio_path.stat().st_size / 1024 / 1024
     print(f"  wrote {audio_path}  ({size_mb:.1f} MB)")

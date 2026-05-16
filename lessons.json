@@ -19,7 +19,7 @@
         "beginner"
       ],
       "created_at": "2026-05-16T13:09:45+00:00",
-      "updated_at": "2026-05-16T13:51:51+00:00"
+      "updated_at": "2026-05-16T16:45:36+00:00"
     },
     {
       "slug": "introduction-to-opentofu-fundamentals",
@@ -41,7 +41,7 @@
         "overview"
       ],
       "created_at": "2026-05-16T13:17:35+00:00",
-      "updated_at": "2026-05-16T13:53:10+00:00"
+      "updated_at": "2026-05-16T16:46:52+00:00"
     },
     {
       "slug": "secrets-management-sops-age",
@@ -62,7 +62,7 @@
         "tooling"
       ],
       "created_at": "2026-05-16T13:37:51+00:00",
-      "updated_at": "2026-05-16T13:37:51+00:00"
+      "updated_at": "2026-05-16T16:48:41+00:00"
     },
     {
       "slug": "cloud-init-beginners-guide",
@@ -84,7 +84,7 @@
         "beginner"
       ],
       "created_at": "2026-05-16T13:38:34+00:00",
-      "updated_at": "2026-05-16T13:50:42+00:00"
+      "updated_at": "2026-05-16T16:40:26+00:00"
     },
     {
       "slug": "core-concepts-of-infrastructure-as-code",
@@ -105,7 +105,50 @@
         "beginner"
       ],
       "created_at": "2026-05-16T14:24:56+00:00",
-      "updated_at": "2026-05-16T14:24:56+00:00"
+      "updated_at": "2026-05-16T16:42:03+00:00"
+    },
+    {
+      "slug": "sql-optimisation-tips-and-tricks",
+      "title": "SQL optimisation tips and tricks",
+      "description": "A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.",
+      "topics": [
+        "index design and selectivity",
+        "reading and interpreting query execution plans",
+        "rewriting subqueries and joins for performance",
+        "avoiding common anti-patterns like SELECT * and implicit conversions",
+        "statistics, cardinality estimation, and query planner behaviour",
+        "caching, batching, and pagination strategies"
+      ],
+      "tags": [
+        "databases",
+        "sql",
+        "performance",
+        "intermediate"
+      ],
+      "created_at": "2026-05-16T16:07:03+00:00",
+      "updated_at": "2026-05-16T16:50:45+00:00"
+    },
+    {
+      "slug": "hardening-a-debian-installation",
+      "title": "Hardening a Debian installation",
+      "description": "A practical guide to securing a fresh Debian server by reducing its attack surface, locking down access, and enabling proactive monitoring. Covers user account policies, SSH hardening, firewall configuration, and automated intrusion prevention.",
+      "topics": [
+        "SSH hardening and key-based authentication",
+        "UFW and iptables firewall configuration",
+        "fail2ban and intrusion prevention",
+        "unattended-upgrades and patch management",
+        "sudo and user account policies",
+        "kernel and sysctl hardening"
+      ],
+      "tags": [
+        "linux",
+        "security",
+        "sysadmin",
+        "debian",
+        "intermediate"
+      ],
+      "created_at": "2026-05-16T16:26:20+00:00",
+      "updated_at": "2026-05-16T16:44:17+00:00"
     }
   ]
 }

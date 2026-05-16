@@ -1,0 +1,88 @@
+{
+  "slug": "hardening-a-debian-installation",
+  "revision": 2,
+  "generated_at": "2026-05-16T16:42:21Z",
+  "sources": [
+    {
+      "url": "https://www.debian.org/doc/manuals/securing-debian-manual/index.en.html",
+      "title": "Securing Debian Manual — Debian Project",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.debian.org/doc/manuals/securing-debian-manual/ch04.en.html",
+      "title": "Securing Debian Manual — After installation (user accounts, PAM, sudo)",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://manpages.debian.org/bookworm/openssh-server/sshd_config.5.en.html",
+      "title": "sshd_config(5) — Debian Bookworm OpenSSH-server manpage",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man5/sshd_config.5.html",
+      "title": "sshd_config(5) — Linux manual page (man7.org)",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.sshaudit.com/hardening_guides.html",
+      "title": "SSH Hardening Guides — ssh-audit",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://reintech.io/blog/hardening-ssh-server-configuration-debian-12",
+      "title": "Hardening SSH Server Configuration on Debian 12 — Reintech",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://wiki.debian.org/Uncomplicated%20Firewall%20(ufw)",
+      "title": "Uncomplicated Firewall (ufw) — Debian Wiki",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.cyberciti.biz/faq/set-up-a-firewall-with-ufw-on-debian-12-linux/",
+      "title": "How To Set Up a Firewall with UFW on Debian 12 — nixCraft",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://github.com/fail2ban/fail2ban",
+      "title": "fail2ban/fail2ban — official repository and README",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-debian-11",
+      "title": "How To Protect SSH with Fail2Ban on Debian — DigitalOcean",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://wiki.debian.org/UnattendedUpgrades",
+      "title": "UnattendedUpgrades — Debian Wiki",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.cyberciti.biz/faq/how-to-keep-debian-linux-patched-with-latest-security-updates-automatically/",
+      "title": "How to configure automated security updates on Debian — nixCraft",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://wiki.debian.org/PeriodicUpdates",
+      "title": "PeriodicUpdates — Debian Wiki",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://www.cyberciti.biz/faq/linux-kernel-etcsysctl-conf-security-hardening/",
+      "title": "Linux Kernel /etc/sysctl.conf Security Hardening — nixCraft",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://reintech.io/blog/hardening-linux-kernel-sysctl-debian-12",
+      "title": "Hardening the Linux Kernel with Sysctl on Debian 12 — Reintech",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    },
+    {
+      "url": "https://documentation.suse.com/sles/15-SP7/html/SLES-all/cha-sec-sysctl.html",
+      "title": "Improving network security with sysctl variables — SUSE Security and Hardening Guide",
+      "accessed_at": "2026-05-16T16:00:00Z"
+    }
+  ],
+  "summary": "A practical, layered guide to hardening a fresh Debian server, scoped at the baseline a single operator can apply in an evening rather than a full CIS-compliant build. The lesson opens with an explicit threat model — commodity attacks like SSH credential stuffing, unpatched-CVE exploitation, and password reuse from breached dumps — and then walks through six reinforcing layers in the order you would apply them. The first layer is user accounts: creating a regular sudo user, using Debian's `sudo` group rather than `wheel`, locking the root password, and the discipline of `visudo`, password-required sudo, and least-scope NOPASSWD. The second is SSH hardening: generating an Ed25519 keypair, copying it via `ssh-copy-id`, and a tight `sshd_config` (or drop-in under `/etc/ssh/sshd_config.d/`) that sets `PermitRootLogin no`, `PasswordAuthentication no`, `AllowUsers`, low `MaxAuthTries`, short `LoginGraceTime`, `ClientAlive*` tuning, and disables X11/TCP forwarding; the safe restart pattern of `sshd -t` plus a second terminal is emphasised as the load-bearing operational habit. The third layer is the firewall via UFW: default-deny inbound, `ufw limit 22/tcp` for free SSH rate-limiting, the IPv6=yes gotcha in `/etc/default/ufw`, and when to drop down to nftables. The fourth is fail2ban: the jail/filter/action vocabulary, `jail.local` overrides, `bantime.increment` for exponential bans, the `systemd` backend for journal-based log reading, and the honest framing that it's the cleanup crew, not the actual defence against brute force. The fifth is unattended-upgrades: `dpkg-reconfigure --priority=low`, the `20auto-upgrades` enable file, the `50unattended-upgrades` policy file, automatic-reboot trade-offs, and `--dry-run` verification. The sixth is `sysctl` hardening: a drop-in `/etc/sysctl.d/99-hardening.conf` with spoofing/source-routing defences (rp_filter, accept_source_route, accept_redirects), DoS resistance (tcp_syncookies, icmp_echo_ignore_broadcasts), kernel info-leak protections (kptr_restrict, dmesg_restrict, ptrace_scope, randomize_va_space), and filesystem race protections (protected_symlinks, protected_hardlinks, suid_dumpable). The lesson closes with what is intentionally out of scope (AppArmor profiles, centralised logging, AIDE/auditd, 2FA via PAM) and a recommended order of operations ending with a deliberate reboot to prove the configuration survives a power cycle."
+}

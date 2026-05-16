@@ -1,0 +1,88 @@
+{
+  "slug": "sql-optimisation-tips-and-tricks",
+  "revision": 2,
+  "generated_at": "2026-05-16T16:50:34Z",
+  "sources": [
+    {
+      "url": "https://www.postgresql.org/docs/current/using-explain.html",
+      "title": "PostgreSQL Documentation — Using EXPLAIN",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/current/indexes-index-only-scans.html",
+      "title": "PostgreSQL Documentation — Index-Only Scans and Covering Indexes",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/cardinality-estimation-sql-server",
+      "title": "Microsoft Learn — Cardinality Estimation (SQL Server)",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://use-the-index-luke.com/sql/clustering/index-only-scan-covering-index",
+      "title": "Use The Index, Luke — Covering Indexes and Index-Only Scans",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://use-the-index-luke.com/blog/2019-04/include-columns-in-btree-indexes",
+      "title": "Use The Index, Luke — INCLUDE clause for B-tree indexes",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://use-the-index-luke.com/no-offset",
+      "title": "Use The Index, Luke — Paging Through Results (no OFFSET)",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.mssqltips.com/sqlservertip/6207/sql-server-implicit-conversions-performance-issues/",
+      "title": "MSSQLTips — SQL Server Implicit Conversions Performance Issues",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.red-gate.com/simple-talk/databases/sql-server/performance-sql-server/sql-server-2022-capture-sql-anti-patterns/",
+      "title": "Simple Talk — SQL Server 2022: Capture SQL Anti-Patterns",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.mssqltips.com/sqlservertip/6659/sql-exists-vs-in-vs-join-performance-comparison/",
+      "title": "MSSQLTips — SQL EXISTS vs IN vs JOIN Performance Comparison",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.cybertec-postgresql.com/en/subqueries-and-performance-in-postgresql/",
+      "title": "Cybertec — Subqueries and performance in PostgreSQL",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.cybertec-postgresql.com/en/how-to-interpret-postgresql-explain-analyze-output/",
+      "title": "Cybertec — How to interpret PostgreSQL EXPLAIN ANALYZE output",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://thoughtbot.com/blog/reading-an-explain-analyze-query-plan",
+      "title": "thoughtbot — Reading a Postgres EXPLAIN ANALYZE Query Plan",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.crunchydata.com/blog/why-covering-indexes-are-incredibly-helpful",
+      "title": "Crunchy Data — Why Covering Indexes in Postgres Are Incredibly Helpful",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://blog.sequinstream.com/keyset-cursors-not-offsets-for-postgres-pagination/",
+      "title": "Sequin — Keyset Cursors, Not Offsets, for Postgres Pagination",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://www.mssqltips.com/sqlservertip/5636/optimize-large-sql-server-insert-update-and-delete-processes-by-using-batches/",
+      "title": "MSSQLTips — Optimize Large SQL Server Inserts/Updates/Deletes with Batching",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    },
+    {
+      "url": "https://medium.com/@nitish.weaddo/how-sql-composite-indexes-work-the-leftmost-prefix-rule-and-b-tree-insights-ec2b78326b80",
+      "title": "How SQL Composite Indexes Work: The Leftmost Prefix Rule and B-Tree Insights",
+      "accessed_at": "2026-05-16T00:00:00Z"
+    }
+  ],
+  "summary": "A practical, intermediate-level guide to writing faster SQL by understanding how the database engine actually executes queries. The lesson starts with the four phases of query execution and the central role of the cost-based optimiser, whose plan quality depends on the cardinality estimates it derives from collected statistics. It then walks through reading an execution plan with EXPLAIN ANALYZE in PostgreSQL (and equivalents in SQL Server, MySQL, Oracle), covering the most common node types — sequential scans, index scans, index-only scans, bitmap scans, and nested loop, hash, and merge joins — and the technique of comparing estimated and actual row counts to find where the planner's model diverges from reality. Index design is treated at length: B-tree mechanics, the importance of selectivity, the leftmost prefix rule for composite indexes, equality-before-range column ordering, covering indexes with the INCLUDE clause to enable index-only scans, and the real maintenance cost of every additional index. A dedicated section catalogues the anti-patterns that silently defeat indexes — SELECT *, functions on indexed columns, implicit type conversions, leading wildcards in LIKE, OR across unrelated columns, and the NULL pitfall in NOT IN — with the canonical rewrites for each. The lesson then covers manual subquery-to-join rewriting (IN vs EXISTS semi-joins, decorrelating correlated subqueries into grouped LEFT JOINs), keeping statistics fresh and handling column correlation with multi-column stats, and three structural optimisations that matter once queries are individually reasonable: keyset pagination instead of OFFSET (which gives 10–100x speedups on deep pages), batching writes (multi-row inserts, single-transaction batches, prepared statements, COPY/BULK INSERT), and the three layers of caching (buffer pool, plan cache, application-level). It closes with a six-step optimisation loop — measure, get the plan, find the largest estimate-vs-actual gap, diagnose the cause, change one thing, re-measure — applied to the small number of queries that dominate the workload."
+}

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secrets management with SOPS and age — ai-learn</title>
+  <meta name="description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/">
+  <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="Secrets management with SOPS and age">
+  <meta property="og:description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Secrets management with SOPS and age">
+  <meta name="twitter:description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Secrets management with SOPS and age","headline":"Secrets management with SOPS and age","description":"A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.","url":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/","inLanguage":"en","keywords":"security, devops, beginner, tooling","datePublished":"2026-05-16","dateModified":"2026-05-16","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com"},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/audio.mp3","encodingFormat":"audio/mpeg"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    audio::-webkit-media-controls-panel { background-color: transparent; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <div class="w-9"></div>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">Secrets management with SOPS and age</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</p>
+      <div class="flex flex-wrap gap-1.5">
+        <span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>Secrets management with SOPS and age</h1>
+<p>Every non-trivial codebase eventually accumulates a pile of sensitive strings: database passwords, API tokens, TLS private keys, OAuth client secrets, third-party webhook signing secrets. The question is not whether you have secrets; the question is where they live. The lazy answer is "in a <code>.env</code> file that we pass around on Slack." The slightly less lazy answer is "in an environment-specific vault that only ops touches." The answer this lesson is about is <strong>encrypted alongside your code, in Git, readable only by people who hold the right keys</strong>.</p>
+<p>The two tools that make that approach pleasant are <strong>SOPS</strong> (Secrets OPerationS) and <strong>age</strong>. SOPS is the editor and orchestrator; age is the encryption primitive. They are designed to work together, and once you understand why each one exists, the workflow is almost trivially simple.</p>
+<h2>Why bother encrypting secrets in Git?</h2>
+<p>The instinct against secrets-in-Git is correct in its raw form. Committing <code>password: hunter2</code> to a public repository is a fast way to find your AWS bill quadrupled by a crypto miner. The whole point of SOPS+age is that the thing you commit is <em>not</em> <code>hunter2</code> — it is a ciphertext that says <code>ENC[AES256_GCM,data:...]</code>, and the plaintext only ever exists in memory on a machine that holds the right private key.</p>
+<p>Once that property holds, encrypting secrets in Git gets you back the three things that make IaC and GitOps work in the first place:</p>
+<ul>
+<li><strong>Reproducibility.</strong> A clone of the repo is a complete deployable artifact. No "and then fetch the production database password from this other system" step.</li>
+<li><strong>Reviewability.</strong> Secret changes go through the same pull-request flow as everything else. Adding a new credential is reviewed; rotating one is reviewed; granting a new teammate access is reviewed.</li>
+<li><strong>Auditability.</strong> <code>git log</code> tells you when each secret was added, rotated, and who approved the change.</li>
+</ul>
+<p>The catch is operational: the <em>key that decrypts the secrets</em> has to live somewhere safe and outside the repo. SOPS+age makes the in-repo part cheap, but it does not solve key custody. We will come back to this at the end.</p>
+<h2>What age actually is</h2>
+<p><a href="https://age-encryption.org/v1">age</a> — short for "Actually Good Encryption", though the name is also a pun on the German word for "key" — is a file encryption tool written by Filippo Valsorda, originally during his time on the Go security team. It was designed as a deliberate, opinionated alternative to GPG for the specific job of encrypting files to one or more recipients.</p>
+<p>The design philosophy is <em>no choices</em>. Where GPG offers dozens of algorithms, cipher modes, expiry policies, signature schemes, and a 30-year-old key format, age picks one option for each and bakes it into the format:</p>
+<ul>
+<li><strong>X25519</strong> for the asymmetric key exchange.</li>
+<li><strong>ChaCha20-Poly1305</strong> for the authenticated symmetric encryption of the payload.</li>
+<li><strong>HKDF-SHA-256</strong> for deriving keys.</li>
+<li><strong>scrypt</strong> for passphrase-based encryption.</li>
+</ul>
+<p>There is no <code>--cipher-algorithm</code> flag because there is no other cipher. The format spec fits on a handful of pages.</p>
+<p>The keys are also deliberately small and obvious. A public key (a <em>recipient</em>) is a single line like:</p>
+<div class="highlight"><pre><span></span><code>age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p
+</code></pre></div>
+
+<p>A private key (an <em>identity</em>) looks like:</p>
+<div class="highlight"><pre><span></span><code>AGE-SECRET-KEY-1GFPYYSJZGFPYYSJZGFPYYSJZGFPYYSJZGFPYYSJZGFPYYSJZGFPYY7H7CCH
+</code></pre></div>
+
+<p>You can paste either of those into a Slack message or a YAML file without ceremony. There are no keyrings, no trust webs, no expiry handling — an age recipient is just a bit of bech32-encoded text.</p>
+<p>A minimal age session looks like this:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate a keypair. Public key is printed to stderr; private key written to file.</span>
+age-keygen<span class="w"> </span>-o<span class="w"> </span>key.txt
+
+<span class="c1"># Encrypt to a recipient, producing an ASCII-armored or binary blob.</span>
+age<span class="w"> </span>-r<span class="w"> </span>age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>secrets.env<span class="w"> </span>&gt;<span class="w"> </span>secrets.env.age
+
+<span class="c1"># Decrypt with the matching identity.</span>
+age<span class="w"> </span>-d<span class="w"> </span>-i<span class="w"> </span>key.txt<span class="w"> </span>secrets.env.age
+</code></pre></div>
+
+<p>age also accepts SSH keys as recipients (both <code>ssh-ed25519</code> and <code>ssh-rsa</code>), so you can encrypt to a teammate using their existing GitHub SSH keys without them having to install age first. Multiple recipients are supported — pass <code>-r</code> repeatedly and any one of them can decrypt the file.</p>
+<p>That is, in essence, everything age does. It is a file encryption primitive, not a secrets manager. It does not know what YAML is, it does not understand directory structure, it does not edit files in place, and it does not pick keys for you. That is where SOPS comes in.</p>
+<h2>What SOPS adds on top</h2>
+<p><a href="https://getsops.io/">SOPS</a> — Secrets OPerationS — started life inside Mozilla in 2015 and is now a Cloud Native Computing Foundation sandbox project under the <code>getsops</code> organisation on GitHub. It solves a problem age does not: how to encrypt <strong>structured configuration files</strong> in a way that is <em>still useful as a configuration file</em>.</p>
+<p>If you just <code>age -r ... config.yaml &gt; config.yaml.age</code>, you get an opaque blob. You cannot diff it. You cannot see in a code review that someone added a new key called <code>analytics_token</code>. You cannot let one tool read the <code>database.host</code> field (which is not sensitive) while restricting the <code>database.password</code> field (which is). And you cannot easily edit it without manually decrypting, editing, re-encrypting, and shredding the plaintext.</p>
+<p>SOPS encrypts <strong>only the values</strong>, leaving keys and structure in plaintext. A YAML file that started as:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">database</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">db.internal</span>
+<span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">app</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hunter2</span>
+<span class="nt">api_keys</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">stripe</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sk_live_abc123</span>
+</code></pre></div>
+
+<p>becomes, after <code>sops encrypt</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">database</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENC[AES256_GCM,data:9Hk=,iv:...,tag:...,type:str]</span>
+<span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENC[AES256_GCM,data:cFc=,iv:...,tag:...,type:str]</span>
+<span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENC[AES256_GCM,data:Jh9o=,iv:...,tag:...,type:str]</span>
+<span class="nt">api_keys</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">stripe</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENC[AES256_GCM,data:vqVx...,iv:...,tag:...,type:str]</span>
+<span class="nt">sops</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">age</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">recipient</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p</span>
+<span class="w">        </span><span class="nt">enc</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">-----BEGIN AGE ENCRYPTED FILE-----</span>
+<span class="w">          </span><span class="no">...</span>
+<span class="w">          </span><span class="no">-----END AGE ENCRYPTED FILE-----</span>
+<span class="w">    </span><span class="nt">lastmodified</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2026-05-16T14:30:03Z&quot;</span>
+<span class="w">    </span><span class="nt">mac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ENC[AES256_GCM,data:...]</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.13.1</span>
+</code></pre></div>
+
+<p>Notice three things. First, the keys (<code>database</code>, <code>host</code>, <code>password</code>, <code>api_keys</code>, <code>stripe</code>) are still readable — so a code reviewer can see that a new credential was added even if they cannot decrypt its value. Second, every value has its own initialisation vector, so equal values do not produce equal ciphertexts. Third, the file gained a <code>sops</code> metadata block at the bottom listing how to recover the underlying encryption key.</p>
+<p>That metadata block is the heart of the architecture, and it is what makes SOPS+age more than just "age plus YAML".</p>
+<h2>The data key and master keys</h2>
+<p>When SOPS encrypts a file, it does not encrypt each value directly with your age key. Instead it generates a fresh random 256-bit symmetric key — the <strong>data encryption key</strong>, or DEK — and uses it to encrypt every leaf value with AES-256-GCM. Then it encrypts the DEK <em>itself</em> with each of your configured "master keys" — your age recipient, your AWS KMS key, your PGP fingerprint, whatever you have configured — and stores those wrapped copies in the metadata block.</p>
+<div class="highlight"><pre><span></span><code>            ┌───────────────────────────────┐
+            │ Random data key (DEK, 256 bit)│
+            └──────┬───────────────────┬────┘
+                   │ encrypts          │ is wrapped by
+       ┌───────────▼─────────┐ ┌───────▼──────────────┐
+       │ Every leaf value in │ │ age recipient(s),    │
+       │ the YAML/JSON/ENV   │ │ KMS key(s), PGP key, │
+       │ document            │ │ ... (your masters)   │
+       └─────────────────────┘ └──────────────────────┘
+</code></pre></div>
+
+<p>This two-layer design buys you several practical superpowers:</p>
+<ol>
+<li><strong>Multiple recipients without re-encrypting the body.</strong> Adding a new team member's age key only requires wrapping the existing DEK with one more recipient. The bulk of the file does not change, which keeps Git diffs sane.</li>
+<li><strong>Mixing key types.</strong> You can wrap the same DEK with an age key for local development <em>and</em> an AWS KMS key for production CI/CD, so a developer with their age key and a CI runner with KMS credentials can both decrypt without sharing material.</li>
+<li><strong>Key rotation is cheap.</strong> Re-wrapping the DEK with a new set of masters is fast. Re-keying the values themselves (with <code>sops rotate</code>) is also possible when you want to invalidate old copies.</li>
+</ol>
+<p>For higher-stakes setups, SOPS supports <strong>key groups</strong> that split the DEK across multiple groups using Shamir's Secret Sharing. With a threshold of 2 out of 3 groups, decryption requires keys from any two of the three groups, which lets you require, say, both an age key from a developer <em>and</em> a cloud KMS key from CI in order to read production secrets.</p>
+<h2>The .sops.yaml configuration file</h2>
+<p>You do not pass age recipients on the command line every time you encrypt something. SOPS reads a <code>.sops.yaml</code> file from the root of your repository (walking upward from the file being encrypted) and uses its <strong>creation rules</strong> to decide which keys to use based on the file path.</p>
+<p>A typical config for a small project might look like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">creation_rules</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Production secrets — encrypted to the prod age key only.</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path_regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secrets/prod/.*\.yaml$</span>
+<span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">      </span><span class="no">age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p</span>
+
+<span class="w">  </span><span class="c1"># Dev secrets — encrypted to every developer&#39;s age key.</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path_regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secrets/dev/.*\.yaml$</span>
+<span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">      </span><span class="no">age1devalicexxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,</span>
+<span class="w">      </span><span class="no">age1devbobxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+
+<span class="w">  </span><span class="c1"># Kubernetes Secret manifests — only encrypt the data fields.</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path_regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k8s/.*-secret\.yaml$</span>
+<span class="w">    </span><span class="nt">encrypted_regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^(data|stringData)$</span>
+<span class="w">    </span><span class="nt">age</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">      </span><span class="no">age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p</span>
+</code></pre></div>
+
+<p>A few things to notice. The rules are evaluated in order and <strong>the first match wins</strong>, so put more specific paths above more general ones. The <code>encrypted_regex</code> field tells SOPS to only encrypt values whose <em>key</em> matches the pattern — useful for Kubernetes Secret manifests, where <code>apiVersion</code>, <code>kind</code>, and <code>metadata</code> must remain readable for <code>kubectl apply</code> to function, but the values under <code>data</code>/<code>stringData</code> carry the actual secrets. The sister knob <code>unencrypted_regex</code> flips the logic the other way.</p>
+<p>With a <code>.sops.yaml</code> in place, the daily workflow becomes:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a new encrypted file from scratch.</span>
+sops<span class="w"> </span>edit<span class="w"> </span>secrets/prod/api.yaml
+<span class="c1"># (your $EDITOR opens with a plaintext buffer; on save, SOPS encrypts it)</span>
+
+<span class="c1"># Edit an existing encrypted file. Same command — SOPS detects it.</span>
+sops<span class="w"> </span>edit<span class="w"> </span>secrets/prod/api.yaml
+
+<span class="c1"># Show a decrypted view (no editing) to stdout.</span>
+sops<span class="w"> </span>decrypt<span class="w"> </span>secrets/prod/api.yaml
+
+<span class="c1"># Encrypt an existing plaintext file in place.</span>
+sops<span class="w"> </span>encrypt<span class="w"> </span>--in-place<span class="w"> </span>secrets/prod/api.yaml
+
+<span class="c1"># Rotate the data key (e.g. after a suspected leak).</span>
+sops<span class="w"> </span>rotate<span class="w"> </span>--in-place<span class="w"> </span>secrets/prod/api.yaml
+</code></pre></div>
+
+<p>The <code>edit</code> command is the one you will run most. It decrypts to a temporary file, opens your <code>$EDITOR</code>, watches for changes, and re-encrypts on exit — and crucially, the plaintext only ever exists for the duration of that edit and is shredded afterward.</p>
+<h2>Where the private key lives</h2>
+<p>SOPS looks for age identities in a small number of places, in this order: the file pointed to by <code>$SOPS_AGE_KEY_FILE</code>, the literal value of <code>$SOPS_AGE_KEY</code>, or the default location <code>$XDG_CONFIG_HOME/sops/age/keys.txt</code> (which is typically <code>~/.config/sops/age/keys.txt</code> on Linux and <code>~/Library/Application Support/sops/age/keys.txt</code> on macOS).</p>
+<p>That file holds one or more <code>AGE-SECRET-KEY-1...</code> lines, optionally with <code># comment</code> lines describing each. SOPS will try every key in the file when decrypting, so you can keep your personal key, a CI key, and a shared team key all in the same place.</p>
+<p>This separation is the load-bearing security boundary in the whole system. The <strong>encrypted files are in Git</strong>; the <strong>private key is not</strong>. If a developer leaves the team, you rotate the relevant secrets and re-encrypt them without that person's age recipient. If a CI runner is compromised, you revoke that machine's age identity and rotate. If the keys file leaks, all bets are off — so most teams treat <code>~/.config/sops/age/keys.txt</code> as the same class of sensitive artifact as an SSH private key.</p>
+<p>For CI/CD and production decryption, the choices are roughly:</p>
+<ul>
+<li><strong>Age key as a CI secret.</strong> Store the <code>AGE-SECRET-KEY-1...</code> string in your CI system's secret store, expose it as <code>$SOPS_AGE_KEY</code>, and the runner can decrypt. Simple, but the CI vault is now the new root of trust.</li>
+<li><strong>Cloud KMS as a co-recipient.</strong> Wrap the same DEK with both an age recipient (for humans) and a KMS key (for CI). The CI runner authenticates to the cloud and decrypts via IAM — no long-lived secret to leak.</li>
+<li><strong>Kubernetes operator (Flux / kustomize-controller).</strong> Mount the age private key as a Secret named <code>sops-age</code> and let Flux's kustomize-controller decrypt manifests on the fly as it reconciles. The cluster becomes the only place the key lives.</li>
+</ul>
+<h2>Common patterns and watch-outs</h2>
+<p>A handful of patterns recur across nearly every SOPS+age deployment.</p>
+<p><strong>One age key per developer, multiple recipients per file.</strong> Each engineer generates their own age key once and shares only the public recipient. New hires get added to the <code>.sops.yaml</code>, and existing files are <em>updated in place</em> with <code>sops updatekeys</code> so they can decrypt without anyone re-typing the secrets.</p>
+<p><strong>Partial encryption for Kubernetes Secrets.</strong> Use <code>encrypted_regex: ^(data|stringData)$</code> so that <code>kubectl</code> can still read <code>metadata.name</code>, <code>kind</code>, and friends, but the credentials are encrypted. This is also what GitOps tools like Flux expect.</p>
+<p><strong>Keep <code>.sops.yaml</code> in the repo, keep <code>keys.txt</code> out of it.</strong> The recipient file is public configuration; the identity file is a credential. A <code>.gitignore</code> rule for <code>keys.txt</code> (or, better, keeping it entirely outside the repo) prevents the most common accident.</p>
+<p><strong>Beware of editor swap files and shell history.</strong> <code>sops edit</code> is safe, but <code>sops decrypt &gt; /tmp/foo</code> and then editing <code>/tmp/foo</code> is not, because <code>/tmp/foo</code> is now an unencrypted plaintext copy of your production credentials. Stick with <code>sops edit</code>.</p>
+<p><strong>Diff readability matters.</strong> SOPS attempts to keep diffs small — the IVs for unchanged values stay stable across edits — but a rotated DEK <em>will</em> change every line. Treat <code>sops rotate</code> as a deliberate event, not something you do casually before a code review.</p>
+<p><strong>It is encryption, not a secrets manager.</strong> SOPS does not do access logging, automatic rotation, ephemeral credentials, or break-glass workflows. If you need any of those, SOPS is a building block, not the whole stack — pair it with a real secrets backend (Vault, AWS Secrets Manager, etc.) for the dynamic parts and use SOPS only for the static ones.</p>
+<h2>When SOPS+age is the right answer</h2>
+<p>The combination shines for <strong>small to mid-size teams doing GitOps</strong>: a single Kubernetes platform team that owns its repositories, a startup whose dev and prod environments live in Terraform, an open-source project that wants encrypted CI configuration. The mental model is simple, the tooling is two static binaries, and there is no extra infrastructure to run.</p>
+<p>It is less appropriate when you need centralised access logging, automatic credential rotation, short-lived dynamic credentials, or fine-grained per-secret ACLs that can change without a Git commit. At that point you have outgrown the "secrets in Git" model and should be looking at a dedicated secrets backend.</p>
+<p>But for the very common case of "we have a handful of static credentials, we want them next to the code that uses them, and we want a code-review trail when they change" — SOPS plus age is the smallest amount of moving parts that gives you everything Git already gives you, with the secrets no longer in the clear.</p>
+    </article>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

@@ -7,6 +7,7 @@
   <meta name="description" content="AI-generated learning material with written lessons and accompanying audio narration.">
   <link rel="canonical" href="https://ai-learn.timmoth.com/">
   <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta property="og:title" content="ai-learn">
   <meta property="og:description" content="AI-generated learning material with written lessons and accompanying audio narration.">
   <meta property="og:type" content="website">
@@ -51,6 +52,16 @@
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.</p>
         <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">cloud</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">automation</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
       </a>
+      <a href="lessons/core-concepts-of-infrastructure-as-code/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Core concepts of infrastructure as code</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">An introduction to the foundational vocabulary and mental models behind Infrastructure as Code, covering how declarative definitions, state, and reconciliation enable repeatable, automated infrastructure. Explains key contrasts such as declarative vs imperative, mutable vs immutable, and in-place updates vs burn-and-rebuild.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">fundamentals</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
+      </a>
+      <a href="lessons/hardening-a-debian-installation/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Hardening a Debian installation</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A practical guide to securing a fresh Debian server by reducing its attack surface, locking down access, and enabling proactive monitoring. Covers user account policies, SSH hardening, firewall configuration, and automated intrusion prevention.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">sysadmin</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">debian</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">intermediate</span></div>
+      </a>
       <a href="lessons/introduction-to-ansible/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
         <h2 class="text-base font-medium mb-1">Introduction to Ansible</h2>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.</p>
@@ -61,11 +72,21 @@
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</p>
         <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">opentofu</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">overview</span></div>
       </a>
+      <a href="lessons/secrets-management-sops-age/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Secrets management with SOPS and age</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span></div>
+      </a>
+      <a href="lessons/sql-optimisation-tips-and-tricks/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">SQL optimisation tips and tricks</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">databases</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">sql</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">performance</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">intermediate</span></div>
+      </a>
     </div>
   </main>
   <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
     <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
-      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a> — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
     </div>
   </footer>
   <script>

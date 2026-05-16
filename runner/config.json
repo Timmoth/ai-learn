@@ -21,9 +21,30 @@
   "tts": {
     "enabled": true,
     "url": "http://10.0.50.4:8880/v1",
-    "voice": "am_eric",
     "model": "kokoro",
-    "speed": 1.0,
+
+    "voice": "am_eric",
+    "speed": 0.90,
+    "response_format": "wav",
+
+    "normalization_options": {
+      "normalize": false,
+      "unit_normalization": false,
+      "url_normalization": false,
+      "email_normalization": false,
+      "optional_pluralization_normalization": false,
+      "phone_normalization": false,
+      "replace_remaining_symbols": true
+    },
+
+    "preprocess": {
+      "apply_dictionary": true,
+      "dictionary_mode": "word_boundary",
+      "dictionary_longest_first": true,
+      "spell_acronyms_with_spaces": true,
+      "debug_tts_input": true
+    },
+
     "timeout_seconds": 600
   },
   "site": {

@@ -1,7 +1,7 @@
 {
   "slug": "introduction-to-ansible",
-  "revision": 2,
-  "generated_at": "2026-05-16T13:51:04Z",
+  "revision": 3,
+  "generated_at": "2026-05-16T16:44:40Z",
   "sources": [
     {
       "url": "https://docs.ansible.com/ansible/latest/getting_started/basic_concepts.html",

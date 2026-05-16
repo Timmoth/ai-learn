@@ -107,7 +107,7 @@ def footer_html(site: dict) -> str:
     return (
         '<footer class="border-t border-gray-200 dark:border-gray-800 mt-20">\n'
         '    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">\n'
-        f'      Architected by <a href="{author_url}" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">{author}</a> — '
+        f'      Architected by <a href="{author_url}" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">{author}</a>, Built by AI — '
         f'<a href="{github_url}" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>\n'
         '    </div>\n'
         '  </footer>'

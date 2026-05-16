@@ -1,0 +1,68 @@
+{
+  "slug": "core-concepts-of-infrastructure-as-code",
+  "revision": 2,
+  "generated_at": "2026-05-16T16:41:49Z",
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Infrastructure_as_code",
+      "title": "Infrastructure as code — Wikipedia",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://thenewstack.io/infrastructure-as-code-from-imperative-to-declarative-and-back-again/",
+      "title": "Infrastructure as Code: From Imperative to Declarative and Back Again — The New Stack",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://www.swiftorial.com/swiftlessons/infrastructure-as-code/core-iac-fundamentals/idempotency-in-iac",
+      "title": "Idempotency in IaC — Core IaC Fundamentals — Swiftorial Lessons",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://www.hashicorp.com/en/blog/how-drift-detection-helps-maintain-a-secure-infrastructure",
+      "title": "How Drift Detection Helps Maintain a Secure Infrastructure — HashiCorp",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://spacelift.io/blog/drift-detection",
+      "title": "Infrastructure Drift Detection: How to Fix It With an IaC Tool — Spacelift",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://www.env0.com/blog/drift-detection-in-iac-prevent-your-infrastructure-from-breaking",
+      "title": "Drift Detection in IaC: Prevent Your Infrastructure from Breaking — env0",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://www.geeksforgeeks.org/devops/difference-between-mutable-and-immutable-infrastructure/",
+      "title": "Difference Between Mutable and Immutable Infrastructure — GeeksforGeeks",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://lukasniessen.medium.com/immutable-infrastructure-devops-why-you-should-replace-not-patch-e9a2cf71785e",
+      "title": "Immutable Infrastructure DevOps: Why You Should Replace, Not Patch — Lukas Niessen",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/",
+      "title": "The History of Pets vs Cattle and How to Use the Analogy Properly — Cloudscaling",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://www.kubermatic.com/blog/cloud-native-best-practices-2-why-cattle-not-pets/",
+      "title": "Cloud Native Best Practices: Why Cattle, not Pets — Kubermatic",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://thenewstack.io/how-to-treat-your-kubernetes-clusters-like-cattle-not-pets/",
+      "title": "How to Treat Your Kubernetes Clusters Like Cattle, Not Pets — The New Stack",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    },
+    {
+      "url": "https://developer.harness.io/docs/infra-as-code-management/pipelines/operations/drift-detection/",
+      "title": "Drift Detection — Harness Developer Hub",
+      "accessed_at": "2026-05-16T14:30:03Z"
+    }
+  ],
+  "summary": "A beginner-level introduction to the foundational vocabulary and mental models behind infrastructure as code (IaC). The lesson works through six paired concepts that show up in every IaC tool. Declarative versus imperative contrasts the destination-style description of desired state with step-by-step procedural scripts. Idempotency and convergence distinguish the property of a single safe-to-rerun operation from the property of a system that continuously corrects itself toward the desired state. State and the source of truth explain why declarative tools maintain a bookkeeping file mapping configuration to real-world resources, and why the Git repository — not state, not the live cloud — is the authoritative source. Drift detection and reconciliation cover what happens when reality diverges from code and the three legitimate ways to resolve it. Mutable versus immutable infrastructure contrasts in-place updates with the burn-and-rebuild model based on golden images and containers. The lesson closes with the cultural cattle-not-pets philosophy originated by Bill Baker and popularized for cloud by Randy Bias around 2011, which ties the other concepts together as a discipline that lets infrastructure scale."
+}

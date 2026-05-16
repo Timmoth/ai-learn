@@ -1,0 +1,58 @@
+{
+  "slug": "secrets-management-sops-age",
+  "revision": 2,
+  "generated_at": "2026-05-16T16:48:25Z",
+  "sources": [
+    {
+      "url": "https://github.com/getsops/sops",
+      "title": "getsops/sops — Simple and flexible tool for managing secrets",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://getsops.io/",
+      "title": "SOPS: Secrets OPerationS",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://getsops.io/docs/",
+      "title": "SOPS Documentation",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://github.com/FiloSottile/age",
+      "title": "FiloSottile/age — A simple, modern and secure encryption tool",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://github.com/FiloSottile/age/blob/main/README.md",
+      "title": "age README — installation and usage",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://github.com/C2SP/C2SP/blob/main/age.md",
+      "title": "age v1 format specification — C2SP",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://blog.gitguardian.com/a-comprehensive-guide-to-sops/",
+      "title": "A Comprehensive Guide to SOPS — GitGuardian",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://devops.datenkollektiv.de/using-sops-with-age-and-git-like-a-pro.html",
+      "title": "Using SOPS with Age and Git like a Pro — datenkollektiv",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://fluxcd.io/flux/guides/mozilla-sops/",
+      "title": "Manage Kubernetes secrets with SOPS — Flux",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    },
+    {
+      "url": "https://github.com/FiloSottile/age/discussions/471",
+      "title": "age v1.1.0: plugin and YubiKeys support — FiloSottile/age Discussion",
+      "accessed_at": "2026-05-16T15:53:12Z"
+    }
+  ],
+  "summary": "A beginner-friendly introduction to encrypting application secrets directly inside a Git repository using SOPS (Secrets OPerationS) and age. The lesson starts with the case for storing secrets next to code at all — reproducibility, reviewability, and auditability — and the security property that makes it safe, namely that what gets committed is ciphertext, not plaintext. It then introduces age as a deliberately minimal file encryption tool by Filippo Valsorda, built on X25519, ChaCha20-Poly1305, HKDF-SHA-256, and scrypt with no algorithm negotiation, small bech32-encoded recipient and identity keys, and a UNIX-pipe-friendly CLI. SOPS is then introduced as the layer above age that understands structured configuration: it encrypts only values in YAML, JSON, ENV, INI, and binary files, leaving keys readable for diffability and selective access. The core architectural idea is the two-layer key design — a random per-file data encryption key (DEK) that encrypts every leaf value with AES-256-GCM, then wrapped separately by each configured master key (age, AWS KMS, GCP KMS, Azure Key Vault, PGP), with optional Shamir-based key groups for threshold access. The lesson walks through the .sops.yaml file with creation_rules, path_regex, and encrypted_regex; the everyday workflow of sops edit / encrypt / decrypt / rotate; key custody via SOPS_AGE_KEY_FILE, SOPS_AGE_KEY, and ~/.config/sops/age/keys.txt; and the three common production decryption patterns (age key as CI secret, cloud KMS co-recipient, Flux kustomize-controller). It closes with recurring patterns, footguns to avoid, and an honest assessment that SOPS+age is a clean fit for small-to-mid GitOps teams but not a replacement for a full secrets manager when dynamic credentials, access logging, or per-secret ACL changes are required."
+}

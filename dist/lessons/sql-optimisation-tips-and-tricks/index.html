@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL optimisation tips and tricks — ai-learn</title>
+  <meta name="description" content="A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/">
+  <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="SQL optimisation tips and tricks">
+  <meta property="og:description" content="A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SQL optimisation tips and tricks">
+  <meta name="twitter:description" content="A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"SQL optimisation tips and tricks","headline":"SQL optimisation tips and tricks","description":"A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.","url":"https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/","inLanguage":"en","keywords":"databases, sql, performance, intermediate","datePublished":"2026-05-16","dateModified":"2026-05-16","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com"},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/audio.mp3","encodingFormat":"audio/mpeg"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    audio::-webkit-media-controls-panel { background-color: transparent; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <div class="w-9"></div>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">SQL optimisation tips and tricks</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.</p>
+      <div class="flex flex-wrap gap-1.5">
+        <span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">databases</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">sql</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">performance</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">intermediate</span>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>SQL optimisation tips and tricks</h1>
+<p>A slow query is rarely slow because SQL is slow. It is slow because the database engine made a decision — about which index to use, which join algorithm to pick, in what order to combine tables — and that decision turned out badly for your data. Once you understand how the engine <em>thinks</em>, optimisation stops being a bag of folklore tricks and starts being something closer to a conversation: you make a change, you ask the planner what it now intends to do, you check whether it lined up with reality, and you iterate.</p>
+<p>This lesson is a practical tour of that conversation. We will walk through how a query is actually executed, how to read what the planner tells you, what makes an index useful (or useless), the common ways people accidentally defeat indexes, and the structural patterns — pagination, batching, caching — that matter once your queries themselves are reasonable.</p>
+<p>The examples lean on PostgreSQL and SQL Server syntax, but the underlying mechanics — B-tree indexes, cost-based optimisers, cardinality estimates, hash and merge joins — are essentially universal across the mainstream relational engines.</p>
+<h2>How the database actually runs your query</h2>
+<p>When you send <code>SELECT ...</code> to the database, it goes through four phases before any rows come back. Parsing turns the text into a syntax tree. Binding resolves table and column names against the catalog. Then the <strong>query optimiser</strong> rewrites the tree into a <em>plan</em>: a concrete sequence of physical operations, like "scan this table, then probe this index, then hash-join the results, then sort." Finally the execution engine runs that plan.</p>
+<p>The optimiser is the interesting bit. It does not know your data; it guesses, using <strong>statistics</strong> collected from your tables — histograms of value distributions, counts of distinct values, average row sizes. From those, it estimates how many rows each step will produce (its <em>cardinality</em>), assigns a <em>cost</em> to every candidate plan based on disk and CPU constants, and picks the cheapest. The whole edifice rests on the cardinality estimates being roughly right. When they are wildly wrong, the optimiser picks a plan that looked cheap on paper and is catastrophic in practice.</p>
+<p>The most important consequence of this for you, the query author, is that <strong>the optimiser cannot read your mind, only your statistics</strong>. If a column's statistics say "this filter returns 5% of the table" and reality is 90%, the engine will happily nested-loop through what it thought was a small set, and you will wait.</p>
+<h2>Reading a query plan</h2>
+<p>Every mainstream database has a way to ask "what would you do with this query?". In PostgreSQL it is <code>EXPLAIN</code>. In SQL Server it is <code>SET SHOWPLAN_ALL ON</code> or the GUI's "Display Estimated Execution Plan". In MySQL it is <code>EXPLAIN</code>. In Oracle it is <code>EXPLAIN PLAN FOR</code>. They all show the same kind of thing: a tree of operations the engine intends to perform.</p>
+<p>Here is a typical PostgreSQL plan:</p>
+<div class="highlight"><pre><span></span><code>EXPLAIN SELECT * FROM orders WHERE customer_id = 42;
+
+ Bitmap Heap Scan on orders  (cost=4.36..39.38 rows=10 width=244)
+   Recheck Cond: (customer_id = 42)
+   -&gt;  Bitmap Index Scan on orders_customer_id_idx  (cost=0.00..4.36 rows=10 width=0)
+         Index Cond: (customer_id = 42)
+</code></pre></div>
+
+<p>Read it inside-out, like a function call stack. The leaves at the bottom are the data sources; the parent nodes combine, filter, or transform their children. Here the engine plans to use the index to find row pointers (the inner <code>Bitmap Index Scan</code>) and then fetch those rows from the table itself (the outer <code>Bitmap Heap Scan</code>).</p>
+<p>The numbers next to each node are the planner's guesses. <code>cost=4.36..39.38</code> is a pair: the <em>startup cost</em> (work done before the first row comes out) and the <em>total cost</em> (work done to produce every row), in arbitrary internal units. <code>rows=10</code> is the estimated row count. <code>width=244</code> is the estimated average row size in bytes.</p>
+<p><code>EXPLAIN ANALYZE</code> (or <code>EXPLAIN (ANALYZE, BUFFERS)</code> for cache statistics) actually runs the query and adds <em>measured</em> values alongside the estimates:</p>
+<div class="highlight"><pre><span></span><code> Bitmap Heap Scan on orders  (cost=4.36..39.38 rows=10 width=244)
+                             (actual time=0.041..0.084 rows=12 loops=1)
+</code></pre></div>
+
+<p>You compare the two. If the planner expected 10 rows and got 12, all is well. If it expected 10 and got 10 million, you have a cardinality problem — and almost any plan built on top of that estimate will be wrong.</p>
+<p>A handful of node types you will see constantly:</p>
+<ul>
+<li><strong>Seq Scan / Table Scan.</strong> Read every row in the table. Fine for small tables or queries that legitimately want most rows; an alarm bell for big tables with selective filters.</li>
+<li><strong>Index Scan.</strong> Walk the index in order to find row pointers, then fetch each row from the heap. Cheap when few rows match, expensive when many do (random heap I/O).</li>
+<li><strong>Index Only Scan.</strong> Read the answer straight out of the index without touching the table. The fastest read pattern. Requires that every column the query needs is in the index.</li>
+<li><strong>Bitmap Index Scan + Bitmap Heap Scan.</strong> A compromise between the two — collect all matching row pointers from the index, sort them, then read the heap in physical order. Good for medium-sized result sets.</li>
+<li><strong>Nested Loop join.</strong> For each row on the outer side, look up matching rows on the inner side. Excellent when the outer side is tiny; terrible when it is large.</li>
+<li><strong>Hash Join.</strong> Build a hash table from one side, probe it with the other. Good for medium-to-large joins with equality conditions.</li>
+<li><strong>Merge Join.</strong> Walk two pre-sorted inputs in lock-step. Excellent when both sides happen to be sorted already.</li>
+</ul>
+<p>Whenever a query is slower than you expect, your first instinct should be to look at the plan, find where the estimated and actual row counts diverge most, and investigate that node.</p>
+<h2>Index design and selectivity</h2>
+<p>An index is a sorted, on-disk structure (almost always a B-tree) that lets the engine find rows matching a value or range without scanning the whole table. The key property of a <em>useful</em> index is <strong>selectivity</strong> — how thoroughly it narrows the set of candidate rows. An index on <code>country</code> in a global users table where 60% of users are from one country has terrible selectivity for that country; an index on <code>email</code> (effectively unique) is maximally selective.</p>
+<p>A useful rule of thumb: if a query needs more than about 5–10% of a table's rows, the engine will (correctly) prefer a sequential scan over an index scan, because random I/O for many rows is more expensive than streaming the whole table.</p>
+<h3>Composite indexes and the leftmost prefix rule</h3>
+<p>An index on multiple columns — sometimes called a composite or compound index — is sorted lexicographically: first by the leftmost column, then by the next, and so on. This has an important consequence called the <strong>leftmost prefix rule</strong>: an index on <code>(a, b, c)</code> can be used efficiently for queries filtering on <code>a</code>, on <code>a</code> and <code>b</code>, or on <code>a</code>, <code>b</code>, and <code>c</code>, but <strong>not</strong> for a query filtering only on <code>b</code> or <code>c</code>.</p>
+<p>Concretely:</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_orders_customer_status_date</span>
+<span class="w">  </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">);</span>
+
+<span class="c1">-- Uses the index efficiently:</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;shipped&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;shipped&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2026-01-01&#39;</span><span class="p">;</span>
+
+<span class="c1">-- Does NOT use the index efficiently:</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;shipped&#39;</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="s1">&#39;2026-01-01&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Two design heuristics follow from this. First, <strong>put equality predicates before range predicates</strong>. An index on <code>(customer_id, created_at)</code> works beautifully for <code>customer_id = 42 AND created_at &gt; x</code>, because the B-tree can dive straight to the matching <code>customer_id</code> and then scan a contiguous slice of dates. An index on <code>(created_at, customer_id)</code> for the same query has to walk every row in the date range and check the customer separately.</p>
+<p>Second, <strong>put more selective columns earlier</strong>, all else being equal. The leading column does the bulk of the row narrowing; less selective columns later sharpen what is already a small set.</p>
+<h3>Covering indexes and <code>INCLUDE</code></h3>
+<p>A <em>covering</em> index is one that contains every column a particular query needs to return, so the engine can answer the whole query from the index without ever touching the heap. That triggers the magical <code>Index Only Scan</code> plan and tends to be many times faster than the equivalent index-plus-heap-fetch.</p>
+<p>PostgreSQL 11+, SQL Server, and others support an <code>INCLUDE</code> clause for exactly this case:</p>
+<div class="highlight"><pre><span></span><code><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_orders_customer_covering</span>
+<span class="w">  </span><span class="k">ON</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="p">(</span><span class="n">customer_id</span><span class="p">)</span>
+<span class="w">  </span><span class="n">INCLUDE</span><span class="w"> </span><span class="p">(</span><span class="n">status</span><span class="p">,</span><span class="w"> </span><span class="n">total_cents</span><span class="p">,</span><span class="w"> </span><span class="n">created_at</span><span class="p">);</span>
+</code></pre></div>
+
+<p>The leading <code>customer_id</code> is the <em>key</em> — what the index is sorted by and what the engine can search on. The <code>INCLUDE</code>d columns are stored only in the leaf nodes; they are payload, not sort keys, so they cannot be used to filter or order, but they let <code>SELECT status, total_cents, created_at FROM orders WHERE customer_id = ?</code> be answered without a heap fetch.</p>
+<p>Use <code>INCLUDE</code> for the columns you only need to <em>return</em>, not to <em>search on</em>. It keeps the upper levels of the B-tree slim.</p>
+<h3>The cost of indexes</h3>
+<p>Indexes are not free. Every index slows down <code>INSERT</code>, <code>UPDATE</code> (when an indexed column changes), and <code>DELETE</code>, because the index has to be kept in sync. Indexes also consume storage and memory. A table with twelve indexes will write twelve times as much index data per insert as a table with one. The right number of indexes is "the smallest number that makes the workload's reads acceptable", not "one per query".</p>
+<p>For very large bulk loads, it is often faster to drop indexes, load the data, and rebuild the indexes at the end than to maintain them incrementally during the load.</p>
+<h2>Anti-patterns that defeat indexes</h2>
+<p>Many of the most common SQL performance problems come from writing queries in ways that prevent the engine from using indexes that <em>exist</em>.</p>
+<h3><code>SELECT *</code></h3>
+<p>Selecting every column has two costs. It returns more data over the wire than you need, which is the small one. The bigger one is that it makes index-only scans impossible: the engine cannot return columns the index does not have, so it has to fall back to a heap fetch even if the filter is fully covered by the index. Always list the columns you actually need.</p>
+<h3>Functions on indexed columns</h3>
+<p>Wrapping an indexed column in a function disables the index, because the index is sorted by the column's <em>raw</em> value, not by the function's output. This is the single most common reason a "correct-looking" query refuses to use an obviously suitable index.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- Bad: index on created_at is unusable</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="nb">DATE</span><span class="p">(</span><span class="n">created_at</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;2026-05-16&#39;</span><span class="p">;</span>
+
+<span class="c1">-- Good: range condition that the index can satisfy</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="s1">&#39;2026-05-16&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">created_at</span><span class="w"> </span><span class="o">&lt;</span><span class="w">  </span><span class="s1">&#39;2026-05-17&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Similarly, <code>WHERE LOWER(email) = 'a@b.com'</code> cannot use a plain index on <code>email</code>. You either store the value already lowercased, use a case-insensitive collation, or create a <strong>functional index</strong> (<code>CREATE INDEX ... ON users (LOWER(email))</code>) so the index stores the function's output.</p>
+<h3>Implicit type conversions</h3>
+<p>If you compare a column of one type against a value of another, the engine has to convert one side. Crucially, when it converts the <em>column</em> side — which it often does, since the value side is a constant the planner does not control — it has applied a function to the column, and the index becomes unusable. The plan silently degrades to a full scan, and cardinality estimates can go wildly wrong because the histogram is on the original type.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- &#39;phone&#39; is VARCHAR. The constant is an integer. SQL Server</span>
+<span class="c1">-- converts every row&#39;s phone to integer before comparing.</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">phone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5551234567</span><span class="p">;</span>
+
+<span class="c1">-- The fix: match the column&#39;s type</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">phone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;5551234567&#39;</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Real-world reports of one-hour queries dropping to seconds after fixing a single implicit conversion are not exaggerated. SQL Server 2022 even added a dedicated <code>query_antipattern</code> extended event partly because this problem is so widespread.</p>
+<h3>Leading wildcards</h3>
+<p><code>WHERE name LIKE '%smith'</code> cannot use a regular index, because the engine has no idea where in the B-tree to start. <code>WHERE name LIKE 'smith%'</code> can. If you genuinely need infix or suffix search, you want a different data structure: a trigram index (<code>pg_trgm</code> in PostgreSQL), a reversed-string column, or a real full-text search engine.</p>
+<h3><code>OR</code> across unrelated columns</h3>
+<p><code>WHERE a = ? OR b = ?</code> typically cannot use an index on <code>a</code> <em>and</em> an index on <code>b</code> at the same time efficiently; the engine often gives up and table-scans. Rewriting as <code>UNION</code> (or <code>UNION ALL</code> if duplicates are impossible) lets each branch use its own index:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">phone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+
+<p>Bitmap scans help here on PostgreSQL — it can combine two index scans into a single bitmap — but the <code>UNION</code> form is more reliable across engines.</p>
+<h3><code>NOT IN</code> with a nullable subquery</h3>
+<p>If the subquery returns even a single <code>NULL</code>, <code>NOT IN</code> becomes equivalent to "not in a set containing NULL", which SQL evaluates as unknown and returns <em>no rows at all</em>. Beyond the correctness footgun, <code>NOT IN</code> also tends to optimise worse than <code>NOT EXISTS</code>. Prefer <code>NOT EXISTS</code> (or <code>LEFT JOIN ... WHERE x IS NULL</code>) for "rows on the left with no match on the right".</p>
+<h2>Rewriting subqueries and joins</h2>
+<p>Most modern optimisers can rewrite a subquery into a join when it is equivalent — PostgreSQL, SQL Server, and recent MySQL all do this for many cases — but not always, especially when the subquery is correlated or contains aggregates. Knowing how to rewrite manually is still useful, both as a fallback and as a way of clarifying what you actually mean.</p>
+<h3><code>IN</code> versus <code>EXISTS</code></h3>
+<p><code>SELECT ... WHERE x IN (SELECT y FROM ...)</code> and <code>SELECT ... WHERE EXISTS (SELECT 1 FROM ... WHERE y = x)</code> are usually logically equivalent for non-null <code>y</code>. The difference is intent: <code>EXISTS</code> is a <strong>semi-join</strong> — "do any matching rows exist?" — and the engine can stop searching for the inner table as soon as it finds one match. For large inner tables, that early termination is a significant win, and most engines will produce a Semi Join plan node for <code>EXISTS</code> automatically.</p>
+<p>For small inner sets that are essentially constant, <code>IN (a, b, c, ...)</code> is fine and the optimiser will turn it into a hash or a sorted list.</p>
+<h3>Correlated subqueries</h3>
+<p>A <em>correlated</em> subquery references a column from the outer query, so it logically runs once per outer row:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span>
+<span class="w">       </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">c</span><span class="p">;</span>
+</code></pre></div>
+
+<p>A good optimiser will often rewrite this to a single join with <code>GROUP BY</code>. A less good one will execute the subquery <code>N</code> times. You can rewrite manually:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="k">COALESCE</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">order_count</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">customers</span><span class="w"> </span><span class="k">c</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">customer_id</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">order_count</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">orders</span>
+<span class="w">  </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">customer_id</span>
+<span class="p">)</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The manual rewrite makes the join algorithm choice explicit and tends to perform predictably regardless of optimiser version.</p>
+<h3>Join order and the optimiser</h3>
+<p>You generally do <em>not</em> need to write joins in a particular order — the optimiser will reorder them based on costs. The exception is when statistics are bad and the optimiser keeps choosing wrong; then you either fix the statistics, add appropriate indexes, or use optimiser hints as a last resort. Hints are a smell: they are pinning the plan against future data changes, and if your data shifts the hint can become the new performance problem.</p>
+<h2>Statistics, cardinality, and keeping the planner honest</h2>
+<p>We said earlier that the optimiser's cost-based plans rely on cardinality estimates, and cardinality estimates come from statistics. The corollary is that <strong>stale statistics are a common cause of bad plans</strong> — not because the SQL is wrong, but because the optimiser is reasoning about a version of the table that no longer exists.</p>
+<p>Most databases auto-update statistics, but the triggers are heuristic and can lag behind real workload. PostgreSQL runs <code>ANALYZE</code> as part of <code>VACUUM</code> (and <code>autovacuum</code>); SQL Server has <code>AUTO_UPDATE_STATISTICS</code>; MySQL samples on the fly. After a bulk load, a schema change, or a sudden shift in data distribution, it is often worth running statistics manually:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">-- PostgreSQL</span>
+<span class="k">ANALYZE</span><span class="w"> </span><span class="n">orders</span><span class="p">;</span>
+
+<span class="c1">-- SQL Server</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="k">STATISTICS</span><span class="w"> </span><span class="n">orders</span><span class="p">;</span>
+</code></pre></div>
+
+<p>The other big source of estimate error is <strong>column correlation</strong>. The optimiser usually assumes columns are statistically independent — that the selectivity of <code>country = 'GB' AND city = 'London'</code> is the product of the two individual selectivities. Reality is wildly different (almost everyone with <code>city = 'London'</code> also has <code>country = 'GB'</code>). Some databases support multi-column statistics (PostgreSQL's <code>CREATE STATISTICS</code>, SQL Server's filtered statistics) to teach the planner about correlations explicitly.</p>
+<p>When you read <code>EXPLAIN ANALYZE</code> and see a node whose estimated rows are off by more than ~10x from actual rows, that is your first thing to investigate. The fix is sometimes "run <code>ANALYZE</code>", sometimes "add multi-column stats", sometimes "rewrite the query to avoid the correlated predicate altogether".</p>
+<h2>Pagination: keyset beats offset</h2>
+<p>The most common pagination pattern in beginner SQL is <code>LIMIT N OFFSET M</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">published_at</span><span class="w"> </span><span class="k">DESC</span><span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="k">OFFSET</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span>
+</code></pre></div>
+
+<p>This looks innocent and is fine for the first few pages. The problem is that to skip <code>OFFSET</code> rows, the database has to <em>produce</em> those rows first — sort them, walk them, and then throw them away. Performance degrades linearly with depth, and by page 500 of a large table you can be reading hundreds of thousands of rows to return twenty. Benchmarks routinely show <strong>10x to 100x speedups</strong> when switching to keyset pagination on large tables.</p>
+<p><strong>Keyset</strong> (or "seek", or "cursor") pagination remembers where you left off and asks the database for "the next N rows after this key":</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">articles</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">published_at</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w">   </span><span class="c1">-- the last row from the previous page</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">published_at</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span>
+</code></pre></div>
+
+<p>If <code>(published_at, id)</code> is indexed (the <code>id</code> tiebreak is essential — <code>published_at</code> alone is not necessarily unique), this is an index seek followed by a 20-row scan. It is O(1) in page depth instead of O(N). The trade-offs are that you cannot jump to "page 837" directly, only "next" and "previous"; and you have to remember and pass back the last key. For UIs that are infinite-scroll, "load more", or API cursors, this is a clear win. For UIs with numbered page links, you may need offset, but you can usually cap the depth.</p>
+<h2>Batching</h2>
+<p>Single-row <code>INSERT</code>, <code>UPDATE</code>, and <code>DELETE</code> statements have a fixed overhead per round trip — parsing, planning, network latency, transaction bookkeeping, index maintenance — that dominates when you are doing many of them. Sending 10,000 inserts as 10,000 separate statements can be more than 10x slower than sending them as a single multi-row insert.</p>
+<p>Strategies, in roughly the order you should reach for them:</p>
+<ol>
+<li><strong>Multi-row inserts.</strong> <code>INSERT INTO t (a, b) VALUES (1, 2), (3, 4), (5, 6), ...</code>. Trivial change, large win.</li>
+<li><strong>Batched transactions.</strong> Wrap N inserts in a single transaction so the WAL / log flush happens once at commit, not once per row.</li>
+<li><strong>Prepared statements.</strong> Send the SQL once, then send N bindings. Saves repeated parsing and planning.</li>
+<li><strong>Bulk-load utilities.</strong> <code>COPY</code> in PostgreSQL, <code>BULK INSERT</code> in SQL Server, <code>LOAD DATA INFILE</code> in MySQL. Bypasses much of the per-row plumbing and is the right answer for very large loads.</li>
+<li><strong>Drop and rebuild indexes around very large loads.</strong> Maintaining ten indexes incrementally over a billion rows can be slower than dropping them, inserting, and rebuilding.</li>
+</ol>
+<p>For reads, the corresponding anti-pattern is the <strong>N+1 query problem</strong>: fetching a list of N parent rows, then issuing one query per parent for the children. Replace it with a single join or a single <code>WHERE child.parent_id IN (...)</code> round trip.</p>
+<h2>Caching</h2>
+<p>Once your queries are individually reasonable and your batching is sensible, the next lever is not running the query at all. Caching is generally cheaper than any query optimisation.</p>
+<p>There are three layers worth distinguishing:</p>
+<ul>
+<li><strong>The buffer pool / page cache.</strong> Built into the database. Frequently accessed pages live in RAM, and a query that hits the cache costs orders of magnitude less than one that does not. You influence this by sizing memory appropriately (<code>shared_buffers</code> in PostgreSQL, the buffer pool in SQL Server / MySQL), and by writing queries that touch small, hot working sets rather than scanning cold pages. <code>EXPLAIN (ANALYZE, BUFFERS)</code> in PostgreSQL shows cache hits versus disk reads.</li>
+<li><strong>The plan cache.</strong> The database also caches <em>compiled plans</em>, keyed by query text or a parameter shape. Parameterised queries (using <code>?</code> or <code>$1</code>, not string concatenation) reuse plans across calls; string-concatenated queries are seen as unique every time and force a fresh compilation on each call.</li>
+<li><strong>Application-level cache.</strong> For results that are read often, change rarely, and are tolerant of slight staleness — reference data, leaderboard snapshots, user profiles — a Redis or Memcached layer in front of the database is usually the best return on effort. The hard parts are not the cache; they are choosing a TTL or an invalidation strategy that matches your consistency needs.</li>
+</ul>
+<p>A pragmatic order of operations: make the underlying query fast first, then cache, not the other way around. A cached slow query is a slow query waiting for the next cold start.</p>
+<h2>A workable optimisation loop</h2>
+<p>Putting it all together, here is the loop that tends to work in practice when a query is slow:</p>
+<ol>
+<li><strong>Measure.</strong> Get actual numbers — execution time, rows returned, whether the query is CPU-bound, I/O-bound, or waiting on locks. Without a measurement, you are guessing.</li>
+<li><strong>Get the plan.</strong> Run <code>EXPLAIN ANALYZE</code> (or your engine's equivalent). Read it bottom-up.</li>
+<li><strong>Look for the lie.</strong> Find the node where estimated and actual row counts diverge most. That is where the planner's model and reality disagree, and it is almost always the root cause of the bad plan.</li>
+<li><strong>Ask why.</strong> Is a needed index missing? Is an existing index being defeated by a function, an implicit conversion, or a leading wildcard? Are statistics stale? Is a column correlation confusing the estimator?</li>
+<li><strong>Change one thing.</strong> Add the index, fix the predicate, run <code>ANALYZE</code>. One change at a time, so you know what helped.</li>
+<li><strong>Re-plan and re-measure.</strong> Confirm the plan changed in the way you expected, and that the wall-clock time matches.</li>
+</ol>
+<p>Most of the dramatic wins — orders of magnitude, not percentages — come from this loop applied to the small number of queries that dominate your workload. Find the slow ones (the engine's slow-query log will tell you), fix them, and stop. The rest of the database can almost always be left alone.</p>
+<h2>Further reading</h2>
+<ul>
+<li><a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQL: Using EXPLAIN</a> — the canonical reference for reading plans.</li>
+<li><a href="https://use-the-index-luke.com/">Use The Index, Luke</a> — Markus Winand's free book on practical indexing, covering composite indexes, covering indexes, and the leftmost prefix rule across all major engines.</li>
+<li><a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/cardinality-estimation-sql-server">Microsoft Learn: Cardinality Estimation</a> — how SQL Server's estimator builds its row guesses.</li>
+<li><a href="https://use-the-index-luke.com/no-offset">Keyset pagination explained</a> — the case against <code>OFFSET</code> and the seek-method alternative.</li>
+</ul>
+    </article>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>
