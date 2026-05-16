@@ -85,6 +85,27 @@
       ],
       "created_at": "2026-05-16T13:38:34+00:00",
       "updated_at": "2026-05-16T13:50:42+00:00"
+    },
+    {
+      "slug": "core-concepts-of-infrastructure-as-code",
+      "title": "Core concepts of infrastructure as code",
+      "description": "An introduction to the foundational vocabulary and mental models behind Infrastructure as Code, covering how declarative definitions, state, and reconciliation enable repeatable, automated infrastructure. Explains key contrasts such as declarative vs imperative, mutable vs immutable, and in-place updates vs burn-and-rebuild.",
+      "topics": [
+        "declarative vs imperative",
+        "idempotency and convergence",
+        "state and source of truth",
+        "drift detection and reconciliation",
+        "immutable vs mutable infrastructure",
+        "cattle not pets philosophy"
+      ],
+      "tags": [
+        "infrastructure-as-code",
+        "devops",
+        "fundamentals",
+        "beginner"
+      ],
+      "created_at": "2026-05-16T14:24:56+00:00",
+      "updated_at": "2026-05-16T14:24:56+00:00"
     }
   ]
 }

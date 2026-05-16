@@ -332,11 +332,44 @@ def action_render_audio(config: dict) -> int:
     if not with_scripts:
         print("No lessons have a script.md yet — generate a lesson first.")
         return 0
-    chosen = pick_lesson(with_scripts, "Render audio for which lesson?")
-    if not chosen:
+
+    scope = questionary.select(
+        "Render audio for which lessons?",
+        choices=[
+            "A specific lesson",
+            f"All lessons with a script ({len(with_scripts)})",
+        ],
+    ).ask()
+    if scope is None:
         return 0
-    ok = render_audio(chosen["slug"], config)
-    return 0 if ok else 1
+
+    if scope.startswith("A specific"):
+        chosen = pick_lesson(with_scripts, "Pick a lesson:")
+        if not chosen:
+            return 0
+        targets = [chosen]
+    else:
+        targets = sorted(with_scripts, key=lambda l: l["title"].lower())
+        confirmed = questionary.confirm(
+            f"Render audio for all {len(targets)} lesson(s)?",
+            default=False,
+        ).ask()
+        if not confirmed:
+            print("Cancelled.")
+            return 0
+
+    failures = 0
+    for lesson in targets:
+        slug = lesson["slug"]
+        print(f"\n=== {slug} ===")
+        if not render_audio(slug, config):
+            failures += 1
+
+    if failures:
+        print(f"\nDone with {failures} failure(s).")
+        return 1
+    print("\nDone.")
+    return 0
 
 
 def action_create(config: dict) -> int:
