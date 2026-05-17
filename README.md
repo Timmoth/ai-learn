@@ -24,8 +24,9 @@ runner/
   ├── tts.py              Kokoro TTS + dictionary substitution + ffmpeg
   ├── manifest.py         JSON I/O
   ├── config.json         backend, TTS, and site configuration
+  ├── styles.css          Tailwind v4 input (compiled to dist/styles.css)
   ├── prompts/            templates fed to the CLI backend
-  └── templates/          home.html + lesson.html (Tailwind via CDN)
+  └── templates/          home.html + lesson.html + tag.html
 
 dist/                     static site output (gitignored / publishable)
 static/                   optional pass-through dir (CNAME, favicons, …)
@@ -76,12 +77,15 @@ Switch backends by changing `active_backend` in `runner/config.json`.
 
 `python -m runner.build` regenerates `dist/`:
 
-- `index.html` lists all lessons with `lesson.md` present
-- `lessons/<slug>/index.html` per lesson (markdown rendered via Pygments-highlighted code blocks, HTML5 audio player)
+- `index.html` lists all lessons with `lesson.md` present, newest-updated first
+- `lessons/<slug>/index.html` per lesson (markdown rendered via Pygments-highlighted code blocks, HTML5 audio player, related lessons block)
+- `tags/<slug>/index.html` per unique tag
+- `feed.xml` — iTunes-compatible podcast feed of every lesson with `audio.mp3`
+- `styles.css` — Tailwind v4 compiled at build time via the `pytailwindcss` standalone binary (no CDN, no Node required)
 - `sitemap.xml`, `robots.txt`, `.nojekyll`
-- Anything under `static/` is copied verbatim into `dist/` (put `CNAME`, favicons, etc. there)
+- Anything under `static/` is copied verbatim into `dist/` (put `CNAME`, favicons, `podcast-cover.png` etc. there)
 
-Tailwind is loaded from the Play CDN; dark mode persists via `localStorage`.
+Dark mode persists via `localStorage`. JSON-LD (`WebSite`, `Person` with `sameAs`, `LearningResource`) is emitted on every page.
 
 ## Publishing
 

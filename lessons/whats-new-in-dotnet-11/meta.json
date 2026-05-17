@@ -1,0 +1,53 @@
+{
+  "slug": "whats-new-in-dotnet-11",
+  "revision": 1,
+  "generated_at": "2026-05-17T16:24:35Z",
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/overview",
+      "title": "What's new in .NET 11 — Microsoft Learn",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime",
+      "title": "What's new in .NET 11 runtime — Microsoft Learn",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/libraries",
+      "title": "What's new in .NET libraries for .NET 11 — Microsoft Learn",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/release-notes/aspnetcore-11",
+      "title": "What's new in ASP.NET Core in .NET 11 — Microsoft Learn",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-15",
+      "title": "What's new in C# 15 — Microsoft Learn",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://devblogs.microsoft.com/dotnet/dotnet-11-preview-4/",
+      "title": ".NET 11 Preview 4 is now available! — .NET Blog",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://www.infoq.com/news/2026/04/dotnet-11-preview-3/",
+      "title": "Microsoft Releases .NET 11 Preview 3 with Updates across Runtime, SDK, MAUI, and ASP.NET Core — InfoQ",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://www.infoq.com/news/2026/02/dotnet-11-preview1/",
+      "title": ".NET 11 Preview 1 Arrives with Runtime Async, Zstandard Support, and C# 15 Features — InfoQ",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    },
+    {
+      "url": "https://github.com/microsoft/OpenAPI.NET/blob/main/docs/upgrade-guide-3.md",
+      "title": "Microsoft.OpenApi 3.x upgrade guide",
+      "accessed_at": "2026-05-17T16:24:35Z"
+    }
+  ],
+  "summary": "A practical tour of .NET 11, the Standard Term Support release that follows the .NET 10 LTS and is scheduled to ship in November 2026. The lesson opens with how to install the preview SDK and set net11.0 and LangVersion=preview, then walks through C# 15's headline additions: union types declared with the new union keyword, which give exhaustive switch checking and replace OneOf-style packages, and collection expression arguments using a with(...) element to pass capacity or comparers into the underlying collection. It explains the biggest engineering bet of the release — Runtime Async (V2) — which moves async state-machine handling from the compiler into the runtime, producing dramatically cleaner live stack traces, lower allocation overhead, and NativeAOT/ReadyToRun support, and notes that EnablePreviewFeatures is no longer required on net11.0 and the DOTNET_RuntimeAsync env var has been removed. It covers JIT and codegen wins (constant-folded SequenceEqual, bounds-check elimination after IsEmpty, redundant branch removal, switch folding, F16C/SVE2 intrinsics, faster Vector.Dot), ReadyToRun specialisation of default comparers (up to 20× faster), cached interface dispatch on iOS (up to 200×), and faster Guid.NewGuid on Linux via getrandom. The ASP.NET Core section covers Kestrel's non-throwing HTTP/1.1 parse path (20–40% throughput gain on hostile traffic), Zstandard response compression and request decompression on by default, native OpenTelemetry tracing via the Microsoft.AspNetCore activity source, OpenAPI 3.2.0 support (a breaking dependency bump), endpoint filters that observe binding failures, Blazor improvements including variable-height Virtualize with AnchorMode, static-SSR TempData, relative NavigateTo, server-triggered circuit pause, the new blazorwebworker template, Identity moving to TimeProvider, and the mcpserver template shipping in-box. BCL additions include a substantial Process API expansion (Run/RunAndCaptureText, fire-and-forget, SafeProcessHandle lifecycle), System.Text.Json improvements (PascalCase policy, per-member naming, type-level JsonIgnore, F# DU support, generic GetTypeInfo<T>), span-based Deflate/ZLib/GZip encoders, Zstandard in System.IO.Compression, ZIP CRC32 validation, Tar format selection, Rune overloads on String, BFloat16 in BitConverter, IEEE-754 hex float formatting, RegexOptions.AnyNewLine, SafeFileHandle pipe support, and MemoryCache OpenTelemetry metrics. SDK improvements include dotnet watch + Aspire integration, dotnet run -e, file-based #:include, and a NativeAOT dotnet CLI entry-point foundation. The migration section flags the lifted hardware baselines (x86-64-v2 minimum and x86-64-v3 R2R target on Windows/Linux; LSE required on Windows Arm64), the empty-payload header/footer behaviour change in DeflateStream/GZipStream, ZIP CRC32 validation now throwing on corrupt archives, the OpenAPI 3.2 breaking change, and the fact that union types, collection expression arguments, and Runtime Async are still labelled preview features in their respective designs."
+}

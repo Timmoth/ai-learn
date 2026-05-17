@@ -7,15 +7,19 @@
   <meta name="description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
   <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/">
   <link rel="author" href="https://timmoth.com">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="ai-learn podcast" href="../../feed.xml">
   <meta property="og:title" content="Secrets management with SOPS and age">
   <meta property="og:description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/">
+  <meta property="og:site_name" content="ai-learn">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Secrets management with SOPS and age">
   <meta name="twitter:description" content="A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Secrets management with SOPS and age","headline":"Secrets management with SOPS and age","description":"A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.","url":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/","inLanguage":"en","keywords":"security, devops, beginner, tooling","datePublished":"2026-05-16","dateModified":"2026-05-16","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com"},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/audio.mp3","encodingFormat":"audio/mpeg"}}</script>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Secrets management with SOPS and age","headline":"Secrets management with SOPS and age","description":"A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.","url":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/","inLanguage":"en","keywords":"security, devops, beginner, tooling","datePublished":"2026-05-16","dateModified":"2026-05-16","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","@id":"https://timmoth.com/#person","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/audio.mp3","encodingFormat":"audio/mpeg","duration":"PT987S"}}</script>
   <script>
     (function() {
       var saved = localStorage.getItem('theme');
@@ -25,14 +29,8 @@
       }
     })();
   </script>
-  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' };
-  </script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
-    audio::-webkit-media-controls-panel { background-color: transparent; }
-    pre { line-height: 125%; }
+  <link rel="stylesheet" href="../../styles.css">
+  <style>pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
@@ -221,18 +219,20 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
   font-size: inherit !important;
 }
 .highlight code::before, .highlight code::after { content: none !important; }
-
-  </style>
+</style>
 </head>
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
   <header class="border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
         <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       </button>
       <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
-      <div class="w-9"></div>
+      <a href="../../feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+        <span>Podcast / RSS</span>
+      </a>
     </div>
   </header>
   <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
@@ -242,8 +242,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
     <header class="mb-8">
       <h1 class="text-3xl font-semibold tracking-tight mb-3">Secrets management with SOPS and age</h1>
       <p class="text-gray-600 dark:text-gray-400 mb-4">A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</p>
+      <div class="text-sm text-gray-500 dark:text-gray-500 mb-4">Requested by <a href="https://timmoth.com" rel="author" class="underline-offset-2 hover:underline">Tim Jones</a>, written by <span class="text-gray-700 dark:text-gray-300">Claude</span>, narrated by <span class="text-gray-700 dark:text-gray-300">Kokoro</span></div>
+      <div class="text-xs text-gray-500 dark:text-gray-500 mb-4">Published <time datetime="2026-05-16">16 May 2026</time> · 12 min read · 16 min listen</div>
       <div class="flex flex-wrap gap-1.5">
-        <span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span>
+        <a href="../../tags/security/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">security</a><a href="../../tags/devops/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">devops</a><a href="../../tags/beginner/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">beginner</a><a href="../../tags/tooling/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">tooling</a>
       </div>
     </header>
     <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
@@ -417,6 +419,27 @@ sops<span class="w"> </span>rotate<span class="w"> </span>--in-place<span class=
 <p>It is less appropriate when you need centralised access logging, automatic credential rotation, short-lived dynamic credentials, or fine-grained per-secret ACLs that can change without a Git commit. At that point you have outgrown the "secrets in Git" model and should be looking at a dedicated secrets backend.</p>
 <p>But for the very common case of "we have a handful of static credentials, we want them next to the code that uses them, and we want a code-review trail when they change" — SOPS plus age is the smallest amount of moving parts that gives you everything Git already gives you, with the secrets no longer in the clear.</p>
     </article>
+    <section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-4">Related lessons</h2>
+      <div class="space-y-3"><a href="../../lessons/git-basics-for-new-developers/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Git basics for new developers</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-17">17 May 2026</time> · 11 min read · 13 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">git</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">version control</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span></div>
+      </a>
+        <a href="../../lessons/introduction-to-opentofu-fundamentals/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Introduction to OpenTofu fundamentals</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 10 min read · 14 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">opentofu</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">overview</span></div>
+      </a>
+        <a href="../../lessons/introduction-to-ansible/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Introduction to Ansible</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 7 min read · 10 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">ansible</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
+      </a></div>
+    </section>
   </main>
   <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
     <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">

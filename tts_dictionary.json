@@ -1,6 +1,6 @@
 {
   ".env": "dot env",
-
+  ".NET": "dot net",
   "ACL": "eh see ell",
   "AKS": "eh kay ess",
   "ALB": "eh ell bee",
@@ -14,7 +14,8 @@
 "AWS": "eh  double yew ess",
   "BGP": "bee gee pee",
   "BIOS": "by oss",
-
+  "BCL": "base class library",
+  "C#": "see sharp",
   "CA": "see ay",
   "CDN": "see dee en",
   "CI/CD": "continuous integration and continuous delivery",

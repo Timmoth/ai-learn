@@ -170,6 +170,28 @@
       ],
       "created_at": "2026-05-17T09:45:37+00:00",
       "updated_at": "2026-05-17T09:49:47+00:00"
+    },
+    {
+      "slug": "whats-new-in-dotnet-11",
+      "title": "What's new in .NET 11",
+      "description": "An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.",
+      "topics": [
+        "new language features",
+        "runtime and performance improvements",
+        "ASP.NET Core updates",
+        "BCL and API additions",
+        "practical code examples",
+        "migration considerations"
+      ],
+      "tags": [
+        "dotnet",
+        "csharp",
+        "backend",
+        "release-notes",
+        "intermediate"
+      ],
+      "created_at": "2026-05-17T16:18:53+00:00",
+      "updated_at": "2026-05-17T16:25:30+00:00"
     }
   ]
 }

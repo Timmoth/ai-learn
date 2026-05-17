@@ -7,15 +7,20 @@
   <meta name="description" content="{{site_description}}">
   <link rel="canonical" href="{{canonical_url}}">
   <link rel="author" href="{{author_url}}">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="{{root_rel}}favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="{{site_title}} podcast" href="{{root_rel}}feed.xml">
   <meta property="og:title" content="{{site_title}}">
   <meta property="og:description" content="{{site_description}}">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{{canonical_url}}">
+  <meta property="og:site_name" content="{{site_title}}">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{{site_title}}">
   <meta name="twitter:description" content="{{site_description}}">
-  {{json_ld}}
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
+  {{json_ld_website}}
+  {{json_ld_person}}
   <script>
     (function() {
       var saved = localStorage.getItem('theme');
@@ -25,23 +30,20 @@
       }
     })();
   </script>
-  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' };
-  </script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
-  </style>
+  <link rel="stylesheet" href="{{root_rel}}styles.css">
 </head>
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
   <header class="border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
       <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
         <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       </button>
       <h1 class="text-base font-medium tracking-tight">{{site_title}}</h1>
-      <div class="w-9"></div>
+      <a href="{{root_rel}}feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+        <span>Podcast / RSS</span>
+      </a>
     </div>
   </header>
   <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">

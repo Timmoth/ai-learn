@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What&#x27;s new in .NET 11 — ai-learn</title>
+  <meta name="description" content="An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/">
+  <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="ai-learn podcast" href="../../feed.xml">
+  <meta property="og:title" content="What&#x27;s new in .NET 11">
+  <meta property="og:description" content="An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/">
+  <meta property="og:site_name" content="ai-learn">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="What&#x27;s new in .NET 11">
+  <meta name="twitter:description" content="An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"What's new in .NET 11","headline":"What's new in .NET 11","description":"An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.","url":"https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/","inLanguage":"en","keywords":"dotnet, csharp, backend, release-notes, intermediate","datePublished":"2026-05-17","dateModified":"2026-05-17","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","@id":"https://timmoth.com/#person","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/audio.mp3","encodingFormat":"audio/mpeg","duration":"PT1489S"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../../styles.css">
+  <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+</style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <a href="../../feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+        <span>Podcast / RSS</span>
+      </a>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">What&#x27;s new in .NET 11</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.</p>
+      <div class="text-sm text-gray-500 dark:text-gray-500 mb-4">Requested by <a href="https://timmoth.com" rel="author" class="underline-offset-2 hover:underline">Tim Jones</a>, written by <span class="text-gray-700 dark:text-gray-300">Claude</span>, narrated by <span class="text-gray-700 dark:text-gray-300">Kokoro</span></div>
+      <div class="text-xs text-gray-500 dark:text-gray-500 mb-4">Published <time datetime="2026-05-17">17 May 2026</time> · 17 min read · 25 min listen</div>
+      <div class="flex flex-wrap gap-1.5">
+        <a href="../../tags/dotnet/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">dotnet</a><a href="../../tags/csharp/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">csharp</a><a href="../../tags/backend/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">backend</a><a href="../../tags/release-notes/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">release-notes</a><a href="../../tags/intermediate/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">intermediate</a>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>What's new in .NET 11</h1>
+<p>.NET 11 is the next annual release of the platform, currently in preview and scheduled to ship in November 2026. As a Standard Term Support (STS) release it succeeds the LTS .NET 10, and most of its surface area is already stable enough to try out in real projects.</p>
+<p>This lesson is a tour of what is actually changing — the language additions, the runtime and JIT work, the ASP.NET Core updates, the BCL APIs you will reach for in day-to-day code, and the things you need to know before you bump a <code>&lt;TargetFramework&gt;</code> from <code>net10.0</code> to <code>net11.0</code>. It assumes you are comfortable with C# and have written or maintained a .NET app before.</p>
+<h2>Where to get it and how to target it</h2>
+<p>Install the <a href="https://dotnet.microsoft.com/download/dotnet/11.0">.NET 11 preview SDK</a>, then change your project's target framework:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;PropertyGroup&gt;</span>
+<span class="w">  </span><span class="nt">&lt;TargetFramework&gt;</span>net11.0<span class="nt">&lt;/TargetFramework&gt;</span>
+<span class="w">  </span><span class="nt">&lt;LangVersion&gt;</span>preview<span class="nt">&lt;/LangVersion&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre></div>
+
+<p><code>&lt;LangVersion&gt;preview&lt;/LangVersion&gt;</code> opts you into C# 15 features. You no longer need <code>&lt;EnablePreviewFeatures&gt;true&lt;/EnablePreviewFeatures&gt;</code> for runtime-async on <code>net11.0</code> — that one was relaxed for this release. Other preview features (such as the discriminated-union scaffolding types) still require it.</p>
+<h2>C# 15 language features</h2>
+<p>C# 15 ships with .NET 11. The headline additions are small but expressive.</p>
+<h3>Union types</h3>
+<p>C# finally gets first-class <em>unions</em> — a value that can be one of several known case types, declared with the new <code>union</code> keyword:</p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">Cat</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="p">);</span>
+<span class="k">public</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">Dog</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="p">);</span>
+<span class="k">public</span><span class="w"> </span><span class="k">record</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nf">Bird</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">Name</span><span class="p">);</span>
+
+<span class="k">public</span><span class="w"> </span><span class="n">union</span><span class="w"> </span><span class="nf">Pet</span><span class="p">(</span><span class="n">Cat</span><span class="p">,</span><span class="w"> </span><span class="n">Dog</span><span class="p">,</span><span class="w"> </span><span class="n">Bird</span><span class="p">);</span>
+</code></pre></div>
+
+<p>The compiler provides implicit conversions from each case type into the union and makes <code>switch</code> exhaustiveness a hard guarantee. If you forget a case, the compiler tells you:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Pet</span><span class="w"> </span><span class="n">pet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Dog</span><span class="p">(</span><span class="s">&quot;Rex&quot;</span><span class="p">);</span>
+
+<span class="kt">string</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pet</span><span class="w"> </span><span class="k">switch</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Dog</span><span class="w"> </span><span class="n">d</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Cat</span><span class="w"> </span><span class="n">c</span><span class="w">  </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Bird</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div>
+
+<p>If you removed the <code>Bird</code> arm, the switch expression would emit a non-exhaustive-pattern warning at compile time rather than risking an <code>InvalidOperationException</code> at runtime. The runtime side is exposed in <code>System.Runtime.CompilerServices</code> as <code>UnionAttribute</code> and <code>IUnion</code>, so libraries can author against the surface today; some features from the proposal (notably <em>union member providers</em>) are still being filled in across previews.</p>
+<p>This is the feature people coming from F#, Rust, Swift, or TypeScript have been asking about for years. It replaces a pile of <code>OneOf&lt;&gt;</code>-style NuGet packages and ad-hoc inheritance hierarchies with one supported pattern.</p>
+<h3>Collection expression arguments</h3>
+<p>Collection expressions in C# 12 gave you <code>[1, 2, 3]</code> and spreads. C# 15 lets you pass arguments to the underlying collection's constructor via a <code>with(...)</code> element at the head of the expression:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;one&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;three&quot;</span><span class="p">];</span>
+
+<span class="c1">// Preallocate the List&lt;T&gt; capacity</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="k">with</span><span class="p">(</span><span class="n">capacity</span><span class="p">:</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">..</span><span class="w"> </span><span class="n">values</span><span class="p">];</span>
+
+<span class="c1">// Pass a comparer to a HashSet&lt;T&gt;</span>
+<span class="n">HashSet</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="k">with</span><span class="p">(</span><span class="n">StringComparer</span><span class="p">.</span><span class="n">OrdinalIgnoreCase</span><span class="p">),</span>
+<span class="w">                       </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;HELLO&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">];</span>
+<span class="c1">// set contains a single element.</span>
+</code></pre></div>
+
+<p>Before C# 15, you had to fall back to <code>new HashSet&lt;string&gt;(StringComparer.OrdinalIgnoreCase) { ... }</code> to thread a comparer through, which is awkward inside expressions or <code>init</code> initializers. <code>with(...)</code> keeps the collection expression syntax for the common cases that previously fell off the cliff.</p>
+<h2>Runtime: the big change is Runtime Async</h2>
+<p>The biggest engineering investment in .NET 11 is finishing the move from compiler-generated async state machines to <em>runtime-native async</em>, called Runtime Async (or Runtime Async V2). Instead of the C# compiler emitting a state-machine class per <code>async</code> method, the runtime itself tracks suspension and resumption.</p>
+<p>Opt in per project:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;PropertyGroup&gt;</span>
+<span class="w">  </span><span class="nt">&lt;Features&gt;</span>runtime-async=on<span class="nt">&lt;/Features&gt;</span>
+<span class="nt">&lt;/PropertyGroup&gt;</span>
+</code></pre></div>
+
+<p>The .NET 11 runtime libraries themselves are already compiled with <code>runtime-async=on</code>, so even apps that don't enable it pick up the change indirectly when they call into the BCL. ASP.NET Core's shared-framework libraries are also compiled with it on <code>net11.0+</code>.</p>
+<h3>What you get</h3>
+<p><strong>Cleaner live stack traces.</strong> This is the most visible effect. Walk a chain of three <code>await</code>s today and a <code>new StackTrace()</code> shows you ~13 frames threaded through <code>AsyncMethodBuilderCore.Start[TStateMachine]</code>. With Runtime Async you see the five frames that actually exist in your code:</p>
+<div class="highlight"><pre><span></span><code>   at Program.InnerAsync() in Program.cs:line 24
+   at Program.MiddleAsync() in Program.cs:line 14
+   at Program.OuterAsync() in Program.cs:line 8
+   at Program.&lt;Main&gt;$(String[] args) in Program.cs:line 3
+   at Program.&lt;Main&gt;(String[] args)
+</code></pre></div>
+
+<p>Profilers, debugger call-stack windows, and logging that captures live stacks all benefit. (Exception stack traces already looked clean because <code>ExceptionDispatchInfo</code> had been papering over the compiler-generated frames.)</p>
+<p><strong>Lower overhead.</strong> The runtime reuses continuation objects more aggressively and skips saving locals that didn't change across an await, so allocation pressure in async-heavy code drops.</p>
+<p><strong>Better debugging.</strong> Breakpoints inside runtime-async methods bind correctly, and stepping through <code>await</code> doesn't bounce you into compiler-generated infrastructure.</p>
+<p><strong>Broader codegen.</strong> Runtime Async now works under NativeAOT and ReadyToRun, including inlining of await-less async calls (the synchronous fast path).</p>
+<h3>What to know</h3>
+<p>To opt <em>out</em> per project, use <code>&lt;UseRuntimeAsync&gt;false&lt;/UseRuntimeAsync&gt;</code> in your <code>csproj</code>. The older <code>DOTNET_RuntimeAsync</code> and <code>UNSUPPORTED_RuntimeAsync</code> environment variables have been removed. Because Runtime Async changes codegen for a large portion of the framework, test your apps against the preview and watch for regressions around <code>ExecutionContext</code>/<code>AsyncLocal</code> flow and exception propagation.</p>
+<h2>JIT and codegen improvements</h2>
+<p>The JIT picks up several optimizations that mostly show up after inlining, where guards from different methods land in the same compiled body.</p>
+<p><strong>Constant-folding <code>SequenceEqual</code> and <code>string.Equals</code>.</strong> When both operands are compile-time constants — string literals, <code>const string</code> fields, or UTF-8 literals like <code>"PNG"u8</code> — the JIT replaces the comparison with the constant result:</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsAdmin</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">role</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">role</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;Admin&quot;</span><span class="p">;</span>
+<span class="c1">// At a caller: IsAdmin(&quot;Guest&quot;) folds to false at JIT time after inlining.</span>
+</code></pre></div>
+
+<p><strong>Better bounds-check elimination.</strong> The pattern <code>i + cns &lt; len</code> now elides the bounds check on the indexed access. Index-from-end (<code>values[^1]</code>) has more redundant checks removed. And the JIT now picks up the implicit <code>length != 0</code> assertion from a <code>span.IsEmpty</code> guard:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">span</span><span class="p">.</span><span class="n">IsEmpty</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">span</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// span[0]&#39;s bounds check is now elided.</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Redundant branch elimination.</strong> If an outer predicate is already implied by an inner branch, or if you assign a value conditionally and immediately test it, the JIT now removes the redundant work:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">S</span><span class="p">();</span><span class="w">   </span><span class="c1">// outer x &gt; 0 is folded away</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">A</span><span class="p">();</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">B</span><span class="p">();</span><span class="w"> </span><span class="c1">// the test is eliminated — each ternary branch jumps directly</span>
+</code></pre></div>
+
+<p><strong>Switch expression folding.</strong> Patterns like <code>x is 0 or 1 or 2 or 3 or 4</code> collapse into branchless checks instead of a chain of comparisons.</p>
+<p><strong>Hardware intrinsics.</strong> New Arm SVE2 intrinsics land (<code>ShiftRightLogicalNarrowingSaturate(Even|Odd)</code>), <code>Half</code>↔<code>float</code> conversions on x64 with F16C use dedicated <code>vcvtph2ps</code> / <code>vcvtps2ph</code> instructions, and <code>Vector128.Dot</code> on AVX lowers to <code>mul + permute + add</code> instead of <code>vdpps</code>, which is consistently faster. The runtime also reports <code>SVE_AES</code>, <code>SVE_SHA3</code>, <code>SVE_SM4</code>, <code>SHA3</code>, and <code>SM4</code> as separate instruction sets.</p>
+<p><strong>ReadyToRun.</strong> Default comparers (<code>Comparer&lt;T&gt;.Default</code>, <code>EqualityComparer&lt;T&gt;.Default</code>) are now specialised in R2R images, mirroring NativeAOT — Microsoft's benchmarks show up to 20× improvement for collection operations that hit the default comparer. R2R can also devirtualise non-shared generic virtual calls.</p>
+<p><strong>Cached interface dispatch on non-JIT platforms</strong> — primarily iOS — yields up to 200× improvements in interface-heavy code, because what used to fall back to an expensive generic fixup path now uses the cached path.</p>
+<p><strong><code>Guid.NewGuid()</code> on Linux</strong> now uses <code>getrandom()</code> with batch caching instead of reading from <code>/dev/urandom</code>, ≈12% faster.</p>
+<h2>ASP.NET Core</h2>
+<h3>Kestrel and the request pipeline</h3>
+<p>Kestrel's HTTP/1.1 parser now uses a non-throwing code path for malformed requests, returning a result struct instead of throwing <code>BadHttpRequestException</code> on every parse failure. In hostile traffic (port scanning, misconfigured clients), throughput improves 20–40%; valid request processing is unaffected.</p>
+<p>Kestrel also starts processing HTTP/3 requests without waiting for the control stream and SETTINGS frame, reducing first-request latency on new connections.</p>
+<p>Two TLS observability changes make handshake failures debuggable. <code>ITlsHandshakeFeature.Exception</code> exposes the underlying exception from a failed handshake instead of surfacing a bare <code>IOException</code> higher up. The old <code>TlsClientHelloBytesCallback</code> option is now obsolete; configure ClientHello inspection via the new <code>ListenOptions.UseTlsClientHelloListener</code> connection middleware:</p>
+<div class="highlight"><pre><span></span><code><span class="n">builder</span><span class="p">.</span><span class="n">WebHost</span><span class="p">.</span><span class="n">ConfigureKestrel</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">ListenAnyIP</span><span class="p">(</span><span class="mi">5001</span><span class="p">,</span><span class="w"> </span><span class="n">listenOptions</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">listenOptions</span><span class="p">.</span><span class="n">Use</span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">await</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+<span class="w">            </span><span class="kt">var</span><span class="w"> </span><span class="n">tls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="n">Features</span><span class="p">.</span><span class="n">Get</span><span class="o">&lt;</span><span class="n">ITlsHandshakeFeature</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tls</span><span class="o">?.</span><span class="n">Exception</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">ex</span><span class="p">)</span>
+<span class="w">                </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;TLS failed on {context.ConnectionId}: {ex.Message}&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="p">});</span>
+
+<span class="w">        </span><span class="n">listenOptions</span><span class="p">.</span><span class="n">UseTlsClientHelloListener</span><span class="p">((</span><span class="n">connection</span><span class="p">,</span><span class="w"> </span><span class="n">helloBytes</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="w">            </span><span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;ClientHello: {helloBytes.Length} bytes&quot;</span><span class="p">));</span>
+<span class="w">        </span><span class="n">listenOptions</span><span class="p">.</span><span class="n">UseHttps</span><span class="p">();</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<h3>Zstandard compression — on by default</h3>
+<p>ASP.NET Core picks up Zstandard for both response compression and request decompression, and <code>zstd</code> is enabled by default alongside Brotli and gzip. Browsers that advertise <code>Accept-Encoding: zstd</code> will now get Zstandard-compressed responses out of the box:</p>
+<div class="highlight"><pre><span></span><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddResponseCompression</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddRequestDecompression</span><span class="p">();</span>
+<span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">Configure</span><span class="o">&lt;</span><span class="n">ZstandardCompressionProviderOptions</span><span class="o">&gt;</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">CompressionOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ZstandardCompressionOptions</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Quality</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="p">};</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>The response-compression middleware now also adds <code>Vary: Accept-Encoding</code> to every response when compression is enabled, even if the response itself isn't compressed — important for CDNs and shared caches that key on encoding.</p>
+<h3>Native OpenTelemetry tracing</h3>
+<p>ASP.NET Core now emits OpenTelemetry semantic-convention attributes on the HTTP server activity directly — no separate <code>OpenTelemetry.Instrumentation.AspNetCore</code> package required. Just subscribe to the <code>Microsoft.AspNetCore</code> activity source:</p>
+<div class="highlight"><pre><span></span><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddOpenTelemetry</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="n">WithTracing</span><span class="p">(</span><span class="n">tracing</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">tracing</span>
+<span class="w">        </span><span class="p">.</span><span class="n">AddSource</span><span class="p">(</span><span class="s">&quot;Microsoft.AspNetCore&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="n">AddConsoleExporter</span><span class="p">());</span>
+</code></pre></div>
+
+<p>Attributes like <code>http.request.method</code>, <code>url.path</code>, <code>http.response.status_code</code>, and <code>server.address</code> are populated automatically. If you don't want them, flip the <code>Microsoft.AspNetCore.Hosting.SuppressActivityOpenTelemetryData</code> AppContext switch.</p>
+<h3>Minimal APIs and OpenAPI</h3>
+<p>Endpoint filters now run even when parameter binding fails. The filter can inspect <code>HttpContext.Response.StatusCode == 400</code> and substitute its own response. In <code>Development</code>, set <code>RouteHandlerOptions.ThrowOnBadRequest = false</code> so the framework returns a 400 the filter can observe instead of throwing into the developer exception page.</p>
+<p><code>Microsoft.AspNetCore.OpenApi</code> updates to OpenAPI 3.2.0 via <code>Microsoft.OpenApi</code> 3.3.1 — a <strong>breaking change</strong> in the underlying library. Opt in to the new version explicitly:</p>
+<div class="highlight"><pre><span></span><code><span class="n">builder</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="n">AddOpenApi</span><span class="p">(</span><span class="n">options</span><span class="w"> </span><span class="o">=&gt;</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">options</span><span class="p">.</span><span class="n">OpenApiVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OpenApiSpecVersion</span><span class="p">.</span><span class="n">OpenApi3_2</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>OpenAPI doc generation now recognises HTTP <code>QUERY</code> as a known operation type and emits <code>FileStreamResult</code> / <code>FileContentResult</code> types as binary string schemas instead of generic objects.</p>
+<h3>Blazor</h3>
+<p>Blazor gets a long list of improvements; the ones most likely to affect existing apps:</p>
+<p><strong>Virtualization no longer assumes equal item heights.</strong> <code>Virtualize&lt;TItem&gt;</code> now adapts to measured item sizes at runtime, fixing scrolling glitches in mixed-height lists. The default <code>OverscanCount</code> rises from 3 to 15 to feed the average-height calculation better. A new <code>AnchorMode</code> parameter (<code>None</code>, <code>Beginning</code>, <code>End</code>) controls viewport pinning when items are added — useful for news feeds (<code>Beginning</code>) and chat / log views (<code>End</code>):</p>
+<div class="highlight"><pre><span></span><code>&lt;Virtualize AnchorMode=&quot;End&quot; Items=&quot;@messages&quot; Context=&quot;msg&quot;&gt;
+    &lt;MessageBubble Value=&quot;@msg&quot; /&gt;
+&lt;/Virtualize&gt;
+</code></pre></div>
+
+<p><strong>TempData under static SSR.</strong> A <code>[CascadingParameter] public ITempData? TempData { get; set; }</code> and a <code>[SupplyParameterFromTempData]</code> attribute persist data between HTTP requests during static server-side rendering — flash messages, POST-Redirect-GET state, one-time notifications.</p>
+<p><strong>Relative navigation.</strong> <code>NavigateTo</code> and <code>&lt;NavLink&gt;</code> accept <code>RelativeToCurrentUri = true</code>, resolving the target against the current path instead of the app's base URI:</p>
+<div class="highlight"><pre><span></span><code><span class="n">Navigation</span><span class="p">.</span><span class="n">NavigateTo</span><span class="p">(</span><span class="s">&quot;configuration&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">NavigationOptions</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">RelativeToCurrentUri</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+
+<p><strong>Server-triggered circuit pause.</strong> Server-side Blazor can ask connected clients to begin the graceful pause flow via <code>Circuit.RequestCircuitPauseAsync(CancellationToken)</code> — useful for planned shutdowns, instance draining, and maintenance windows.</p>
+<p><strong><code>BasePath</code> component and <code>DisplayName</code> component.</strong> <code>&lt;BasePath /&gt;</code> renders the <code>&lt;base href&gt;</code> tag automatically; <code>&lt;DisplayName For="..." /&gt;</code> reads <code>[Display(Name=...)]</code> or <code>[DisplayName(...)]</code> from model metadata.</p>
+<p><strong>New project template, <code>blazorwebworker</code>,</strong> scaffolds a Blazor WebAssembly app that runs CPU-heavy work in a Web Worker so the UI thread stays responsive:</p>
+<div class="highlight"><pre><span></span><code>dotnet new blazorwebworker -o MyApp
+</code></pre></div>
+
+<h3>Authentication and rate limiting</h3>
+<p>ASP.NET Core Identity migrates from <code>DateTime</code>/<code>DateTimeOffset</code> to <code>TimeProvider</code>, making lockouts, token expiration, and security-stamp validation deterministic in tests via <code>FakeTimeProvider</code>. Passkey display names are inferred automatically from authenticator AAGUIDs for known providers (Google Password Manager, iCloud Keychain, Windows Hello, 1Password, Bitwarden).</p>
+<p><code>FixedWindowRateLimiter</code> now reports a <code>RetryAfter</code> value that reflects the next window boundary, so apps propagating that into the <code>Retry-After</code> header automatically produce accurate retry intervals.</p>
+<h3>MCP server template ships in the box</h3>
+<p>The <code>mcpserver</code> template — for building Model Context Protocol servers — now bundles with the .NET SDK rather than requiring <code>Microsoft.McpServer.ProjectTemplates</code>:</p>
+<div class="highlight"><pre><span></span><code>dotnet new mcpserver -o MyMcpServer
+</code></pre></div>
+
+<h2>BCL and API additions</h2>
+<h3>Process gets the biggest update in years</h3>
+<p><code>System.Diagnostics.Process</code> finally gets the ergonomic helpers that most teams ended up writing themselves:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// One-shot capture of stdout/stderr plus exit code.</span>
+<span class="n">ProcessTextOutput</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">Process</span><span class="p">.</span><span class="n">RunAndCaptureTextAsync</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;git&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;--porcelain&quot;</span><span class="p">]);</span>
+
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="n">StandardOutput</span><span class="p">);</span>
+<span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">$&quot;Exit: {result.ExitStatus.ExitCode}&quot;</span><span class="p">);</span>
+</code></pre></div>
+
+<p>The new family includes <code>Process.Run</code> / <code>RunAsync</code>, <code>Process.RunAndCaptureText</code> / <code>RunAndCaptureTextAsync</code>, <code>Process.ReadAllText</code> / <code>ReadAllBytes</code> / <code>ReadAllLinesAsync</code>, plus fire-and-forget options:</p>
+<ul>
+<li><code>Process.StartAndForget</code> — starts a child you don't intend to wait for; the runtime detaches the handle.</li>
+<li><code>ProcessStartInfo.StartDetached</code> — detaches from the parent's session/console so the child outlives a terminal.</li>
+<li><code>ProcessStartInfo.KillOnParentExit</code> (Windows) — terminates the child when the parent exits.</li>
+</ul>
+<p><code>SafeProcessHandle</code> gains <code>Start</code>, <code>Kill</code>, <code>Signal</code>, <code>WaitForExit</code> / <code>WaitForExitAsync</code>, and a <code>ProcessId</code> property. <code>ProcessStartInfo.InheritedHandles</code>, <code>StandardInputHandle</code>, <code>StandardOutputHandle</code>, and <code>StandardErrorHandle</code> let you control exactly which OS handles cross the fork boundary instead of inheriting everything.</p>
+<p><code>Console</code> now honours the <code>FORCE_COLOR</code> standard — useful for piping coloured output through <code>tee</code> or into CI viewers.</p>
+<h3>System.Text.Json</h3>
+<p>Several quality-of-life additions:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">JsonSerializerOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">PropertyNamingPolicy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JsonNamingPolicy</span><span class="p">.</span><span class="n">PascalCase</span>
+<span class="p">};</span>
+
+<span class="c1">// Strongly typed metadata retrieval — no more downcast from non-generic GetTypeInfo.</span>
+<span class="n">JsonTypeInfo</span><span class="o">&lt;</span><span class="n">MyRecord</span><span class="o">&gt;</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">options</span><span class="p">.</span><span class="n">GetTypeInfo</span><span class="o">&lt;</span><span class="n">MyRecord</span><span class="o">&gt;</span><span class="p">();</span>
+</code></pre></div>
+
+<ul>
+<li><code>JsonNamingPolicy.PascalCase</code> joins the existing camelCase / snake_case / kebab-case policies.</li>
+<li><code>[JsonNamingPolicy]</code> can be applied per-member to override the global policy without writing a custom converter.</li>
+<li><code>[JsonIgnore]</code> is now valid at the <em>type</em> level — apply once and every member inherits the ignore condition.</li>
+<li>F# discriminated unions serialize out of the box, with no custom converter.</li>
+<li><code>Utf8JsonWriter.Reset(stream, options)</code> accepts new writer options when repooling.</li>
+</ul>
+<h3>Compression and archives</h3>
+<p>The <code>System.IO.Compression</code> namespace gains span-based <code>DeflateEncoder</code>, <code>ZLibEncoder</code>, and <code>GZipEncoder</code> types that mirror the shape of <code>BrotliEncoder</code> — encode and decode without allocating a <code>Stream</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">ReadOnlySpan</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">&gt;</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mh">0x48</span><span class="p">,</span><span class="w"> </span><span class="mh">0x65</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6C</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6C</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6F</span><span class="p">];</span>
+<span class="n">Span</span><span class="o">&lt;</span><span class="kt">byte</span><span class="o">&gt;</span><span class="w"> </span><span class="n">destination</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">stackalloc</span><span class="w"> </span><span class="kt">byte</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+
+<span class="k">using</span><span class="w"> </span><span class="nn">ZLibEncoder</span><span class="w"> </span><span class="n">encoder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+<span class="n">OperationStatus</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">encoder</span><span class="p">.</span><span class="n">Compress</span><span class="p">(</span>
+<span class="w">    </span><span class="n">source</span><span class="p">,</span><span class="w"> </span><span class="n">destination</span><span class="p">,</span>
+<span class="w">    </span><span class="k">out</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">consumed</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">written</span><span class="p">,</span>
+<span class="w">    </span><span class="n">isFinalBlock</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Zstandard joins the namespace as <code>ZstandardStream</code> / <code>ZstandardEncoder</code>. <code>ZipArchiveEntry.Open(FileAccess)</code> and a new <code>CompressionMethod</code> property let you open entries for explicit read/write/read-write access and inspect their compression. <code>ZipArchive</code> now validates CRC32 on read — corrupt archives that previously passed silently now throw <code>InvalidDataException</code>. <code>DeflateStream</code> and <code>GZipStream</code> write format headers and footers even for empty payloads (a <strong>behaviour change</strong> if you depended on empty output).</p>
+<p><code>TarFile.CreateFromDirectory</code> accepts a <code>TarEntryFormat</code> parameter — pick <code>Pax</code>, <code>Ustar</code>, <code>Gnu</code>, or <code>V7</code> instead of always producing Pax. <code>TarReader</code> now also handles the GNU sparse 1.0 (PAX) representation.</p>
+<h3>Strings, numerics, and low-level I/O</h3>
+<ul>
+<li><code>String</code> gains <code>Rune</code>-based overloads of <code>Contains</code>, <code>StartsWith</code> / <code>EndsWith</code>, <code>IndexOf</code> / <code>LastIndexOf</code>, <code>Replace</code>, <code>Split</code>, and <code>Trim*</code>. <code>Char.Equals(char, StringComparison)</code> brings ordinal vs. culture-aware comparisons to single characters.</li>
+<li><code>BitConverter</code> adds <code>BFloat16</code> round-tripping for ML interop.</li>
+<li><code>double</code>, <code>float</code>, and <code>Half</code> can format and parse in IEEE-754 hex form (<code>"0X1.921FB54442D18P+1"</code>), preserving every bit for golden-file tests and C <code>printf("%a", ...)</code> interop.</li>
+<li><code>RegexOptions.AnyNewLine</code> makes <code>^</code>, <code>$</code>, and <code>.</code> treat all Unicode line terminators (<code>\r\n</code>, <code></code>, <code>,</code>) as newlines, not just <code>\n</code>.</li>
+<li><code>SafeFileHandle.Type</code> reports whether a handle is a file, pipe, socket, or directory without P/Invoke; <code>SafeFileHandle.CreateAnonymousPipe(...)</code> makes an anonymous pipe pair with independent async settings.</li>
+<li><code>RandomAccess.Read</code> / <code>Write</code> now work with non-seekable handles like pipes.</li>
+<li><code>BitArray.PopCount()</code> returns the number of set bits efficiently.</li>
+<li><code>Utf8.IndexOfInvalidSubsequence</code> and <code>Utf16.IsValid</code> / <code>IndexOfInvalidSubsequence</code> let parsers report the exact byte position of an encoding error instead of bailing out with a generic exception.</li>
+</ul>
+<h3>Networking and TLS</h3>
+<p><code>HttpClient</code> automatically downgrades to HTTP/1.1 when a request needs NTLM/Negotiate authentication, which HTTP/2 doesn't allow. Enterprise intranets using Windows auth no longer need explicit <code>HttpRequestMessage.Version</code> overrides. On Linux, certificate-validation failures now emit standard TLS alerts to the peer instead of dropping the connection, matching Windows behaviour.</p>
+<h3>Caching observability</h3>
+<p><code>MemoryCache</code> ships with built-in OpenTelemetry-compatible metrics — no extra adapter package. Opt in by setting <code>TrackStatistics</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kt">var</span><span class="w"> </span><span class="n">cache</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">MemoryCache</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">MemoryCacheOptions</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">TrackStatistics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span>
+<span class="p">});</span>
+</code></pre></div>
+
+<p>The <code>Microsoft.Extensions.Caching.Memory.MemoryCache</code> meter publishes <code>dotnet.cache.requests</code> (with a <code>hit</code>/<code>miss</code> tag), <code>dotnet.cache.evictions</code>, <code>dotnet.cache.entries</code>, and <code>dotnet.cache.estimated_size</code>. A new <code>MemoryCache</code> constructor takes an <code>IMeterFactory</code> for per-instance metrics.</p>
+<h2>SDK and tooling</h2>
+<ul>
+<li><strong><code>dotnet watch</code></strong> integrates with Aspire app hosts, recovers automatically after a crash, and supports device selection for MAUI and mobile.</li>
+<li><strong><code>dotnet run -e KEY=value</code></strong> passes environment variables from the command line — no more wrapping in shell-specific syntax.</li>
+<li><strong>File-based apps</strong> now support <code>#:include</code> so you can split a single-file app across multiple files without scaffolding a project.</li>
+<li><strong><code>dotnet sln</code></strong> can create and edit solution filters (<code>.slnf</code>).</li>
+<li><strong>Smaller SDK installers</strong> on Linux and macOS via assembly deduplication; crossgen is skipped for <code>DotnetTools</code>-only assemblies.</li>
+<li><strong>OpenTelemetry replaces Application Insights</strong> for CLI telemetry — the SDK reports back over the open standard.</li>
+<li><strong>Foundation for a NativeAOT <code>dotnet</code> CLI entry point</strong> lands in 11.</li>
+</ul>
+<h2>Migration considerations</h2>
+<p>The shift from .NET 10 to .NET 11 is mostly a recompile, but a few items need attention.</p>
+<h3>Updated hardware baselines</h3>
+<p>This is the change most likely to surprise you. .NET 11 raises the minimum CPU baseline:</p>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>Previous JIT/AOT minimum</th>
+<th>New JIT/AOT minimum</th>
+<th>Previous R2R target</th>
+<th>New R2R target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple</td>
+<td>x86-64-v1</td>
+<td>x86-64-v2</td>
+<td>x86-64-v2</td>
+<td>(no change)</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>x86-64-v1</td>
+<td>x86-64-v2</td>
+<td>x86-64-v2</td>
+<td>x86-64-v3</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>x86-64-v1</td>
+<td>x86-64-v2</td>
+<td>x86-64-v2</td>
+<td>x86-64-v3</td>
+</tr>
+<tr>
+<td>Apple</td>
+<td>Apple M1</td>
+<td>(no change)</td>
+<td>Apple M1</td>
+<td>(no change)</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>armv8.0-a</td>
+<td>(no change)</td>
+<td>armv8.0-a</td>
+<td>armv8.0-a + LSE</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>armv8.0-a</td>
+<td>armv8.0-a + LSE</td>
+<td>armv8.0-a</td>
+<td>armv8.2-a + RCPC</td>
+</tr>
+</tbody>
+</table>
+<p><code>x86-64-v2</code> requires <code>CX16</code>, <code>POPCNT</code>, <code>SSE3</code>, <code>SSSE3</code>, <code>SSE4.1</code>, and <code>SSE4.2</code>. In practice, anything Intel and AMD still officially support meets it — the chips that go below were last supported around 2013 — but if you build container images for older bare-metal fleets or air-gapped environments, validate before upgrading. Running .NET 11 on hardware below the baseline now fails with a startup message:</p>
+<blockquote>
+<p>The current CPU is missing one or more of the baseline instruction sets.</p>
+</blockquote>
+<p>The R2R target lifting to <code>x86-64-v3</code> means precompiled images now assume AVX/AVX2/BMI/FMA. Hardware that meets the JIT baseline but not the R2R baseline will pay a small JIT cost at startup as falls back.</p>
+<h3>Runtime Async and async behaviour</h3>
+<p>Even if you don't enable Runtime Async in your own project, the BCL and ASP.NET Core's shared-framework libraries are compiled with it. Most apps see only cleaner stack traces, but exercise your test suite, especially around <code>ExecutionContext</code> / <code>AsyncLocal</code> propagation and exception flow. The <code>DOTNET_RuntimeAsync</code> environment variable is gone — use <code>&lt;UseRuntimeAsync&gt;false&lt;/UseRuntimeAsync&gt;</code> to opt out per project.</p>
+<h3>Empty Deflate/GZip output now writes headers and footers</h3>
+<p>If you rely on <code>DeflateStream</code> or <code>GZipStream</code> producing an empty file when no data is written, that changes in .NET 11. The streams now always emit format-compliant headers and footers, which is what every other implementation already produces.</p>
+<h3>OpenAPI 3.2 is a breaking dependency</h3>
+<p>If you use <code>Microsoft.AspNetCore.OpenApi</code>, the underlying <code>Microsoft.OpenApi</code> library jumps to 3.3.1 with breaking changes in the doc-model types. Walk the <a href="https://github.com/microsoft/OpenAPI.NET/blob/main/docs/upgrade-guide-3.md">Microsoft.OpenApi upgrade guide</a> before bumping.</p>
+<h3>ZIP CRC32 is now validated</h3>
+<p>Archives that previously passed without validation now throw <code>InvalidDataException</code> on a CRC mismatch. If your pipeline produced subtly corrupt ZIPs that nobody noticed, you will notice now — which is the point.</p>
+<h3>Preview vs. stable surface</h3>
+<p>C# 15 (<code>union</code>, collection expression arguments) and Runtime Async are still labelled preview features in their respective designs even though Runtime Async no longer requires <code>&lt;EnablePreviewFeatures&gt;</code>. Production projects should pin to released previews and budget for at least one validation pass before adopting these specific features broadly. The library surface — Process API, JSON improvements, compression, MemoryCache metrics — is stable.</p>
+<h2>In one paragraph</h2>
+<p>.NET 11 is a polishing release with one large engineering bet — Runtime Async — and a lot of small wins everywhere else. The C# 15 additions (unions, collection expression arguments) tighten the language's modelling story. The JIT, ReadyToRun, and hardware-intrinsics work shaves overhead from real workloads without you changing code. ASP.NET Core picks up Zstandard, native OpenTelemetry, and a much better Blazor <code>Virtualize</code>. The BCL finally gets a sane <code>Process</code> API and a stack of span-based encoders. The thing to watch when you upgrade is the hardware baseline lift and the OpenAPI 3.2 breaking change; everything else should just compile and run, faster and cleaner than before.</p>
+    </article>
+    <section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-4">Related lessons</h2>
+      <div class="space-y-3"><a href="../../lessons/sql-optimisation-tips-and-tricks/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">SQL optimisation tips and tricks</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 19 min read · 22 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">databases</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">sql</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">performance</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">intermediate</span></div>
+      </a>
+        <a href="../../lessons/hardening-a-debian-installation/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Hardening a Debian installation</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A practical guide to securing a fresh Debian server by reducing its attack surface, locking down access, and enabling proactive monitoring. Covers user account policies, SSH hardening, firewall configuration, and automated intrusion prevention.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 16 min read · 22 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">sysadmin</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">debian</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">intermediate</span></div>
+      </a></div>
+    </section>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

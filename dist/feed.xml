@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ai-learn</title>
+    <link>https://ai-learn.timmoth.com/</link>
+    <atom:link href="https://ai-learn.timmoth.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>en</language>
+    <description>AI-generated learning material with written lessons and accompanying audio narration.</description>
+    <copyright>Tim Jones</copyright>
+    <lastBuildDate>Sun, 17 May 2026 16:59:35 +0000</lastBuildDate>
+    <managingEditor>noreply@ai-learn.timmoth.com (Tim Jones)</managingEditor>
+    <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+    <itunes:summary>AI-generated learning material with written lessons and accompanying audio narration.</itunes:summary>
+    <itunes:owner>
+      <itunes:name>Tim Jones</itunes:name>
+      <itunes:email>noreply@ai-learn.timmoth.com</itunes:email>
+    </itunes:owner>
+    <itunes:image href="https://ai-learn.timmoth.com/podcast-cover.png"/>
+    <itunes:category text="Technology"/>
+    <itunes:category text="Education"/>
+    <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>What&#x27;s new in .NET 11</title>
+      <description>An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.</description>
+      <link>https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/</guid>
+      <pubDate>Sun, 17 May 2026 16:18:53 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/audio.mp3" length="17334189" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>dotnet, csharp, backend, release-notes, intermediate</itunes:keywords>
+      <itunes:duration>24:49</itunes:duration>
+    </item>
+    <item>
+      <title>Git basics for new developers</title>
+      <description>A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.</description>
+      <link>https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/</guid>
+      <pubDate>Sun, 17 May 2026 09:45:37 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/audio.mp3" length="8927685" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>git, version control, beginner, tooling</itunes:keywords>
+      <itunes:duration>12:49</itunes:duration>
+    </item>
+    <item>
+      <title>SQL optimisation tips and tricks</title>
+      <description>A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.</description>
+      <link>https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/</guid>
+      <pubDate>Sat, 16 May 2026 16:07:03 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/sql-optimisation-tips-and-tricks/audio.mp3" length="15162093" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A practical guide to writing faster SQL queries by understanding how the database engine executes them and applying proven optimisation techniques. Covers indexing strategies, query rewriting, execution plan analysis, and common performance pitfalls to avoid.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>databases, sql, performance, intermediate</itunes:keywords>
+      <itunes:duration>21:44</itunes:duration>
+    </item>
+    <item>
+      <title>Secrets management with SOPS and age</title>
+      <description>A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</description>
+      <link>https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/</guid>
+      <pubDate>Sat, 16 May 2026 13:37:51 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/secrets-management-sops-age/audio.mp3" length="11493645" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>security, devops, beginner, tooling</itunes:keywords>
+      <itunes:duration>16:27</itunes:duration>
+    </item>
+    <item>
+      <title>Introduction to OpenTofu fundamentals</title>
+      <description>A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</description>
+      <link>https://ai-learn.timmoth.com/lessons/introduction-to-opentofu-fundamentals/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/introduction-to-opentofu-fundamentals/</guid>
+      <pubDate>Sat, 16 May 2026 13:17:35 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/introduction-to-opentofu-fundamentals/audio.mp3" length="9430029" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>infrastructure-as-code, opentofu, devops, beginner, overview</itunes:keywords>
+      <itunes:duration>13:31</itunes:duration>
+    </item>
+    <item>
+      <title>Introduction to Ansible</title>
+      <description>A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.</description>
+      <link>https://ai-learn.timmoth.com/lessons/introduction-to-ansible/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/introduction-to-ansible/</guid>
+      <pubDate>Sat, 16 May 2026 13:09:45 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/introduction-to-ansible/audio.mp3" length="6921189" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A beginner-friendly overview of Ansible as an infrastructure-as-code tool, covering its core concepts, architecture, and the key files and directories you need to get started. Learners will gain a well-rounded mental model of how Ansible works before writing their first playbook.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>ansible, devops, infrastructure-as-code, beginner</itunes:keywords>
+      <itunes:duration>9:53</itunes:duration>
+    </item>
+    <item>
+      <title>Hardening a Debian installation</title>
+      <description>A practical guide to securing a fresh Debian server by reducing its attack surface, locking down access, and enabling proactive monitoring. Covers user account policies, SSH hardening, firewall configuration, and automated intrusion prevention.</description>
+      <link>https://ai-learn.timmoth.com/lessons/hardening-a-debian-installation/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/hardening-a-debian-installation/</guid>
+      <pubDate>Sat, 16 May 2026 16:26:20 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/hardening-a-debian-installation/audio.mp3" length="15032109" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A practical guide to securing a fresh Debian server by reducing its attack surface, locking down access, and enabling proactive monitoring. Covers user account policies, SSH hardening, firewall configuration, and automated intrusion prevention.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>linux, security, sysadmin, debian, intermediate</itunes:keywords>
+      <itunes:duration>21:34</itunes:duration>
+    </item>
+    <item>
+      <title>Core concepts of infrastructure as code</title>
+      <description>An introduction to the foundational vocabulary and mental models behind Infrastructure as Code, covering how declarative definitions, state, and reconciliation enable repeatable, automated infrastructure. Explains key contrasts such as declarative vs imperative, mutable vs immutable, and in-place updates vs burn-and-rebuild.</description>
+      <link>https://ai-learn.timmoth.com/lessons/core-concepts-of-infrastructure-as-code/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/core-concepts-of-infrastructure-as-code/</guid>
+      <pubDate>Sat, 16 May 2026 14:24:56 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/core-concepts-of-infrastructure-as-code/audio.mp3" length="10719621" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>An introduction to the foundational vocabulary and mental models behind Infrastructure as Code, covering how declarative definitions, state, and reconciliation enable repeatable, automated infrastructure. Explains key contrasts such as declarative vs imperative, mutable vs immutable, and in-place updates vs burn-and-rebuild.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>infrastructure-as-code, devops, fundamentals, beginner</itunes:keywords>
+      <itunes:duration>15:22</itunes:duration>
+    </item>
+    <item>
+      <title>Cloud-init beginners guide</title>
+      <description>An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.</description>
+      <link>https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/</guid>
+      <pubDate>Sat, 16 May 2026 13:38:34 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/cloud-init-beginners-guide/audio.mp3" length="9151941" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>An introduction to cloud-init, the industry-standard tool for initializing cloud instances on first boot. Covers how it works, why it is useful, and practical examples of what it can be used for.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>cloud, devops, linux, automation, beginner</itunes:keywords>
+      <itunes:duration>13:05</itunes:duration>
+    </item>
+  </channel>
+</rss>
