@@ -53,6 +53,66 @@ RELATED_SECTION = """<section class="mt-16 pt-8 border-t border-gray-200 dark:bo
       <div class="space-y-3">{{related_cards}}</div>
     </section>"""
 
+HOME_REQUEST_SECTION = """<section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-3">Request a lesson</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Have something you'd like to learn? Describe it and it will open a pre-filled idea on
+        <a href="{{discussions_url}}" class="underline-offset-2 hover:underline" rel="external">GitHub Discussions</a>
+        for review. You'll need a GitHub account to submit.
+      </p>
+      {{request_form}}
+    </section>"""
+
+REQUEST_FORM = """<form id="lesson-request-form" onsubmit="return submitLessonRequest(event)" class="space-y-3">
+      <textarea id="lesson-request-body" rows="6" required minlength="20" maxlength="2000"
+                placeholder="e.g. A practical introduction to systemd service files for self-hosted apps"
+                class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-gray-500 dark:focus:border-gray-500 resize-y"></textarea>
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-xs text-gray-500 dark:text-gray-500">Opens GitHub in a new tab — review before submitting.</span>
+        <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:border-gray-500 dark:hover:border-gray-500 text-sm text-gray-900 dark:text-gray-100 transition">
+          Submit on GitHub
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </button>
+      </div>
+    </form>
+    <script>
+      (function() {
+        var repo = "{{repo}}";
+        var category = "{{category_slug}}";
+        var titlePrefix = "{{title_prefix}}";
+        window.submitLessonRequest = function(e) {
+          e.preventDefault();
+          var body = document.getElementById('lesson-request-body').value.trim();
+          if (body.length < 20) return false;
+          var firstLine = body.split(/\\r?\\n/)[0].slice(0, 80).trim();
+          var params = new URLSearchParams({category: category, title: titlePrefix + firstLine, body: body});
+          window.open('https://github.com/' + repo + '/discussions/new?' + params.toString(), '_blank', 'noopener,noreferrer');
+          return false;
+        };
+      })();
+    </script>"""
+
+COMMENTS_SECTION = """<section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-4">Comments</h2>
+      <p class="text-xs text-gray-500 dark:text-gray-500 mb-4">Sign in with GitHub to leave a comment. Discussions live on the <a href="{{discussions_url}}" class="underline-offset-2 hover:underline">repo</a>.</p>
+      <script src="https://giscus.app/client.js"
+              data-repo="{{repo}}"
+              data-repo-id="{{repo_id}}"
+              data-category="{{category}}"
+              data-category-id="{{category_id}}"
+              data-mapping="{{mapping}}"
+              data-strict="0"
+              data-reactions-enabled="{{reactions}}"
+              data-emit-metadata="0"
+              data-input-position="{{input_position}}"
+              data-theme="preferred_color_scheme"
+              data-lang="en"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async></script>
+      <noscript>Enable JavaScript to view comments. Or read them directly on <a href="{{discussions_url}}" class="underline-offset-2 hover:underline">GitHub Discussions</a>.</noscript>
+    </section>"""
+
 
 def _highlight_css() -> str:
     light = HtmlFormatter(style="default").get_style_defs(".highlight")
@@ -345,6 +405,75 @@ def related_section_html(lesson: dict, all_lessons: list[dict], root_rel: str) -
     })
 
 
+def request_form_html(site: dict) -> str:
+    cfg = site.get("requests") or {}
+    if not cfg.get("repo") or not cfg.get("category_slug"):
+        return ""
+    return render(REQUEST_FORM, {
+        "repo": html.escape(cfg["repo"]),
+        "category_slug": html.escape(cfg["category_slug"]),
+        "title_prefix": html.escape(cfg.get("title_prefix", "Lesson request: ")),
+    })
+
+
+def requests_enabled(site: dict) -> bool:
+    cfg = site.get("requests") or {}
+    return bool(cfg.get("repo") and cfg.get("category_slug"))
+
+
+def home_request_section_html(site: dict) -> str:
+    form = request_form_html(site)
+    if not form:
+        return ""
+    cfg = site["requests"]
+    discussions_url = f"https://github.com/{cfg['repo']}/discussions/categories/{cfg['category_slug']}"
+    return render(HOME_REQUEST_SECTION, {
+        "discussions_url": html.escape(discussions_url),
+        "request_form": form,
+    })
+
+
+def build_request_page(site: dict, footer: str) -> bool:
+    form = request_form_html(site)
+    if not form:
+        return False
+    out_dir = DIST_DIR / "request"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    canonical = f"{site['url']}/request/"
+    root_rel = "../"
+    cfg = site["requests"]
+    discussions_url = f"https://github.com/{cfg['repo']}/discussions/categories/{cfg['category_slug']}"
+    description = f"Request a lesson for {site['title']}. Describe what you'd like to learn and it opens a pre-filled discussion on GitHub for review."
+    page = render(load_template("request.html"), {
+        "root_rel": root_rel,
+        "site_title": html.escape(site["title"]),
+        "canonical_url": html.escape(canonical),
+        "author_url": html.escape(site["author_url"]),
+        "description": html.escape(description),
+        "discussions_url": html.escape(discussions_url),
+        "request_form": form,
+        "footer": footer,
+    })
+    (out_dir / "index.html").write_text(page)
+    return True
+
+
+def comments_section_html(site: dict) -> str:
+    cfg = site.get("comments") or {}
+    if cfg.get("provider") != "giscus" or not cfg.get("repo_id") or not cfg.get("category_id"):
+        return ""
+    return render(COMMENTS_SECTION, {
+        "repo": html.escape(cfg["repo"]),
+        "repo_id": html.escape(cfg["repo_id"]),
+        "category": html.escape(cfg.get("category", "Comments")),
+        "category_id": html.escape(cfg["category_id"]),
+        "mapping": html.escape(cfg.get("mapping", "pathname")),
+        "reactions": "1" if cfg.get("reactions", True) else "0",
+        "input_position": html.escape(cfg.get("input_position", "bottom")),
+        "discussions_url": html.escape(f"https://github.com/{cfg['repo']}/discussions"),
+    })
+
+
 def annotate_lesson(lesson: dict) -> None:
     slug = lesson["slug"]
     src_dir = LESSONS_DIR / slug
@@ -394,6 +523,7 @@ def build_lesson_page(lesson: dict, all_lessons: list[dict], md: markdown.Markdo
         "highlight_css": HIGHLIGHT_CSS,
         "json_ld": lesson_json_ld(lesson, site, audio_url),
         "related_section": related_section_html(lesson, all_lessons, root_rel),
+        "comments_section": comments_section_html(site),
         "footer": footer,
     })
     (out_dir / "index.html").write_text(page)
@@ -411,6 +541,7 @@ def build_home(lessons: list[dict], site: dict, footer: str) -> None:
         "lesson_cards": render_cards(lessons, root_rel),
         "json_ld_website": home_website_json_ld(site),
         "json_ld_person": home_person_json_ld(site),
+        "request_section": home_request_section_html(site),
         "footer": footer,
     })
     (DIST_DIR / "index.html").write_text(page)
@@ -458,6 +589,8 @@ def build_sitemap(lessons: list[dict], tag_urls: list[tuple[str, str]], site: di
         urls.append((f"{site['url']}/lessons/{l['slug']}/", lastmod, "monthly", "0.8"))
     for _slug, url in tag_urls:
         urls.append((url, today, "weekly", "0.5"))
+    if requests_enabled(site):
+        urls.append((f"{site['url']}/request/", today, "yearly", "0.4"))
 
     parts = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -625,6 +758,9 @@ def build() -> int:
 
     build_home(publishable, site, footer)
     print("  home     index.html")
+
+    if build_request_page(site, footer):
+        print("  request  request/index.html")
 
     tag_urls = build_tag_pages(publishable, site, footer)
     print(f"  tags     {len(tag_urls)} tag page(s)")

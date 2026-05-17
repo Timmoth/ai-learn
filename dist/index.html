@@ -40,10 +40,16 @@
         <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
       </button>
       <h1 class="text-base font-medium tracking-tight">ai-learn</h1>
-      <a href="feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
-        <span>Podcast / RSS</span>
-      </a>
+      <nav class="flex items-center gap-4">
+        <a href="request/" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Request a lesson">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          <span>Request</span>
+        </a>
+        <a href="feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+          <span>Podcast / RSS</span>
+        </a>
+      </nav>
     </div>
   </header>
   <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
@@ -116,6 +122,42 @@
         <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">cloud</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">linux</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">automation</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span></div>
       </a>
     </div>
+    <section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-3">Request a lesson</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+        Have something you'd like to learn? Describe it and it will open a pre-filled idea on
+        <a href="https://github.com/timmoth/ai-learn/discussions/categories/lesson-requests" class="underline-offset-2 hover:underline" rel="external">GitHub Discussions</a>
+        for review. You'll need a GitHub account to submit.
+      </p>
+      <form id="lesson-request-form" onsubmit="return submitLessonRequest(event)" class="space-y-3">
+      <textarea id="lesson-request-body" rows="6" required minlength="20" maxlength="2000"
+                placeholder="e.g. A practical introduction to systemd service files for self-hosted apps"
+                class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-gray-500 dark:focus:border-gray-500 resize-y"></textarea>
+      <div class="flex items-center justify-between gap-3">
+        <span class="text-xs text-gray-500 dark:text-gray-500">Opens GitHub in a new tab — review before submitting.</span>
+        <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:border-gray-500 dark:hover:border-gray-500 text-sm text-gray-900 dark:text-gray-100 transition">
+          Submit on GitHub
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+        </button>
+      </div>
+    </form>
+    <script>
+      (function() {
+        var repo = "timmoth/ai-learn";
+        var category = "lesson-requests";
+        var titlePrefix = "Lesson request: ";
+        window.submitLessonRequest = function(e) {
+          e.preventDefault();
+          var body = document.getElementById('lesson-request-body').value.trim();
+          if (body.length < 20) return false;
+          var firstLine = body.split(/\r?\n/)[0].slice(0, 80).trim();
+          var params = new URLSearchParams({category: category, title: titlePrefix + firstLine, body: body});
+          window.open('https://github.com/' + repo + '/discussions/new?' + params.toString(), '_blank', 'noopener,noreferrer');
+          return false;
+        };
+      })();
+    </script>
+    </section>
   </main>
   <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
     <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">

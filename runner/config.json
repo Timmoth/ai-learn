@@ -53,6 +53,21 @@
     "url": "https://ai-learn.timmoth.com",
     "author": "Tim Jones",
     "author_url": "https://timmoth.com",
-    "github_url": "https://github.com/Timmoth/ai-learn"
+    "github_url": "https://github.com/Timmoth/ai-learn",
+    "comments": {
+      "provider": "giscus",
+      "repo": "timmoth/ai-learn",
+      "repo_id": "R_kgDOSfMCGw",
+      "category": "Announcements",
+      "category_id": "DIC_kwDOSfMCG84C9QvM",
+      "mapping": "pathname",
+      "reactions": true,
+      "input_position": "bottom"
+    },
+    "requests": {
+      "repo": "timmoth/ai-learn",
+      "category_slug": "lesson-requests",
+      "title_prefix": "Lesson request: "
+    }
   }
 }
