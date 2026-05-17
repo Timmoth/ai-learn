@@ -1,0 +1,68 @@
+{
+  "slug": "llama-cpp-qwen3.6-35b-a3b-setup",
+  "revision": 1,
+  "generated_at": "2026-05-17T12:00:00Z",
+  "sources": [
+    {
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "title": "ggml-org/llama.cpp — LLM inference in C/C++",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md",
+      "title": "llama.cpp build documentation",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md",
+      "title": "llama-server README — command-line flags and OpenAI-compatible endpoints",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF",
+      "title": "unsloth/Qwen3.6-35B-A3B-GGUF — model card, quantisations, recommended sampler settings",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://huggingface.co/blog/Doctor-Shotgun/llamacpp-moe-offload-guide",
+      "title": "Performant local mixture-of-experts CPU inference with GPU acceleration in llama.cpp",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://huggingface.co/Qwen/Qwen3-30B-A3B",
+      "title": "Qwen/Qwen3-30B-A3B — recommended generation parameters and architecture notes",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://unsloth.ai/docs/basics/inference-and-deployment/llama-server-and-openai-endpoint",
+      "title": "llama-server & OpenAI endpoint deployment guide — Unsloth Documentation",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://www.finding-intuition.com/posts/2025-09-28-llama-cpp-service/",
+      "title": "How to set up llama.cpp as a systemd service — Finding Intuition",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html",
+      "title": "systemd.exec(5) — sandboxing directives reference",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://manpages.debian.org/unstable/llama.cpp-tools/llama-server.1.en.html",
+      "title": "llama-server(1) — Debian manpage",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://huggingface.co/docs/huggingface_hub/main/en/guides/cli",
+      "title": "huggingface-cli — downloading specific files from the Hugging Face Hub",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    },
+    {
+      "url": "https://github.com/thc1006/qwen3.6-speculative-decoding-rtx3090",
+      "title": "First public benchmark of llama.cpp speculative decoding on Qwen3.6-35B-A3B with RTX 3090",
+      "accessed_at": "2026-05-17T12:00:00Z"
+    }
+  ],
+  "summary": "An end-to-end, intermediate-level guide to running the Qwen3.6 35B A3B mixture-of-experts model locally with llama.cpp and managing it as a systemd service. The lesson opens with a quick architectural orientation: 35B total parameters but only 3B active per token, 256 experts with 8 routed plus 1 shared firing per forward pass, a native 262K-token context window, and an Unsloth GGUF release with quantisations spanning 10 GB to 70 GB. The first concrete step builds llama.cpp from source on Debian/Ubuntu, with the CUDA backend enabled (-DGGML_CUDA=ON) and libcurl support (-DLLAMA_CURL=ON) so that llama-server can resolve Hugging Face shortcuts like unsloth/Qwen3.6-35B-A3B-GGUF:UD-Q4_K_M directly. The second step walks through three ways to get the weights — the built-in -hf shortcut, huggingface-cli download for explicit paths, and direct LFS URLs — alongside a quantisation table mapping VRAM budgets to specific tags (UD-IQ2_M for 12 GB, UD-Q3_K_M for 16 GB, UD-Q4_K_M for 24 GB, Q8_0 and BF16 for larger setups). The third step explains the six load-bearing llama-server flags: --model, --host/--port, --ctx-size, --n-gpu-layers, --threads/--threads-batch, --batch-size/--ubatch-size, --parallel, --jinja, and --api-key, including the often-missed detail that context size is divided across parallel slots. The fourth step is the MoE-specific tuning section that pays the rent: the routed experts are the bulk of the weights but rarely used, so --cpu-moe pushes all of them to CPU, --n-cpu-moe N pushes the first N layers' experts, and --override-tensor \"exps=CPU\" gives regex-level control, letting a 22 GB Q4 model run on a 12 GB card or a full 64K context on a 24 GB card. The fifth step verifies the live endpoint by hand with curl against /v1/models and /v1/chat/completions, confirming the OpenAI-compatible shape. The sixth step wraps everything in a systemd service: a dedicated 'llama' system user, a locked-down /etc/llama-server.env containing the API key and tunable parameters, a unit file with After=network-online.target, Restart=on-failure, a generous TimeoutStartSec for the slow GGUF load, and a sandboxing block (NoNewPrivileges, ProtectSystem=strict, ProtectHome, PrivateTmp, ProtectKernel*, RestrictNamespaces) that meaningfully reduces blast radius. The lesson closes with what was intentionally left out — reverse proxy and TLS, GPU driver setup, multi-GPU tensor splits, speculative decoding (which empirically does not help Qwen3.6 35B A3B on Ampere), and llama-swap for multi-model rotation — and frames the result as a reproducible private OpenAI-shaped endpoint tunable through one environment file."
+}

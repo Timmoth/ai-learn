@@ -10,7 +10,7 @@
     <language>en</language>
     <description>AI-generated learning material with written lessons and accompanying audio narration.</description>
     <copyright>Tim Jones</copyright>
-    <lastBuildDate>Sun, 17 May 2026 17:20:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 17:24:55 +0000</lastBuildDate>
     <managingEditor>noreply@ai-learn.timmoth.com (Tim Jones)</managingEditor>
     <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
     <itunes:summary>AI-generated learning material with written lessons and accompanying audio narration.</itunes:summary>
@@ -22,6 +22,19 @@
     <itunes:category text="Technology"/>
     <itunes:category text="Education"/>
     <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>Running llama.cpp locally with Qwen3.6 35B A3B and systemd</title>
+      <description>A practical guide to installing and configuring llama.cpp to serve the Qwen3.6 35B A3B mixture-of-experts model locally, including tuning runtime parameters and setting up a systemd service so the inference server starts automatically on boot.</description>
+      <link>https://ai-learn.timmoth.com/lessons/llama-cpp-qwen3.6-35b-a3b-setup/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/llama-cpp-qwen3.6-35b-a3b-setup/</guid>
+      <pubDate>Sun, 17 May 2026 17:17:28 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/llama-cpp-qwen3.6-35b-a3b-setup/audio.mp3" length="11970813" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A practical guide to installing and configuring llama.cpp to serve the Qwen3.6 35B A3B mixture-of-experts model locally, including tuning runtime parameters and setting up a systemd service so the inference server starts automatically on boot.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>local LLM, self-hosting, linux, inference, intermediate</itunes:keywords>
+      <itunes:duration>17:10</itunes:duration>
+    </item>
     <item>
       <title>Essential macOS tips and shortcuts for beginners</title>
       <description>A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.</description>
