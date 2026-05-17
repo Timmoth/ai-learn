@@ -149,6 +149,27 @@
       ],
       "created_at": "2026-05-16T16:26:20+00:00",
       "updated_at": "2026-05-16T16:44:17+00:00"
+    },
+    {
+      "slug": "git-basics-for-new-developers",
+      "title": "Git basics for new developers",
+      "description": "A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.",
+      "topics": [
+        "initialising and cloning repositories",
+        "staging and committing changes",
+        "working with feature branches",
+        "pulling, pushing, and syncing with remotes",
+        "merging branches and resolving conflicts",
+        "a simple best-practice Git workflow"
+      ],
+      "tags": [
+        "git",
+        "version control",
+        "beginner",
+        "tooling"
+      ],
+      "created_at": "2026-05-17T09:45:37+00:00",
+      "updated_at": "2026-05-17T09:49:47+00:00"
     }
   ]
 }

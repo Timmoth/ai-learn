@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git basics for new developers — ai-learn</title>
+  <meta name="description" content="A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/">
+  <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta property="og:title" content="Git basics for new developers">
+  <meta property="og:description" content="A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Git basics for new developers">
+  <meta name="twitter:description" content="A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Git basics for new developers","headline":"Git basics for new developers","description":"A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.","url":"https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/","inLanguage":"en","keywords":"git, version control, beginner, tooling","datePublished":"2026-05-17","dateModified":"2026-05-17","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com"},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/git-basics-for-new-developers/audio.mp3","encodingFormat":"audio/mpeg"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+    audio::-webkit-media-controls-panel { background-color: transparent; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <div class="w-9"></div>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">Git basics for new developers</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.</p>
+      <div class="flex flex-wrap gap-1.5">
+        <span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">git</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">version control</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>Git basics for new developers</h1>
+<p>Almost every working developer touches Git every day. It is the tool you use to save your work, share it with teammates, branch off to try ideas, and reconcile changes when more than one person edits the same code. The commands look intimidating at first, but the underlying model is small and consistent. Once you have it, the day-to-day cycle becomes muscle memory.</p>
+<p>This lesson walks through that model and the commands that go with it: creating and cloning repositories, staging and committing, working on feature branches, syncing with remotes, and resolving merge conflicts. We finish with a simple workflow you can use on real projects from day one.</p>
+<h2>What Git is, in one paragraph</h2>
+<p>Git is a distributed version control system. "Version control" means it records snapshots of your files over time so you can review, compare, and roll back changes. "Distributed" means every clone of the repository is a full copy — there is no special central server in the protocol itself, only a server that teams <em>agree</em> to treat as the source of truth (typically hosted on GitHub, GitLab, Bitbucket, or a self-hosted instance). Every command you run operates on your local copy first; sharing is an extra step.</p>
+<p>A Git repository keeps your project's history in a hidden <code>.git</code> directory at the root. That directory holds objects (the snapshots), refs (named pointers like branches and tags), and configuration. Everything else in the project folder is your <em>working tree</em> — the actual files you edit.</p>
+<h2>Starting a repository</h2>
+<p>You can start a new repository from an existing folder with <code>git init</code>, or you can copy an existing remote repository with <code>git clone</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Brand new project: turn the current folder into a Git repo</span>
+mkdir<span class="w"> </span>my-project
+<span class="nb">cd</span><span class="w"> </span>my-project
+git<span class="w"> </span>init<span class="w"> </span>-b<span class="w"> </span>main
+</code></pre></div>
+
+<p>The <code>-b main</code> flag sets the initial branch name. Older Git defaulted to <code>master</code>; modern projects almost always use <code>main</code>, and Git 3.0 will make <code>main</code> the default. You can set this globally once and forget about it:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>init.defaultBranch<span class="w"> </span>main
+</code></pre></div>
+
+<p>Cloning a remote project is more common in practice:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/owner/repo.git
+<span class="nb">cd</span><span class="w"> </span>repo
+</code></pre></div>
+
+<p><code>git clone</code> does several things at once: it downloads the full history, creates a working tree on disk, sets up a remote called <code>origin</code> pointing back at the URL you cloned from, and checks out the repository's default branch (usually <code>main</code>). From that point on, the local clone is a full, independent copy of the project's history.</p>
+<h2>The three areas: working tree, index, repository</h2>
+<p>The piece of Git that confuses newcomers most is the <strong>staging area</strong> (also called the <strong>index</strong>). Git has three places a change can live:</p>
+<ol>
+<li><strong>Working tree</strong> — the files on disk that you edit.</li>
+<li><strong>Index / staging area</strong> — a holding pen for changes you have marked for the <em>next</em> commit.</li>
+<li><strong>Repository</strong> — the committed history inside <code>.git</code>.</li>
+</ol>
+<p>The flow is always the same: edit a file, <em>stage</em> the changes you want to record, then <em>commit</em> them. The staging area lets you decide exactly what goes into each commit, so a single editing session can become several focused commits instead of one big blob.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status<span class="w">            </span><span class="c1"># see what&#39;s modified, staged, or untracked</span>
+git<span class="w"> </span>diff<span class="w">              </span><span class="c1"># show unstaged changes</span>
+git<span class="w"> </span>diff<span class="w"> </span>--staged<span class="w">     </span><span class="c1"># show what&#39;s about to be committed</span>
+git<span class="w"> </span>add<span class="w"> </span>path/to/file<span class="w">  </span><span class="c1"># stage a specific file</span>
+git<span class="w"> </span>add<span class="w"> </span>.<span class="w">             </span><span class="c1"># stage everything in the current directory</span>
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Add login form validation&quot;</span>
+</code></pre></div>
+
+<p><code>git status</code> is the command you will run more than any other. It tells you, in plain English, which files are modified, which are staged, which are untracked, and which branch you are on. When you are unsure what state your repo is in, run it.</p>
+<p>A small shortcut: <code>git commit -am "message"</code> stages all <em>already-tracked</em> files and commits in one step. It does not pick up new files — for those you still need <code>git add</code>.</p>
+<h2>Ignoring files</h2>
+<p>You rarely want to commit build artifacts, log files, editor settings, or secrets. Create a <code>.gitignore</code> file at the repo root listing patterns Git should pretend do not exist:</p>
+<div class="highlight"><pre><span></span><code># Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Logs and local env
+*.log
+.env
+.env.local
+
+# Editor and OS junk
+.vscode/
+.DS_Store
+</code></pre></div>
+
+<p><code>.gitignore</code> itself is committed; it is part of the project. If a file is already tracked, adding it to <code>.gitignore</code> does <em>not</em> untrack it — you need <code>git rm --cached &lt;file&gt;</code> to stop tracking it while keeping the file on disk.</p>
+<h2>Writing good commits</h2>
+<p>A commit is a labeled snapshot of the repository. Two habits will make your history dramatically more useful:</p>
+<ul>
+<li><strong>Make commits small and focused.</strong> Each commit should do one logical thing — fix one bug, add one feature, rename one symbol. If you find yourself writing "and" in the message, it is probably two commits.</li>
+<li><strong>Write a clear message.</strong> The first line is a short summary, ideally under fifty characters, written in the imperative ("Add password reset endpoint", not "Added" or "Adds"). If more context is needed, leave a blank line and add a longer body explaining <em>why</em>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Add password reset endpoint
+
+Lets users request a reset link via email when they forget
+their password. Tokens expire after one hour.
+</code></pre></div>
+
+<p>You will read these messages in <code>git log</code> weeks or months later, often while debugging an incident. Future-you will appreciate the effort.</p>
+<h2>Branches</h2>
+<p>A branch in Git is just a movable pointer to a commit. Creating one is cheap — there is no copying of files, no separate folder, no server round-trip. That is why branches are the unit of work in almost every Git workflow.</p>
+<p>The typical pattern is: branch off <code>main</code>, do your work on the branch, then merge it back into <code>main</code> when it is ready. The branch keeps your in-progress code isolated, so <code>main</code> stays in a known-good state.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a branch and switch to it in one step</span>
+git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/login-form
+
+<span class="c1"># ... edit, add, commit, repeat ...</span>
+
+<span class="c1"># Move between existing branches</span>
+git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>switch<span class="w"> </span>feature/login-form
+git<span class="w"> </span>switch<span class="w"> </span>-<span class="w">            </span><span class="c1"># jump back to the previous branch</span>
+
+<span class="c1"># See your branches</span>
+git<span class="w"> </span>branch<span class="w">              </span><span class="c1"># local branches; the current one has a *</span>
+git<span class="w"> </span>branch<span class="w"> </span>-a<span class="w">           </span><span class="c1"># include remote-tracking branches</span>
+</code></pre></div>
+
+<p><code>git switch</code> is the modern command for moving between branches; <code>git switch -c</code> creates one. Older tutorials use <code>git checkout -b</code> for the same thing — both still work, but <code>switch</code> is the clearer name and what you should reach for in new code.</p>
+<p>Branch names should describe the work, not the author or the date. Common conventions are <code>feature/...</code>, <code>fix/...</code>, or <code>chore/...</code>, but the only hard rule is "be descriptive": <code>fix/login-redirect-loop</code> is helpful, <code>tims-branch-2</code> is not.</p>
+<h2>Remotes: fetch, pull, push</h2>
+<p>A <strong>remote</strong> is a named reference to another copy of the repository — usually a shared one on a hosting service. After <code>git clone</code>, you already have a remote called <code>origin</code>.</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>-v
+<span class="c1"># origin  https://github.com/owner/repo.git (fetch)</span>
+<span class="c1"># origin  https://github.com/owner/repo.git (push)</span>
+</code></pre></div>
+
+<p>Three commands move commits between your clone and the remote:</p>
+<ul>
+<li><strong><code>git fetch</code></strong> downloads new commits from the remote into <em>remote-tracking</em> branches (like <code>origin/main</code>). It does not touch your working tree or your local branches. Think of it as "check the mailbox."</li>
+<li><strong><code>git pull</code></strong> is <code>git fetch</code> followed by an integration step — by default it merges the remote branch into your current local branch. It is the everyday "give me the latest" command.</li>
+<li><strong><code>git push</code></strong> sends your local commits up to the remote so other people can see them.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>fetch<span class="w"> </span>origin<span class="w">                  </span><span class="c1"># download without changing your branch</span>
+git<span class="w"> </span>pull<span class="w">                          </span><span class="c1"># fetch and integrate into the current branch</span>
+git<span class="w"> </span>push<span class="w">                          </span><span class="c1"># publish current branch to its remote</span>
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>feature/login<span class="w">  </span><span class="c1"># first push of a new branch; sets up tracking</span>
+</code></pre></div>
+
+<p>The <code>-u</code> (short for <code>--set-upstream</code>) on the first push of a new branch tells Git which remote branch your local branch corresponds to. After that, plain <code>git pull</code> and <code>git push</code> know where to go.</p>
+<p>A common gotcha: <code>git pull</code> will refuse to fast-forward if your local branch and the remote branch have diverged (you both made commits). At that point you choose how to integrate — either with a merge or a rebase. Many teams set <code>pull.rebase = true</code> or <code>pull.ff = only</code> in their config to make the behavior explicit:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>pull.ff<span class="w"> </span>only<span class="w">      </span><span class="c1"># only fast-forward; fail if diverged</span>
+<span class="c1"># or</span>
+git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>pull.rebase<span class="w"> </span><span class="nb">true</span><span class="w">  </span><span class="c1"># always rebase your local commits on top</span>
+</code></pre></div>
+
+<p>If <code>pull --ff-only</code> fails, you decide consciously: <code>git pull --rebase</code> to replay your commits on top, or <code>git pull --no-rebase</code> to create a merge commit.</p>
+<h2>Merging branches</h2>
+<p>Once your feature branch is done, you bring its commits back into <code>main</code>. The mechanics are:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>switch<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w">              </span><span class="c1"># make sure main is up to date</span>
+git<span class="w"> </span>merge<span class="w"> </span>feature/login-form
+</code></pre></div>
+
+<p>Git performs one of two kinds of merge:</p>
+<ul>
+<li><strong>Fast-forward.</strong> If <code>main</code> has not moved since you branched, Git just slides the <code>main</code> pointer forward to the tip of your branch. No new commit, perfectly linear history.</li>
+<li><strong>Three-way merge.</strong> If <code>main</code> has new commits too, Git compares your branch, the current <code>main</code>, and their common ancestor, and creates a new <em>merge commit</em> that ties the histories together.</li>
+</ul>
+<p>After a successful merge you can delete the feature branch — its commits live on in <code>main</code>:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>feature/login-form<span class="w">           </span><span class="c1"># local</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>--delete<span class="w"> </span>feature/login-form<span class="w"> </span><span class="c1"># remote</span>
+</code></pre></div>
+
+<p>In team workflows you usually do not merge locally. Instead you push the branch, open a pull request (or merge request) on the hosting service, get a review, and let the platform perform the merge. The mechanics underneath are exactly the same.</p>
+<h2>Resolving merge conflicts</h2>
+<p>A <strong>conflict</strong> happens when the same lines of the same file have been changed on both sides of a merge, and Git cannot pick a winner automatically. Git pauses the merge and writes both versions into the file with markers:</p>
+<div class="highlight"><pre><span></span><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+const TIMEOUT_MS = 5000;
+=======
+const TIMEOUT_MS = 10000;
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/slow-network
+</code></pre></div>
+
+<p>The block between <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> and <code>=======</code> is your side (the branch you were on). The block between <code>=======</code> and <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> is the other side. Your job is to:</p>
+<ol>
+<li>Open each conflicted file (<code>git status</code> lists them).</li>
+<li>Edit the file so it contains the version you actually want — keeping one side, keeping both, or writing something new entirely.</li>
+<li>Delete the conflict markers.</li>
+<li>Stage the resolved file with <code>git add</code>.</li>
+<li>Run <code>git commit</code> to finalize the merge (Git supplies a default message).</li>
+</ol>
+<p>If you panic mid-merge, <code>git merge --abort</code> puts everything back the way it was. Conflicts feel scary the first few times; after a couple they are routine.</p>
+<h2>A simple, sane workflow</h2>
+<p>For most teams, this is enough:</p>
+<ol>
+<li><strong>Start from an up-to-date main.</strong>
+   <code>bash
+   git switch main
+   git pull</code></li>
+<li><strong>Create a branch for your work.</strong>
+   <code>bash
+   git switch -c fix/login-redirect-loop</code></li>
+<li><strong>Make small, focused commits as you go.</strong>
+   <code>bash
+   git add .
+   git commit -m "Stop redirecting on already-authenticated session"</code></li>
+<li><strong>Push your branch and keep pushing as you commit.</strong>
+   <code>bash
+   git push -u origin fix/login-redirect-loop
+   # later commits:
+   git push</code></li>
+<li><strong>Open a pull request on your hosting service</strong> with a description of what you changed and why. Address review feedback by making more commits and pushing.</li>
+<li><strong>Merge through the platform's UI</strong> once it is approved and the checks pass. Delete the branch.</li>
+<li><strong>Pull <code>main</code> back down locally</strong> so your next piece of work starts from the merged result.</li>
+</ol>
+<p>This is sometimes called <strong>GitHub Flow</strong>, and it scales surprisingly well — many large teams use a more elaborate variant of the same pattern. The reason it works is that <code>main</code> always represents shippable code, branches are short-lived, and integration happens through reviewed pull requests rather than ad-hoc local merges.</p>
+<h2>Commands to commit to memory</h2>
+<p>If you only learn ten commands to start, learn these:</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git status</code></td>
+<td>Show what's changed, staged, and untracked.</td>
+</tr>
+<tr>
+<td><code>git add &lt;path&gt;</code></td>
+<td>Stage a change for the next commit.</td>
+</tr>
+<tr>
+<td><code>git commit -m "..."</code></td>
+<td>Record staged changes as a new commit.</td>
+</tr>
+<tr>
+<td><code>git switch &lt;branch&gt;</code></td>
+<td>Move to an existing branch.</td>
+</tr>
+<tr>
+<td><code>git switch -c &lt;branch&gt;</code></td>
+<td>Create a new branch and move to it.</td>
+</tr>
+<tr>
+<td><code>git pull</code></td>
+<td>Fetch from the remote and integrate.</td>
+</tr>
+<tr>
+<td><code>git push</code></td>
+<td>Send your commits to the remote.</td>
+</tr>
+<tr>
+<td><code>git log --oneline --graph --decorate</code></td>
+<td>Browse history in a readable form.</td>
+</tr>
+<tr>
+<td><code>git diff</code></td>
+<td>See what's changed since the last commit.</td>
+</tr>
+<tr>
+<td><code>git merge &lt;branch&gt;</code></td>
+<td>Merge another branch into the current one.</td>
+</tr>
+</tbody>
+</table>
+<p>Everything else — rebases, cherry-picks, reflogs, bisect, stashes, submodules — builds on these. Get fluent with the basics first, and the rest of Git stops looking like a foreign language and starts looking like a set of power tools you can pick up as you need them.</p>
+    </article>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

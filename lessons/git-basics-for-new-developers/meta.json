@@ -1,0 +1,48 @@
+{
+  "slug": "git-basics-for-new-developers",
+  "revision": 1,
+  "generated_at": "2026-05-17T09:49:20Z",
+  "sources": [
+    {
+      "url": "https://git-scm.com/docs/git-init",
+      "title": "git-init Documentation",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/docs/git-clone",
+      "title": "git-clone Documentation",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/docs/git-switch",
+      "title": "git-switch Documentation",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/docs/git-pull",
+      "title": "git-pull Documentation",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository",
+      "title": "Pro Git Book — Recording Changes to the Repository",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging",
+      "title": "Pro Git Book — Basic Branching and Merging",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes",
+      "title": "Pro Git Book — Working with Remotes",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    },
+    {
+      "url": "https://docs.github.com/en/get-started/quickstart/github-flow",
+      "title": "GitHub Flow — GitHub Docs",
+      "accessed_at": "2026-05-17T09:49:20Z"
+    }
+  ],
+  "summary": "A practical introduction to Git for new developers, built around the small, consistent mental model that makes day-to-day Git click: a working tree, a staging area, and a committed history, with branches as cheap pointers that move through it. The lesson starts a repository from scratch with git init and via git clone, covers the modern default branch name main, then walks through the edit-stage-commit cycle using git status, git add, git diff, and git commit, including how to write small focused commits and a sensible .gitignore. It introduces branches with git switch and git switch -c, explains the three remote-syncing commands fetch, pull, and push (including the -u upstream flag and the diverged-branch pull.ff and pull.rebase settings), shows how fast-forward and three-way merges differ, and walks through reading and resolving conflict markers with git merge --abort as the safety net. It closes with a simple GitHub Flow style workflow — branch off main, commit, push, open a pull request, review, merge, delete the branch, pull main back down — and a ten-command cheat sheet to commit to memory."
+}
