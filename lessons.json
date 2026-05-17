@@ -192,6 +192,27 @@
       ],
       "created_at": "2026-05-17T16:18:53+00:00",
       "updated_at": "2026-05-17T16:25:30+00:00"
+    },
+    {
+      "slug": "essential-macos-tips-and-shortcuts-for-beginners",
+      "title": "Essential macOS tips and shortcuts for beginners",
+      "description": "A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.",
+      "topics": [
+        "essential keyboard shortcuts",
+        "trackpad gestures and Mission Control",
+        "Spotlight search basics",
+        "window management and Stage Manager",
+        "useful System Settings to change first",
+        "Finder navigation tips"
+      ],
+      "tags": [
+        "macOS",
+        "productivity",
+        "beginner",
+        "tutorial"
+      ],
+      "created_at": "2026-05-17T17:15:24+00:00",
+      "updated_at": "2026-05-17T17:20:31+00:00"
     }
   ]
 }

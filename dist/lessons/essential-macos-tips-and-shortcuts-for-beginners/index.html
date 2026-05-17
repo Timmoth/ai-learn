@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Essential macOS tips and shortcuts for beginners — ai-learn</title>
+  <meta name="description" content="A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.">
+  <link rel="canonical" href="https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/">
+  <link rel="author" href="https://timmoth.com">
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+  <link rel="alternate" type="application/rss+xml" title="ai-learn podcast" href="../../feed.xml">
+  <meta property="og:title" content="Essential macOS tips and shortcuts for beginners">
+  <meta property="og:description" content="A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/">
+  <meta property="og:site_name" content="ai-learn">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Essential macOS tips and shortcuts for beginners">
+  <meta name="twitter:description" content="A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#030712" media="(prefers-color-scheme: dark)">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Essential macOS tips and shortcuts for beginners","headline":"Essential macOS tips and shortcuts for beginners","description":"A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.","url":"https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/","inLanguage":"en","keywords":"macOS, productivity, beginner, tutorial","datePublished":"2026-05-17","dateModified":"2026-05-17","author":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","@id":"https://timmoth.com/#person","sameAs":["https://github.com/Timmoth"]},"publisher":{"@type":"Person","name":"Tim Jones","url":"https://timmoth.com","sameAs":["https://github.com/Timmoth"]},"audio":{"@type":"AudioObject","contentUrl":"https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/audio.mp3","encodingFormat":"audio/mpeg","duration":"PT746S"}}</script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../../styles.css">
+  <style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.highlight .hll { background-color: #ffffcc }
+.highlight { background: #f8f8f8; }
+.highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #F00 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666 } /* Operator */
+.highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #9C6500 } /* Comment.Preproc */
+.highlight .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.highlight .gr { color: #E40000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #008400 } /* Generic.Inserted */
+.highlight .go { color: #717171 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #04D } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #687822 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
+.highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #00F } /* Name.Function */
+.highlight .nl { color: #767600 } /* Name.Label */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #A45A77 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.dark .highlight .hll { background-color: #49483e }
+.dark .highlight { background: #272822; color: #F8F8F2 }
+.dark .highlight .c { color: #959077 } /* Comment */
+.dark .highlight .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.dark .highlight .esc { color: #F8F8F2 } /* Escape */
+.dark .highlight .g { color: #F8F8F2 } /* Generic */
+.dark .highlight .k { color: #66D9EF } /* Keyword */
+.dark .highlight .l { color: #AE81FF } /* Literal */
+.dark .highlight .n { color: #F8F8F2 } /* Name */
+.dark .highlight .o { color: #FF4689 } /* Operator */
+.dark .highlight .x { color: #F8F8F2 } /* Other */
+.dark .highlight .p { color: #F8F8F2 } /* Punctuation */
+.dark .highlight .ch { color: #959077 } /* Comment.Hashbang */
+.dark .highlight .cm { color: #959077 } /* Comment.Multiline */
+.dark .highlight .cp { color: #959077 } /* Comment.Preproc */
+.dark .highlight .cpf { color: #959077 } /* Comment.PreprocFile */
+.dark .highlight .c1 { color: #959077 } /* Comment.Single */
+.dark .highlight .cs { color: #959077 } /* Comment.Special */
+.dark .highlight .gd { color: #FF4689 } /* Generic.Deleted */
+.dark .highlight .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.dark .highlight .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.dark .highlight .gr { color: #F8F8F2 } /* Generic.Error */
+.dark .highlight .gh { color: #F8F8F2 } /* Generic.Heading */
+.dark .highlight .gi { color: #A6E22E } /* Generic.Inserted */
+.dark .highlight .go { color: #66D9EF } /* Generic.Output */
+.dark .highlight .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.dark .highlight .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.dark .highlight .gu { color: #959077 } /* Generic.Subheading */
+.dark .highlight .gt { color: #F8F8F2 } /* Generic.Traceback */
+.dark .highlight .kc { color: #66D9EF } /* Keyword.Constant */
+.dark .highlight .kd { color: #66D9EF } /* Keyword.Declaration */
+.dark .highlight .kn { color: #FF4689 } /* Keyword.Namespace */
+.dark .highlight .kp { color: #66D9EF } /* Keyword.Pseudo */
+.dark .highlight .kr { color: #66D9EF } /* Keyword.Reserved */
+.dark .highlight .kt { color: #66D9EF } /* Keyword.Type */
+.dark .highlight .ld { color: #E6DB74 } /* Literal.Date */
+.dark .highlight .m { color: #AE81FF } /* Literal.Number */
+.dark .highlight .s { color: #E6DB74 } /* Literal.String */
+.dark .highlight .na { color: #A6E22E } /* Name.Attribute */
+.dark .highlight .nb { color: #F8F8F2 } /* Name.Builtin */
+.dark .highlight .nc { color: #A6E22E } /* Name.Class */
+.dark .highlight .no { color: #66D9EF } /* Name.Constant */
+.dark .highlight .nd { color: #A6E22E } /* Name.Decorator */
+.dark .highlight .ni { color: #F8F8F2 } /* Name.Entity */
+.dark .highlight .ne { color: #A6E22E } /* Name.Exception */
+.dark .highlight .nf { color: #A6E22E } /* Name.Function */
+.dark .highlight .nl { color: #F8F8F2 } /* Name.Label */
+.dark .highlight .nn { color: #F8F8F2 } /* Name.Namespace */
+.dark .highlight .nx { color: #A6E22E } /* Name.Other */
+.dark .highlight .py { color: #F8F8F2 } /* Name.Property */
+.dark .highlight .nt { color: #FF4689 } /* Name.Tag */
+.dark .highlight .nv { color: #F8F8F2 } /* Name.Variable */
+.dark .highlight .ow { color: #FF4689 } /* Operator.Word */
+.dark .highlight .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.dark .highlight .w { color: #F8F8F2 } /* Text.Whitespace */
+.dark .highlight .mb { color: #AE81FF } /* Literal.Number.Bin */
+.dark .highlight .mf { color: #AE81FF } /* Literal.Number.Float */
+.dark .highlight .mh { color: #AE81FF } /* Literal.Number.Hex */
+.dark .highlight .mi { color: #AE81FF } /* Literal.Number.Integer */
+.dark .highlight .mo { color: #AE81FF } /* Literal.Number.Oct */
+.dark .highlight .sa { color: #E6DB74 } /* Literal.String.Affix */
+.dark .highlight .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.dark .highlight .sc { color: #E6DB74 } /* Literal.String.Char */
+.dark .highlight .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.dark .highlight .sd { color: #E6DB74 } /* Literal.String.Doc */
+.dark .highlight .s2 { color: #E6DB74 } /* Literal.String.Double */
+.dark .highlight .se { color: #AE81FF } /* Literal.String.Escape */
+.dark .highlight .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.dark .highlight .si { color: #E6DB74 } /* Literal.String.Interpol */
+.dark .highlight .sx { color: #E6DB74 } /* Literal.String.Other */
+.dark .highlight .sr { color: #E6DB74 } /* Literal.String.Regex */
+.dark .highlight .s1 { color: #E6DB74 } /* Literal.String.Single */
+.dark .highlight .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.dark .highlight .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.dark .highlight .fm { color: #A6E22E } /* Name.Function.Magic */
+.dark .highlight .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.dark .highlight .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.dark .highlight .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.dark .highlight .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.dark .highlight .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+
+.highlight {
+  background-color: #f6f8fa;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  margin: 1.25rem 0;
+}
+.dark .highlight {
+  background-color: #0d1117;
+  border-color: #30363d;
+}
+.highlight pre {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+.highlight code {
+  background-color: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+}
+.highlight code::before, .highlight code::after { content: none !important; }
+</style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="border-b border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+      <button onclick="toggleTheme()" class="p-2 -ml-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition" aria-label="Toggle theme">
+        <svg class="block dark:hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="hidden dark:block w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <a href="../../" class="text-base font-medium tracking-tight hover:text-gray-600 dark:hover:text-gray-400 transition">ai-learn</a>
+      <a href="../../feed.xml" rel="alternate" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition inline-flex items-center gap-1.5" aria-label="Podcast / RSS feed">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
+        <span>Podcast / RSS</span>
+      </a>
+    </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-12 flex-1 w-full">
+    <nav class="mb-8">
+      <a href="../../" class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition">← All lessons</a>
+    </nav>
+    <header class="mb-8">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">Essential macOS tips and shortcuts for beginners</h1>
+      <p class="text-gray-600 dark:text-gray-400 mb-4">A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.</p>
+      <div class="text-sm text-gray-500 dark:text-gray-500 mb-4">Requested by <a href="https://timmoth.com" rel="author" class="underline-offset-2 hover:underline">Tim Jones</a>, written by <span class="text-gray-700 dark:text-gray-300">Claude</span>, narrated by <span class="text-gray-700 dark:text-gray-300">Kokoro</span></div>
+      <div class="text-xs text-gray-500 dark:text-gray-500 mb-4">Published <time datetime="2026-05-17">17 May 2026</time> · 12 min read · 12 min listen</div>
+      <div class="flex flex-wrap gap-1.5">
+        <a href="../../tags/macos/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">macOS</a><a href="../../tags/productivity/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">productivity</a><a href="../../tags/beginner/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">beginner</a><a href="../../tags/tutorial/" class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition">tutorial</a>
+      </div>
+    </header>
+    <div class="mb-10 p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+      <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-2">Listen</p>
+      <audio controls preload="metadata" class="w-full">
+        <source src="audio.mp3" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    </div>
+    <article class="prose prose-gray dark:prose-invert max-w-none prose-headings:font-semibold prose-headings:tracking-tight">
+      <h1>Essential macOS tips and shortcuts for beginners</h1>
+<p>A new Mac is one of those tools that feels great out of the box and quietly gets faster the more you learn about it. macOS hides a lot of its best behaviour behind keyboard shortcuts, trackpad gestures, and a handful of System Settings toggles that ship turned off. None of it is hard — it just isn't obvious. This lesson is the tour you wish someone had given you on day one.</p>
+<p>We will cover the keyboard shortcuts that pay back the most per minute of learning, the trackpad gestures that make moving around feel effortless, how to use Spotlight as your launcher and personal calculator, how to manage windows with Mission Control and the new tiling system, the System Settings worth changing first, and a handful of Finder tricks that turn it from "the thing files live in" into a real navigation tool.</p>
+<h2>The modifier keys, and how to read shortcuts</h2>
+<p>Before anything else, learn the symbols. Mac shortcuts are written with glyphs that the keyboard does not actually print, which catches beginners out.</p>
+<ul>
+<li><code>⌘</code> is <strong>Command</strong> — the workhorse modifier, equivalent to Ctrl on Windows.</li>
+<li><code>⌥</code> is <strong>Option</strong> (also labelled "alt" on some keyboards).</li>
+<li><code>⌃</code> is <strong>Control</strong> — used less often than on Windows.</li>
+<li><code>⇧</code> is <strong>Shift</strong>.</li>
+<li><code>fn</code> is the <strong>Function</strong> key, usually bottom-left.</li>
+</ul>
+<p>So <code>⇧⌘5</code> means "hold Shift and Command, then press 5". In this lesson we will write shortcuts in words (<code>Shift + Command + 5</code>) for clarity. Press and hold the modifiers first, then tap the last key.</p>
+<h2>The shortcuts that earn their keep</h2>
+<p>These are the ones to commit to muscle memory. They work in almost every Mac app.</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Command + C</code> / <code>Command + V</code> / <code>Command + X</code></td>
+<td>Copy, paste, cut</td>
+</tr>
+<tr>
+<td><code>Command + Z</code> / <code>Shift + Command + Z</code></td>
+<td>Undo, redo</td>
+</tr>
+<tr>
+<td><code>Command + S</code></td>
+<td>Save</td>
+</tr>
+<tr>
+<td><code>Command + A</code></td>
+<td>Select all</td>
+</tr>
+<tr>
+<td><code>Command + F</code></td>
+<td>Find in current document or page</td>
+</tr>
+<tr>
+<td><code>Command + W</code></td>
+<td>Close the current window or tab</td>
+</tr>
+<tr>
+<td><code>Command + Q</code></td>
+<td>Quit the current app (note: closing the last window does <em>not</em> quit the app)</td>
+</tr>
+<tr>
+<td><code>Command + Tab</code></td>
+<td>Switch between running apps</td>
+</tr>
+<tr>
+<td><code>Command + Backtick</code> (the key above Tab)</td>
+<td>Cycle between windows of the <em>current</em> app</td>
+</tr>
+<tr>
+<td><code>Command + H</code></td>
+<td>Hide the current app</td>
+</tr>
+<tr>
+<td><code>Command + M</code></td>
+<td>Minimize the front window to the Dock</td>
+</tr>
+<tr>
+<td><code>Command + Space</code></td>
+<td>Open Spotlight</td>
+</tr>
+<tr>
+<td><code>Shift + Command + 5</code></td>
+<td>Screenshot and screen recording tool</td>
+</tr>
+<tr>
+<td><code>Option + Command + Esc</code></td>
+<td>Force-quit picker, the Mac equivalent of Task Manager</td>
+</tr>
+<tr>
+<td><code>Control + Command + Q</code></td>
+<td>Lock the screen instantly</td>
+</tr>
+</tbody>
+</table>
+<p>A subtle one to internalise: on a Mac, <strong>closing the last window does not quit the app</strong>. The menu bar at the top of the screen still shows it as running. <code>Command + Q</code> is what actually quits. This trips up almost everyone coming from Windows.</p>
+<h3>Screenshots, properly</h3>
+<p><code>Shift + Command + 5</code> opens a small toolbar with everything you need: full-screen capture, window capture, region capture, screen recording, and a timer. There are direct shortcuts too:</p>
+<ul>
+<li><code>Shift + Command + 3</code> — capture the whole screen.</li>
+<li><code>Shift + Command + 4</code> — drag a region. Press Space mid-drag to switch to "capture a window" mode, which gives you a clean window screenshot with a subtle drop shadow.</li>
+<li>Hold <code>Control</code> with any of the above to copy to clipboard instead of saving a file to the desktop.</li>
+</ul>
+<h2>Trackpad gestures</h2>
+<p>The Mac trackpad is the part most worth learning gestures for — Apple has spent twenty years making it the best in the industry, and the gestures are how you unlock it. Open <code>System Settings → Trackpad</code> to see them all animated; the highlights are below.</p>
+<p><strong>Two fingers:</strong></p>
+<ul>
+<li>Scroll by sliding two fingers up or down.</li>
+<li>Pinch to zoom on photos, PDFs, and web pages.</li>
+<li>Two-finger tap is right-click (a.k.a. "secondary click").</li>
+<li>Swipe left or right to go back and forward in Safari, Finder, and most native apps.</li>
+<li>Swipe in from the right edge to open Notification Center.</li>
+</ul>
+<p><strong>Three fingers:</strong></p>
+<ul>
+<li>Tap with three fingers on a word to look it up in the dictionary.</li>
+<li>Enable "three-finger drag" in <code>System Settings → Accessibility → Pointer Control → Trackpad Options</code> to drag windows and select text without clicking. Once you have used it for a day, going back feels broken.</li>
+</ul>
+<p><strong>Four fingers:</strong></p>
+<ul>
+<li>Swipe up to open Mission Control (an overview of every open window).</li>
+<li>Swipe down for App Exposé (every window of the <em>current</em> app).</li>
+<li>Swipe left or right between full-screen apps and desktop "Spaces".</li>
+<li>Pinch with thumb and three fingers to show Launchpad. Spread to show the desktop.</li>
+</ul>
+<p>If a gesture isn't doing what you expect, the Trackpad settings panel shows a short video clip of every gesture next to a toggle. It is the single most useful settings page on the machine for a new user.</p>
+<h2>Spotlight is the front door</h2>
+<p><code>Command + Space</code> opens Spotlight. Most people learn it as "the way to launch apps without leaving the keyboard", which is true, but it does a lot more.</p>
+<div class="highlight"><pre><span></span><code>Calendar           → launches Calendar.app
+cal                → also launches Calendar.app (initials match)
+weather london     → embedded weather forecast
+1450 * 1.2         → calculator: shows 1740 inline
+50 usd in eur      → currency conversion
+12 stone in kg     → unit conversion
+define ephemeral   → dictionary definition
+report.pdf         → opens or reveals the file
+kind:pdf budget    → filter by file kind
+</code></pre></div>
+
+<p>A few habits make Spotlight pay off:</p>
+<ul>
+<li><strong>Type initials, not full names.</strong> "ST" launches Sublime Text, "DT" launches DeepL Translate, and so on. Spotlight learns which match you actually pick and prioritises it next time.</li>
+<li><strong>Use it as a calculator</strong> for quick arithmetic — there is no need to open the Calculator app.</li>
+<li><strong>Hold Command</strong> when a result is highlighted to see the full path of the file underneath. Press <code>Command + Return</code> to reveal the file in Finder instead of opening it.</li>
+<li><strong>Trim the noise.</strong> <code>System Settings → Spotlight</code> lets you turn off categories you never use (Mail messages, Siri Suggestions, Bookmarks, etc.) so search results stay sharp. The Privacy tab lets you exclude folders entirely from indexing.</li>
+</ul>
+<p>If Spotlight starts feeling slow or returning nothing for a folder, force a reindex by adding the folder to the Privacy list, then removing it again.</p>
+<h2>Mission Control, Spaces, and Stage Manager</h2>
+<p>macOS gives you three different lenses on your open windows. They sound similar but solve different problems.</p>
+<p><strong>Mission Control</strong> (<code>F3</code> on most keyboards, or four-finger swipe up) zooms out to show every window across every desktop, tiled so you can see what is open. Click a window to jump to it. Drag a window to the top of the screen to put it on a new desktop.</p>
+<p><strong>Spaces</strong> are virtual desktops. Each Space is a separate canvas, and any full-screen app gets its own Space automatically. Switch between them with <code>Control + Left/Right Arrow</code> or by swiping left or right with four fingers. A useful pattern is one Space for communication (Mail, Slack, Messages), one for the work you are focused on, and one full-screen for video calls.</p>
+<p><strong>Stage Manager</strong> is the newer option, off by default. Turn it on from Control Center (the icon in the menu bar that looks like two sliders) or in <code>System Settings → Desktop &amp; Dock</code>. Stage Manager keeps the window you are using in the centre of the screen and parks the rest as small thumbnails on the left. Click a thumbnail to swap in that app. Drag a thumbnail into the centre to group apps together so they come back as a set. It is a great fit for people who like a focused, single-task workspace; less so if you rely on having many windows visible at once.</p>
+<p>You do not need to use all three. Most people pick a primary mode — typically Mission Control plus Spaces — and ignore the others.</p>
+<h2>Window tiling, the native way</h2>
+<p>macOS Sequoia (2024) finally added native window tiling, the snap-to-edge behaviour Windows has had for years.</p>
+<p>The three ways to use it:</p>
+<ol>
+<li><strong>Drag to an edge.</strong> Drag any window to the top, left, right, or a corner. A translucent preview shows where it will snap. Release to drop it in.</li>
+<li><strong>Hover the green button.</strong> Park your pointer over the green traffic-light button at the top-left of any window. A menu appears with layout options: left half, right half, top/bottom halves, quarters, and the classic full screen.</li>
+<li><strong>Keyboard shortcuts.</strong> <code>Fn + Control + Left Arrow</code> snaps the active window to the left half. <code>Right Arrow</code>, <code>Up Arrow</code>, and <code>Down Arrow</code> do the obvious equivalents. <code>Fn + Control + F</code> fills the screen without entering full-screen mode (i.e. without giving up the menu bar).</li>
+</ol>
+<p>If you prefer the old "drag does not tile" behaviour, hold <code>Option</code> while dragging to suppress the snap. The opposite — making tiling more aggressive — is also configurable in <code>System Settings → Desktop &amp; Dock → Windows</code>.</p>
+<h2>Finder, beyond pointing and clicking</h2>
+<p>Finder is the file browser, and like everything else on macOS it gets faster the more keyboard shortcuts you use.</p>
+<table>
+<thead>
+<tr>
+<th>Shortcut</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Command + N</code></td>
+<td>New Finder window</td>
+</tr>
+<tr>
+<td><code>Command + T</code></td>
+<td>New Finder tab</td>
+</tr>
+<tr>
+<td><code>Shift + Command + N</code></td>
+<td>New folder</td>
+</tr>
+<tr>
+<td><code>Control + Command + N</code></td>
+<td>New folder <em>from the selection</em> (great for tidying downloads)</td>
+</tr>
+<tr>
+<td><code>Command + 1</code> / <code>2</code> / <code>3</code> / <code>4</code></td>
+<td>Icon, list, column, gallery view</td>
+</tr>
+<tr>
+<td><code>Command + Down Arrow</code></td>
+<td>Open the selected folder or file</td>
+</tr>
+<tr>
+<td><code>Command + Up Arrow</code></td>
+<td>Go to the enclosing folder</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td>Quick Look — instant preview of any selected file</td>
+</tr>
+<tr>
+<td><code>Command + Y</code></td>
+<td>Quick Look in a full window (toggleable)</td>
+</tr>
+<tr>
+<td><code>Shift + Command + .</code></td>
+<td>Show or hide hidden files</td>
+</tr>
+<tr>
+<td><code>Command + Delete</code></td>
+<td>Move to Trash</td>
+</tr>
+<tr>
+<td><code>Shift + Command + Delete</code></td>
+<td>Empty the Trash</td>
+</tr>
+<tr>
+<td><code>Option + Command + V</code></td>
+<td>"Move" (after a <code>Command + C</code> copy) — paste-and-delete-original</td>
+</tr>
+<tr>
+<td><code>Shift + Command + G</code></td>
+<td>"Go to folder" — type any path, including <code>~</code> for home</td>
+</tr>
+</tbody>
+</table>
+<p><code>Shift + Command + G</code> is the closest thing macOS has to a command-line shortcut inside Finder. Type <code>~/Library</code> to get into your user library (which is hidden by default), or <code>/etc</code> to peek at system config files.</p>
+<p><strong>Quick Look</strong> (<code>Space</code> on any file) is one of those features that nobody mentions and everybody loves once they discover it. It previews PDFs, images, video, audio, code, and most office documents instantly without opening the parent app. Select several files and press <code>Space</code> to flip through them.</p>
+<p><strong>Tabs and tags.</strong> Finder windows can have tabs like a browser (<code>Command + T</code>). And every file can be assigned a colour-tagged label from the right-click menu, which then shows up in the Finder sidebar as a saved filter. Tags work well for cross-cutting groups — "active project", "to read", "tax documents" — that don't map cleanly to a single folder.</p>
+<h2>Settings worth changing on day one</h2>
+<p>The macOS defaults are sensible, but a handful of toggles dramatically improve daily life. Open <code>System Settings</code> (Apple menu → System Settings) and work through these.</p>
+<p><strong>Trackpad (or Mouse).</strong> Turn on "Tap to click" so you don't have to physically depress the trackpad to click. While you are here, check the tracking speed — the default is conservative.</p>
+<p><strong>Keyboard.</strong> Set "Key repeat" to fast and "Delay until repeat" to short. The defaults make holding down arrow keys feel sluggish. Also worth enabling: full keyboard access (<code>Keyboard → Keyboard navigation</code>) so you can <code>Tab</code> through buttons in dialog boxes.</p>
+<p><strong>Dock &amp; Menu Bar.</strong> Shrink the Dock, enable "Automatically hide and show the Dock" if you want the screen real estate, and turn off "Show recent applications in Dock" if you find that clutter unhelpful.</p>
+<p><strong>Desktop &amp; Dock → Hot Corners.</strong> Hot Corners are an underused gem. Assign each corner of the screen to a quick action: bottom-left to Mission Control, top-right to lock screen, top-left to show the desktop. Slamming the cursor into a corner is faster than any shortcut.</p>
+<p><strong>Privacy &amp; Security → FileVault.</strong> Turn this on. FileVault encrypts your entire disk with your login password. If the laptop is ever lost or stolen, your files stay unreadable. There is essentially no downside on modern Macs — the encryption is hardware-accelerated.</p>
+<p><strong>Privacy &amp; Security → Analytics &amp; Improvements.</strong> Turn off "Share Mac Analytics" and "Improve Siri &amp; Dictation" if you would rather not send usage data to Apple. Personal preference, but worth a glance.</p>
+<p><strong>General → Time Machine.</strong> Plug in an external drive and let Time Machine back up to it. Versioned snapshots every hour, with no thought required, are a quiet superpower the first time you accidentally delete something important.</p>
+<p><strong>Accessibility → Display → Reduce motion.</strong> Optional. The big sweeping desktop-switch and Mission Control animations look slick but eat real time over the course of a day. Reducing motion makes them snap.</p>
+<p><strong>Battery → Low Power Mode</strong> (laptops only). Set it to kick in automatically on battery. Modern Macs lose almost nothing in real-world performance and gain meaningful battery life.</p>
+<h2>A short workflow that ties it together</h2>
+<p>Once these pieces are in your hands, the loop looks like this:</p>
+<ol>
+<li><code>Command + Space</code>, type two or three letters, hit Return — your app is open.</li>
+<li><code>Fn + Control + Left Arrow</code> to tile it to the left half of the screen, then <code>Command + Tab</code> to bring the next app over and tile it to the right.</li>
+<li>Four-finger swipe up to peek at Mission Control if you've lost a window.</li>
+<li><code>Space</code> in Finder to preview a file before bothering to open it.</li>
+<li><code>Shift + Command + 5</code> when you need to capture or record something.</li>
+<li><code>Control + Command + Q</code> to lock the screen when you walk away.</li>
+</ol>
+<p>None of these is a power-user trick. They are just the standard macOS controls, used the way they were designed to be used. Spend a week deliberately reaching for them and they become reflex.</p>
+<h2>Where to learn more</h2>
+<ul>
+<li><code>System Settings → Keyboard → Keyboard Shortcuts</code> lets you see (and rebind) every shortcut macOS knows about, including per-app menu shortcuts.</li>
+<li>The official Apple shortcuts reference, "Mac keyboard shortcuts" (support.apple.com), is exhaustive and kept up to date with each macOS release.</li>
+<li>The Help menu of any app has a search box that finds menu items by name and shows their shortcut next to them — type half a command and macOS will tell you which menu it lives in and what the keystroke is.</li>
+</ul>
+<p>That last one is worth remembering on its own. Whenever you find yourself reaching for the menu, look at the shortcut next to the item you clicked. That is how the inventory of shortcuts in your head grows.</p>
+    </article>
+    <section class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+      <h2 class="text-sm uppercase tracking-wide text-gray-500 dark:text-gray-500 mb-4">Related lessons</h2>
+      <div class="space-y-3"><a href="../../lessons/git-basics-for-new-developers/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Git basics for new developers</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A practical introduction to Git covering the essential commands and workflows every new developer needs. Walks through creating and cloning repositories, working with branches, and the standard pull-commit-push cycle used in day-to-day development.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-17">17 May 2026</time> · 11 min read · 13 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">git</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">version control</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span></div>
+      </a>
+        <a href="../../lessons/secrets-management-sops-age/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Secrets management with SOPS and age</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A beginner-friendly introduction to managing secrets in code repositories using SOPS and age, covering the core concepts, architecture, and common workflows. Explains why encrypted secrets matter, how SOPS and age fit together, and how to get started with your first encrypted file.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 12 min read · 16 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">security</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">tooling</span></div>
+      </a>
+        <a href="../../lessons/introduction-to-opentofu-fundamentals/" class="block p-5 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition">
+        <h2 class="text-base font-medium mb-1">Introduction to OpenTofu fundamentals</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">A holistic overview of OpenTofu covering its core concepts, essential files, and architecture. Prepares new users to confidently begin hands-on infrastructure-as-code work.</p>
+        <p class="text-xs text-gray-500 dark:text-gray-500 mb-3"><time datetime="2026-05-16">16 May 2026</time> · 10 min read · 14 min listen</p>
+        <div class="flex flex-wrap gap-1.5"><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">infrastructure-as-code</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">opentofu</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">devops</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">beginner</span><span class="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">overview</span></div>
+      </a></div>
+    </section>
+  </main>
+  <footer class="border-t border-gray-200 dark:border-gray-800 mt-20">
+    <div class="max-w-3xl mx-auto px-6 py-6 text-sm text-gray-600 dark:text-gray-500">
+      Architected by <a href="https://timmoth.com" rel="me author" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">Tim Jones</a>, Built by AI — <a href="https://github.com/Timmoth/ai-learn" rel="external" class="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline-offset-2 hover:underline">GitHub</a>
+    </div>
+  </footer>
+  <script>
+    function toggleTheme() {
+      var isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+  </script>
+</body>
+</html>

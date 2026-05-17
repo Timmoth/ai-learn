@@ -7,6 +7,12 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://ai-learn.timmoth.com/lessons/whats-new-in-dotnet-11/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
@@ -151,6 +157,12 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://ai-learn.timmoth.com/tags/macos/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://ai-learn.timmoth.com/tags/opentofu/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -164,6 +176,12 @@
   </url>
   <url>
     <loc>https://ai-learn.timmoth.com/tags/performance/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ai-learn.timmoth.com/tags/productivity/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -194,6 +212,12 @@
   </url>
   <url>
     <loc>https://ai-learn.timmoth.com/tags/tooling/</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ai-learn.timmoth.com/tags/tutorial/</loc>
     <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

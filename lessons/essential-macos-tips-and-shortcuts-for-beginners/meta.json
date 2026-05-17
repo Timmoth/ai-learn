@@ -1,0 +1,48 @@
+{
+  "slug": "essential-macos-tips-and-shortcuts-for-beginners",
+  "revision": 1,
+  "generated_at": "2026-05-17T17:19:55Z",
+  "sources": [
+    {
+      "url": "https://support.apple.com/en-us/102650",
+      "title": "Mac keyboard shortcuts — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://support.apple.com/en-us/102482",
+      "title": "Use Multi-Touch gestures on Mac — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://support.apple.com/guide/mac-help/search-with-spotlight-mchlp1008/mac",
+      "title": "Search for anything with Spotlight on Mac — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://support.apple.com/guide/mac-help/use-stage-manager-mchl534ba392/mac",
+      "title": "Organise your Mac desktop with Stage Manager — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://support.apple.com/guide/mac-help/change-trackpad-settings-mchlp1226/mac",
+      "title": "Change Trackpad settings on Mac — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://support.apple.com/guide/mac-help/change-system-settings-mh15217/mac",
+      "title": "Customize your Mac with System Settings — Apple Support",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://www.macrumors.com/2024/06/12/macos-sequoia-window-tiling/",
+      "title": "macOS Sequoia: How Window Tiling and Snapping Currently Works — MacRumors",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    },
+    {
+      "url": "https://eshop.macsales.com/blog/96674-how-to-use-macos-sequoias-new-tiled-window-management-feature/",
+      "title": "How to Use macOS Sequoia's New Tiled Window Management Feature — OWC",
+      "accessed_at": "2026-05-17T17:19:55Z"
+    }
+  ],
+  "summary": "A beginner's tour of macOS that focuses on the keyboard shortcuts, trackpad gestures, and System Settings that make the biggest difference in everyday use. The lesson starts by demystifying the Command, Option, Control, Shift, and Function modifier keys, then walks through the universal shortcuts every Mac user should know — copy/paste, undo/redo, save, app and window switching with Command-Tab and Command-Backtick, Command-Q vs. Command-W, force-quit with Option-Command-Esc, lock screen with Control-Command-Q, and the Shift-Command-5 screenshot and screen-recording tool. It explains the standard Multi-Touch trackpad gestures by finger count (two-finger scroll/right-click/back-forward, three-finger dictionary lookup and drag, four-finger Mission Control and App Exposé), shows how to use Spotlight as a launcher, calculator, unit converter, dictionary, and weather/file finder with kind: filters, and covers macOS's three window-management lenses — Mission Control, Spaces, and Stage Manager — alongside Sequoia's native window tiling via drag-to-edge, the green button menu, and Fn-Control-arrow shortcuts. It closes with a Finder shortcut cheat sheet (Quick Look with Space, Shift-Command-G for Go to Folder, Control-Command-N for 'new folder from selection', and view-mode shortcuts), the System Settings worth toggling on day one (Tap to click, fast key repeat, FileVault, Time Machine, Hot Corners, Reduce Motion, Low Power Mode), and a short workflow that strings everything together."
+}

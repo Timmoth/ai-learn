@@ -10,7 +10,7 @@
     <language>en</language>
     <description>AI-generated learning material with written lessons and accompanying audio narration.</description>
     <copyright>Tim Jones</copyright>
-    <lastBuildDate>Sun, 17 May 2026 16:59:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 May 2026 17:20:50 +0000</lastBuildDate>
     <managingEditor>noreply@ai-learn.timmoth.com (Tim Jones)</managingEditor>
     <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
     <itunes:summary>AI-generated learning material with written lessons and accompanying audio narration.</itunes:summary>
@@ -22,6 +22,19 @@
     <itunes:category text="Technology"/>
     <itunes:category text="Education"/>
     <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>Essential macOS tips and shortcuts for beginners</title>
+      <description>A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.</description>
+      <link>https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/</link>
+      <guid isPermaLink="true">https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/</guid>
+      <pubDate>Sun, 17 May 2026 17:15:24 +0000</pubDate>
+      <enclosure url="https://ai-learn.timmoth.com/lessons/essential-macos-tips-and-shortcuts-for-beginners/audio.mp3" length="8683269" type="audio/mpeg"/>
+      <itunes:author>Tim Jones / Claude / Kokoro</itunes:author>
+      <itunes:summary>A beginner-friendly tour of macOS keyboard shortcuts, gestures, and settings that dramatically improve everyday usability. Covers the must-know hotkeys and built-in features that help new Mac users feel productive quickly.</itunes:summary>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:keywords>macOS, productivity, beginner, tutorial</itunes:keywords>
+      <itunes:duration>12:26</itunes:duration>
+    </item>
     <item>
       <title>What&#x27;s new in .NET 11</title>
       <description>An overview of the upcoming features and improvements in .NET 11, including practical examples and code snippets to illustrate how to use them in real projects.</description>
